@@ -31,7 +31,7 @@ Your task is to create a comprehensive product requirements document (PRD) for t
       {feature}-plan.md # Example feature PRD
     PLANS.md            # Mandatory: Global project PRD
   tasks/                # (For reference - Tasks are generated based on PRDs)
-  memory/               # (For reference - Task archive)
+  memory/               # Parent directory for archive
     plans/              # Archive for completed/failed plan files
     PLANS_LOG.md        # Append-only log of archived plans
   TASKS.md              # (For reference - Master task checklist)

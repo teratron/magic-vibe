@@ -20,7 +20,7 @@ It consists of three main components, each governed by its own detailed rule fil
     - **Details**: For plan creation, fully review [.task-magic/plans.md](./plans.md)
 2. **Tasks (`@tasks.md`)**:
     - **Purpose**: Governs the creation, management, and lifecycle of individual development tasks.
-    - **Active Tasks**: All active tasks reside in `.ai/tasks/` as `task{id}_name.md` files.
+    - **Active Tasks**: All active tasks reside in `.ai/tasks/` as `task{id}_{name}.md` files.
     - **Master View**: A master checklist, `.ai/TASKS.md`, mirrors the status of tasks in the `.ai/tasks/` directory and must be kept synchronized.
     - **Details**: For task creation, fully review [.task-magic/tasks.md](./tasks.md)
 3. **Memory (`@memory.md`)**:

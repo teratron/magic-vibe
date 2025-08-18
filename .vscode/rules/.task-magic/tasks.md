@@ -24,11 +24,12 @@ You are a senior software architect and product manager and an expert in analyzi
 
 ```yaml
 .ai/
-  tasks/          # Holds ALL active task files (task{id}_name.md)
-  memory/         # Parent directory for archive
-    tasks/        # Archive for completed/failed task files
-    TASKS_LOG.md  # Append-only log of archived tasks
-  TASKS.md        # Master checklist view of tasks in .ai/tasks/
+  tasks/               # Holds ALL active task files
+    task{id}_{name}.md # Example: task42_implement_user_feature.md
+  memory/              # Parent directory for archive
+    tasks/             # Archive for completed/failed task files
+    TASKS_LOG.md       # Append-only log of archived tasks
+  TASKS.md             # Master checklist view of tasks in .ai/tasks/
 ```
 
 ## Safe File System Operations
@@ -39,7 +40,7 @@ When working with the task system, the agent should always follow these best pra
 2. **Always Check File Existence Before Initial Operations:** Before operating on files like `.ai/TASKS.md` or `.ai/memory/TASKS_LOG.md`, the agent should use the `file_search` tool with the full file path. If a file does not exist and needs to be created (e.g., initial creation of `TASKS.md`), the agent should use the `edit_file` tool, providing the initial content (e.g., `"# Project Tasks\n\n"` for `TASKS.md`).
 3. **Use Safe File Operations:**
     - When moving files (e.g., during archival):
-      - **Identify the source path (e.g., `.ai/tasks/task{id}_name.md`) and the destination directory (e.g., `.ai/memory/tasks/`).**
+      - **Identify the source path (e.g., `.ai/tasks/task{id}_{name}.md`) and the destination directory (e.g., `.ai/memory/tasks/`).**
       - **Ensure the destination directory (e.g., `.ai/memory/tasks/`) exists. Use `list_dir` on the parent directory (e.g., `.ai/memory/`) or `file_search` to check. If it doesn't exist, it can be implicitly created when using `edit_file` to write a file within that path (as `edit_file` creates necessary parent directories), or the `mv` command might create it if it's a direct child.**
       - **Confirm the source file exists using `file_search` or `list_dir` before attempting the `mv` command.**
     - When appending to files, read the existing content with `read_file`, append the new content to what was read, and then use `edit_file` to write the combined content back to the file.
@@ -56,8 +57,8 @@ Each task is a Markdown file (`.md`) with YAML frontmatter.
 
 **Filename Convention:**
 
-Use the format `task{id}_descriptive_name.md`, where `{id}` is a **unique sequential integer ID** for top-level tasks, and `descriptive_name` is a short, kebab-case summary of the task title (e.g., `prompt_list_page`).
-Sub-task filenames follow `task{parent_id}.{sub_id}_descriptive_name.md`.
+Use the format `task{id}_{descriptive_name}.md`, where `{id}` is a **unique sequential integer ID** for top-level tasks, and `descriptive_name` is a short, kebab-case summary of the task title (e.g., `prompt_list_page`).
+Sub-task filenames follow `task{parent_id}.{sub_id}_{descriptive_name}.md`.
 **Always refer to tasks by their full ID (e.g., `7` for a top-level task, `7.1` for a sub-task) in dependencies and commands.**
 
 **Determining the Next Task ID (`{id}` for top-level tasks):**
@@ -67,7 +68,7 @@ To do this, the agent should:
 
 1. Use the `list_dir` tool to get the contents of the `.ai/tasks/` directory.
 2. Use the `list_dir` tool to get the contents of the `.ai/memory/tasks/` directory.
-3. Combine the file listings. From this combined list, identify all filenames that *only* match the pattern `task{id}_descriptive_name.md` (e.g., `task1_init.md`, `task123_another_feature.md`). This pattern specifically targets top-level tasks, ensuring filenames like `task1.2_sub_feature.md` are excluded from this specific ID generation.
+3. Combine the file listings. From this combined list, identify all filenames that *only* match the pattern `task{id}_{descriptive_name}.md` (e.g., `task1_init.md`, `task123_another_feature.md`). This pattern specifically targets top-level tasks, ensuring filenames like `task1.2_sub_feature.md` are excluded from this specific ID generation.
 4. For each matching filename, parse the numeric `{id}` part. This involves extracting the number between "task" and the first underscore.
 5. Find the highest numeric ID among all parsed IDs for top-level tasks.
 6. The next top-level task ID is this highest ID + 1.
@@ -84,7 +85,7 @@ The [.task-magic/expand.md](./expand.md) rule provides guidance on *when* and *h
 
 1. **Receive Sub-Task Definitions:** The agent receives a list of proposed sub-tasks, typically including titles, descriptions, priorities, and their interdependencies, as well as the ID of the parent task (e.g., parent task ID `42`).
 2. **Sub-Task Filename Convention:**
-    - For each proposed sub-task, determine its filename using the format: `task{parent_id}.{sub_id}_descriptive_name.md`
+    - For each proposed sub-task, determine its filename using the format: `task{parent_id}.{sub_id}_{descriptive_name}.md`
       - `{parent_id}`: The numeric ID of the original parent task (e.g., `42`).
       - `{sub_id}`: A sequential integer for the sub-task (e.g., 1, 2, 3), unique *within the scope of that parent*.
       - Example: `task42.1_implement_user_model.md`, `task42.2_create_api_endpoints.md`.
@@ -285,7 +286,7 @@ graph TD
   A[User Request: Create Tasks from Plan/PRD] --> B{Plan All Tasks};
   B --> C[Update .ai/TASKS.md with ALL Planned Tasks];
   C --> D{For Each Task in .ai/TASKS.md};
-  D -- Loop --> E["Create Individual task{id}_name.md in .ai/tasks/"];
+  D -- Loop --> E["Create Individual task{id}_{name}.md in .ai/tasks/"];
   E --> F[Populate YAML and Markdown Body];
   F -- End Loop --> G[All Task Files Created];
   G --> H{User asks agent to work?};
@@ -299,8 +300,8 @@ graph TD
   M -- Failure --> P[Update YAML status: failed, add error_log];
   P --> Q["Update TASKS.md entry: [!], (Failed)"];
   J -- Not Met --> R[Inform User: Dependencies Missing];
-  S{User asks to archive?} --> T[Agent finds completed/failed tasks in .ai/tasks/];
-  T --> U[Move task files to .ai/memory/tasks/];
+  S{User asks to archive?} --> T["Agent finds completed/failed tasks in .ai/tasks/"];
+  T --> U["Move task files to .ai/memory/tasks/"];
   U --> V[Append summary to .ai/memory/TASKS_LOG.md];
   V --> W[Remove corresponding entries from .ai/TASKS.md];
 ```
@@ -317,9 +318,9 @@ graph TD
     - Find completed/failed tasks **in `.ai/tasks/`** by reading their YAML status (use `read_file` for each task file identified by `list_dir` in `.ai/tasks/`).
     - For each task to be archived:
       - Read its full content (YAML frontmatter and Description section) using `read_file` **(this is needed for logging to TASKS_LOG.md).**
-      - **Identify the source path (e.g., `.ai/tasks/task{id}_name.md`) and the destination directory (`.ai/memory/tasks/`).**
+      - **Identify the source path (e.g., `.ai/tasks/task{id}_{name}.md`) and the destination directory (`.ai/memory/tasks/`).**
       - **Ensure the destination directory `.ai/memory/tasks/` exists (e.g., using `list_dir` or `file_search`). If not, it will typically be created by `edit_file` if a file is written into it, or the `mv` command might create it.**
-      - **Use `run_terminal_cmd` to execute an `mv` command (e.g., `mv .ai/tasks/task{id}_name.md .ai/memory/tasks/`).**
+      - **Use `run_terminal_cmd` to execute an `mv` command (e.g., `mv .ai/tasks/task{id}_{name}.md .ai/memory/tasks/`).**
     - Log the summary (including description and dependencies) to `TASKS_LOG.md` by reading its current content, appending the new log entries, and using `edit_file` to write it back.
     - Remove corresponding entries from `.ai/TASKS.md` via `read_file` and `edit_file`.
 
@@ -346,9 +347,9 @@ The agent should interpret user requests and map them to the following actions. 
   - **If creating a regular top-level task or multiple tasks (from a plan/PRD):**
     - First, plan all tasks to be created, determining their IDs, titles, priorities, dependencies, and descriptions.
     - Update `.ai/TASKS.md` with entries for ALL planned tasks using `read_file` and `edit_file`.
-    - Then, for each task now listed in `.ai/TASKS.md`, create the individual `task{id}_descriptive_name.md` file in `.ai/tasks/` using `edit_file`, populating YAML and markdown body.
+    - Then, for each task now listed in `.ai/TASKS.md`, create the individual `task{id}_{descriptive_name}.md` file in `.ai/tasks/` using `edit_file`, populating YAML and markdown body.
   - **If creating sub-tasks for an existing `parent_id` (based on a recommendation from `@expand.md` or user):**
-    - Follow the same process: plan all sub-tasks, update `.ai/TASKS.md` with all sub-task entries, then create each `task{parent_id}.{sub_id}_descriptive_name.md` file in `.ai/tasks/`.
+    - Follow the same process: plan all sub-tasks, update `.ai/TASKS.md` with all sub-task entries, then create each `task{parent_id}.{sub_id}_{descriptive_name}.md` file in `.ai/tasks/`.
     - Update the parent task file's description and details to list the new sub-tasks using `edit_file`.
     - Update the parent task's entry in `TASKS.md` if its description needs to change, using `read_file` and `edit_file`.
 - **Start/Work on Next Task / Continue:**
@@ -363,22 +364,22 @@ The agent should interpret user requests and map them to the following actions. 
   - If met: Update task {id} YAML (`status: inprogress`, etc.) and update `TASKS.md`.
   - If not met: Inform the user that dependencies are missing.
 - **Verify Task Completion (MANDATORY PRE-COMPLETION STEP):**
-  - **ALWAYS** check if the task file (e.g., `task{id}_name.md`) contains a `## Test Strategy` section after completing the implementation work.
+  - **ALWAYS** check if the task file (e.g., `task{id}_{name}.md`) contains a `## Test Strategy` section after completing the implementation work.
   - If a `## Test Strategy` section exists: **DO NOT** mark the task as complete yet. You **MUST** explicitly ask the user: "This task has a Test Strategy. Would you like to run the tests (preferably by triggering the dispatching command/action if applicable), or should I mark it as complete based on your verification?"
   - If no `## Test Strategy` section exists, or if the user confirms after being asked about the tests: Proceed to the "Complete Task {id}" step.
 - **Complete Task {id}:**
   - **Cleanup:** Before marking as complete, review the code changes made for this task and remove any temporary logging or print statements (e.g., language-specific debug prints, verbose console logs) that were added for debugging or testing purposes. Only leave logs that are essential for production monitoring (e.g., errors, critical warnings).
   - **Update:** Update task {id} YAML (`status: completed`, `assigned_agent: null`, `completed_at`) and update the corresponding line in `TASKS.md` to `[x]`.
 - **Fail Task {id} "{Reason}":** Update task {id} YAML (`status: failed`, `error_log`, etc.) and update `TASKS.md`.
-- **Show Task {id} Details:** Read the full content (YAML and Markdown) of `task{id}_name.md` (checking both `.ai/tasks` and `.ai/memory/tasks` for files like `task15_...md` or `task15.1_...md`) and display it.
+- **Show Task {id} Details:** Read the full content (YAML and Markdown) of `task{id}_{name}.md` (checking both `.ai/tasks` and `.ai/memory/tasks` for files like `task15_...md` or `task15.1_...md`) and display it.
 - **Archive Tasks:**
   - Identify tasks in `.ai/tasks/` with `status: completed` or `status: failed` in their YAML (use `list_dir` then `read_file` for each task to check status).
   - For each identified task file:
     - Read its YAML frontmatter (to get Title, Status, Dependencies) and its Markdown body (to get the Description) using `read_file`.
   - Move identified files:
-    - **Construct the source path (e.g., `.ai/tasks/task{id}_name.md`) and destination directory (`.ai/memory/tasks/`).**
+    - **Construct the source path (e.g., `.ai/tasks/task{id}_{name}.md`) and destination directory (`.ai/memory/tasks/`).**
     - **Ensure the destination directory `.ai/memory/tasks/` exists (e.g., using `list_dir` or `file_search`). If not, it will typically be created by `edit_file` if a file is written into it, or the `mv` command might create it.**
-    - **Use `run_terminal_cmd` to execute an `mv` command (e.g., `mv .ai/tasks/task{id}_name.md .ai/memory/tasks/`).**
+    - **Use `run_terminal_cmd` to execute an `mv` command (e.g., `mv .ai/tasks/task{id}_{name}.md .ai/memory/tasks/`).**
   - Append entries to `.ai/memory/TASKS_LOG.md` using the new format (Title, Status, Timestamp, Dependencies, Description) via `read_file` and `edit_file`.
   - Remove corresponding entries from `.ai/TASKS.md` via `read_file` and `edit_file`.
 

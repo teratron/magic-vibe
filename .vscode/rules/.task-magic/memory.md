@@ -19,7 +19,7 @@ The memory system consists of:
 
 ### Task Archive
 
-- **`.ai/memory/tasks/`**: This directory contains the full Markdown files (`task{id}_name.md`) of tasks that have been archived (status: `completed` or `failed`). These files retain the original details, descriptions, and test strategies defined when the task was active.
+- **`.ai/memory/tasks/`**: This directory contains the full Markdown files (`task{id}_{name}.md`) of tasks that have been archived (status: `completed` or `failed`). These files retain the original details, descriptions, and test strategies defined when the task was active.
 - **`.ai/memory/TASKS_LOG.md`**: This is an append-only Markdown file that serves as a chronological log of when tasks were archived. Each entry summarizes the archived task, including its ID, Title, final Status, Dependencies, and the Description extracted from the task file at the time of archival.
 
 ### Plan Archive
@@ -44,6 +44,17 @@ When working with the memory system, the agent should always verify that require
 2. **Check Files Before Operations:** Before operating on files like `.ai/memory/TASKS_LOG.md` or `.ai/memory/PLANS_LOG.md`, the agent should use the `file_search` tool with the full file path to check for its existence.
 3. **Safe File Creation/Modification:** If a file like `.ai/memory/TASKS_LOG.md` or `.ai/memory/PLANS_LOG.md` doesn't exist (as determined by `file_search`), and it needs to be created with initial content (e.g., `"\# Task Archive Log\\n\\n"` or `"\# Plan Archive Log\\n\\n"`), use the `edit_file` tool. To append to an existing file, first use `read_file` to get its current content, then append the new data to this content, and finally use `edit_file` to write the combined content back.
 4. **Archiving Plan Files:** When moving a plan file (e.g., from `.ai/plans/features/` to `.ai/memory/plans/`), always use the `run_terminal_cmd` tool with the `mv` command. Do not use `edit_file` to create a new file in the destination and `delete_file` to remove the original. This ensures the file is moved atomically and preserves its history if version control is used. Example: `mv .ai/plans/features/my-feature-plan.md .ai/memory/plans/my-feature-plan.md`.
+
+## Directory Structure
+
+```yaml
+.ai/
+  memory/         # Parent directory for archive
+    tasks/        # Archive for completed/failed task files
+    plans/        # Archive for completed/failed plan files
+    TASKS_LOG.md  # Append-only log of archived tasks
+    PLANS_LOG.md  # Append-only log of archived plans
+```
 
 ## Purpose and Usage
 
