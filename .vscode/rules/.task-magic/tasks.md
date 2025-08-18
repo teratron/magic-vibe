@@ -1,5 +1,5 @@
 ---
-description: This rule specifies the technical details for creating and processing tasks in the project's file-based AI task system
+description: This rule specifies the technical details for creating and processing tasks in the project's file-based AI task system.
 globs:
 alwaysApply: false
 ---

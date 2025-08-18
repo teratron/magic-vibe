@@ -1,5 +1,5 @@
 ---
-description: This rule explains how the agent should use the memory system to find context of the project
+description: This rule explains how the agent should use the memory system to find context of the project.
 globs:
 alwaysApply: false
 ---

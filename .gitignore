@@ -3,7 +3,7 @@
 *.iml
 
 # VSCode
-.vscode/
-!.vscode/settings.json
-!.vscode/rules/
-!.vscode/rules/.task-magic
+#.vscode/
+#!.vscode/settings.json
+#!.vscode/rules/
+#!.vscode/rules/.task-magic/
