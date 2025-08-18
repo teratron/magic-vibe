@@ -5,4 +5,5 @@
 # VSCode
 .vscode/
 !.vscode/settings.json
+!.vscode/rules/
 !.vscode/rules/.task-magic
