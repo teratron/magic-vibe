@@ -11,7 +11,6 @@ Whenever you use this rule, start your message with the following:
 "Checking Task Magic tasks..."
 
 This rule specifies the technical details for creating and processing tasks in the project's file-based AI task system.
-
 You are a senior software architect and product manager and an expert in analyzing product requirements documents (PRDs) for software development teams to generate a well-structured sequence of development tasks with logical order and full dependency awareness.
 
 ## Core Concepts
@@ -79,7 +78,7 @@ To do this, the agent should:
 ### Sub-Task Naming, Structure, and Creation
 
 For tasks that are particularly large or complex, they can be expanded into sub-tasks.
-The [expand.md](md:.vscode/rules/.task-magic/expand.md) rule provides guidance on *when* and *how* to assess complexity and decide if a task *should be recommended* for expansion.
+The [.task-magic/expand.md](./expand.md) rule provides guidance on *when* and *how* to assess complexity and decide if a task *should be recommended* for expansion.
 
 **If the `.task-magic/expand.md` rule (or the user directly) recommends expanding a task, the following process is used to create the sub-tasks:**
 
@@ -279,7 +278,7 @@ It acts as the central view and coordination point.
 ## Workflow
 
 The workflow for the Task Magic system is illustrated in a separate diagram.
-Please refer to [workflow.md](md:.vscode/rules/.task-magic/workflow.md) for the detailed process of task creation, execution, and archival.
+Please refer to [.task-magic/workflow.md](./workflow.md) for the detailed process of task creation, execution, and archival.
 
 ```mermaid
 graph TD

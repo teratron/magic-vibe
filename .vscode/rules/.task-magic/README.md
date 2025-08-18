@@ -17,7 +17,7 @@ There are three main parts to Task Magic:
 2. **Tasks (`.ai/tasks/` & `.ai/TASKS.md`)**:
     - **Purpose**: This is where the actual work items live. AI agents (or you) can break down plans into individual, manageable tasks.
     - **Key files & structure**:
-      - `.ai/tasks/task{id}_description.md`: Each task gets its own Markdown file. It includes details like status (pending, inprogress, completed), priority, dependencies, a description, and how to test it.
+      - `.ai/tasks/task{id}_description.md`: Each task gets its own Markdown file. It includes details like status (pending, in progress, completed), priority, dependencies, a description, and how to test it.
       - `.ai/TASKS.md`: This is your master checklist. It's a human-friendly overview of all tasks in the `.ai/tasks/` directory, showing their status at a glance. **This file and the individual task files are kept in sync by the AI.**
     - **AI interaction**: AI agents can create tasks from plans, update their status as they work on them, and help you manage dependencies.
 3. **Memory (`.ai/memory/`)**:
@@ -37,7 +37,7 @@ Task Magic is designed to work closely with AI agents. Here's how rules and cont
   - Files named `_index.md` (like the one in `.vscode/rules/.task-magic/_index.md` or `.vscode/rules/.task-magic/_index.mdc`) provide a high-level overview of a system or a set of rules.
   - These `_index.md` files are **automatically included in the AI's context** when you're working within a project that uses them. This gives the AI a foundational understanding without you needing to do anything extra.
 - **On-demand rules (other `.md` or `.mdc` rule files)**:
-  - Other rule files (e.g., `tasks.mdc`, `plans.mdc` located in `.vscode/rules/.task-magic/` or `.vscode/rules/.task-magic/`) define specific behaviors or knowledge for the AI.
+  - Other rule files (e.g., `tasks.md`, `plans.md` located in `.vscode/rules/.task-magic/`) define specific behaviors or knowledge for the AI.
   - Each of these rule files has a `description` in its header. The AI agent (Cursor/Windsurf) can read these descriptions and **decide dynamically whether a specific rule is relevant** to your current request or the task it's performing.
   - If the AI deems a rule relevant, it will "fetch" and use that rule.
 - **Your role: Guiding the AI with @-tags**:

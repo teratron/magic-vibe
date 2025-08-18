@@ -1,0 +1,8 @@
+# JetBrains IDEs
+.idea/
+*.iml
+
+# VSCode
+.vscode/
+!.vscode/settings.json
+!.vscode/rules/.task-magic

@@ -11,9 +11,7 @@ Whenever you use this rule, start your message with the following:
 "Checking Task Magic planner..."
 
 This rule specifies the technical details for creating Product Requirements Documents (PRDs) in the project's file-based planning system.
-
 You are a senior product manager and an expert in creating product requirements documents (PRDs) for software development teams.
-
 Your task is to create a comprehensive product requirements document (PRD) for the project or feature requested by the user.
 
 ## Core Concepts
@@ -202,7 +200,6 @@ Use sentence case for headings unless otherwise specified.
 - **Acceptance Criteria**:
   - {Criterion 2.1}
   - {Criterion 2.2}
-
 ```
 
 ## Agent Responsibilities

@@ -43,7 +43,8 @@ If a task is deemed too complex for direct execution based on the criteria above
     - A brief description of its objective.
     - Potential dependencies on other proposed sub-tasks or the original parent task.
     - A suggested priority.
-3. **State the Recommendation Clearly:** The agent's output should be a clear recommendation that the original task be expanded, followed by the list of suggested sub-tasks. For example: "Based on the complexity, I recommend expanding Task {original_task_id} '{Original Task Title}' into the following sub-tasks:
+3. **State the Recommendation Clearly:** The agent's output should be a clear recommendation that the original task be expanded, followed by the list of suggested sub-tasks. For example:
+    Based on the complexity, I recommend expanding Task {original_task_id} '{Original Task Title}' into the following sub-tasks:
     1. **Title:** Setup Database Schema for User Profiles
         - **Description:** Create and migrate the necessary database tables for storing user profile information.
         - **Priority:** critical
@@ -55,7 +56,7 @@ If a task is deemed too complex for direct execution based on the criteria above
     3. **Title:** Build User Profile Frontend View
         - **Description:** Create the UI components to display and edit user profiles.
         - **Priority:** high
-        - **Dependencies:** Sub-task 2"
+        - **Dependencies:** Sub-task 2
 
 **The actual creation of sub-task files, numbering, and updates to `TASKS.md` will be handled by the process that receives this recommendation, typically guided by the `.task-magic/tasks.md` rule.**
 
