@@ -1,6 +1,8 @@
 # Task Magic
 
-**Task Magic** is a file-based system. This means all your project plans, tasks, and history are stored in plain text files (mostly Markdown) right in your project's `.ai/` directory. This makes it easy to version control, track changes, and for AI agents to read and understand your project.
+**Task Magic** is a file-based system.
+This means all your project plans, tasks, and history are stored in plain text files (mostly Markdown) right in your project's `.ai/` directory.
+This makes it easy to version control, track changes, and for AI agents to read and understand your project.
 
 *Based on this repository: [Task Magic](https://github.com/iannuttall/task-magic).*
 
