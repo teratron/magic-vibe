@@ -12,12 +12,13 @@ There are three main parts to Task Magic:
     - **Purpose**: This is where you define the "what" and "why" of your project or specific features. Think of these as your Product Requirements Documents (PRDs).
     - **Key files**:
       - `.ai/plans/PLANS.md`: A global overview of your entire project. It should be a concise summary and index, linking to more detailed feature plans.
-      - `.ai/plans/features/{your-feature}-plan.md`: Detailed PRDs for each specific feature you're building. This is where the AI will look for specifics when generating tasks.
+      - `.ai/plans/features/plan-{feature-name}.md`: Detailed PRDs for each specific feature you're building. This is where the AI will look for specifics when generating tasks.
+
     - **AI interaction**: AI agents use these plans to understand the scope and requirements, helping to generate tasks.
 2. **Tasks (`.ai/tasks/` & `.ai/TASKS.md`)**:
     - **Purpose**: This is where the actual work items live. AI agents (or you) can break down plans into individual, manageable tasks.
     - **Key files & structure**:
-      - `.ai/tasks/task{id}_description.md`: Each task gets its own Markdown file. It includes details like status (pending, in progress, completed), priority, dependencies, a description, and how to test it.
+      - `.ai/tasks/task{id}_{descriptive_name}.md`: Each task gets its own Markdown file. It includes details like status (pending, in progress, completed), priority, dependencies, a description, and how to test it.
       - `.ai/TASKS.md`: This is your master checklist. It's a human-friendly overview of all tasks in the `.ai/tasks/` directory, showing their status at a glance. **This file and the individual task files are kept in sync by the AI.**
     - **AI interaction**: AI agents can create tasks from plans, update their status as they work on them, and help you manage dependencies.
 3. **Memory (`.ai/memory/`)**:
@@ -34,7 +35,7 @@ There are three main parts to Task Magic:
 Task Magic is designed to work closely with AI agents. Here's how rules and context are handled:
 
 - **Automatic context (`_index.md` files)**:
-  - Files named `_index.md` (like the one in `.vscode/rules/.task-magic/_index.md` or `.vscode/rules/.task-magic/_index.mdc`) provide a high-level overview of a system or a set of rules.
+  - File named `_index.md` (like the one in `.vscode/rules/.task-magic/_index.md`) provide a high-level overview of a system or a set of rules.
   - These `_index.md` files are **automatically included in the AI's context** when you're working within a project that uses them. This gives the AI a foundational understanding without you needing to do anything extra.
 - **On-demand rules (other `.md` or `.mdc` rule files)**:
   - Other rule files (e.g., `tasks.md`, `plans.md` located in `.vscode/rules/.task-magic/`) define specific behaviors or knowledge for the AI.
@@ -46,7 +47,7 @@ Task Magic is designed to work closely with AI agents. Here's how rules and cont
     - `@.vscode/rules/.task-magic/tasks.md create tasks for this feature`
     - `@.vscode/rules/.task-magic/plans.md generate a plan for X`
     - `@TASKS.md what is the status of my project?` (to refer to the main task checklist)
-    - `@.ai/plans/features/my-cool-feature-plan.md can you review this plan?`
+    - `@.ai/plans/features/plan-my-cool-feature.md can you review this plan?`
   - This helps ensure the AI looks at the exact information you want it to.
 
 ## Getting started
@@ -56,7 +57,7 @@ Task Magic is designed to work closely with AI agents. Here's how rules and cont
     - `.ai/TASKS.md` (can start with just `# Project Tasks`)
     - `.ai/memory/TASKS_LOG.md` (can start with `# Task Archive Log`)
 2. **Create a plan**: Ask your AI assistant to create a new feature plan using the planning rule (e.g., `@.vscode/rules/.task-magic/plans.md create a plan for user authentication`).
-3. **Generate tasks**: Once a plan is ready, ask the AI to generate tasks from it (e.g., `@.vscode/rules/.task-magic/tasks.md generate tasks for the user-authentication-plan.md`).
+3. **Generate tasks**: Once a plan is ready, ask the AI to generate tasks from it (e.g., `@.vscode/rules/.task-magic/tasks.md generate tasks for the plan-user-authentication.md`).
 4. **Work on tasks**: Tell the AI to start working on tasks. It will update `.ai/TASKS.md` and the individual task files as it progresses.
 5. **Archive**: Periodically, ask the AI to archive completed or failed tasks to keep your active task list clean.
 

@@ -19,21 +19,21 @@ The memory system consists of:
 
 ### Task Archive
 
-- **`.ai/memory/tasks/`**: This directory contains the full Markdown files (`task{id}_{name}.md`) of tasks that have been archived (status: `completed` or `failed`). These files retain the original details, descriptions, and test strategies defined when the task was active.
+- **`.ai/memory/tasks/`**: This directory contains the full Markdown files (`task{id}_{descriptive_name}.md`) of tasks that have been archived (status: `completed` or `failed`). These files retain the original details, descriptions, and test strategies defined when the task was active.
 - **`.ai/memory/TASKS_LOG.md`**: This is an append-only Markdown file that serves as a chronological log of when tasks were archived. Each entry summarizes the archived task, including its ID, Title, final Status, Dependencies, and the Description extracted from the task file at the time of archival.
 
 ### Plan Archive
 
-- **`.ai/memory/plans/`**: This directory contains the full Markdown files of PRDs (both global `PLANS.md` versions and feature plans like `{feature}-plan.md`) that have been archived. Plans might be archived when they are completed (all associated features are implemented and stable), deprecated (the feature or project direction is abandoned), or superseded by a newer version of the plan.
-- **`.ai/memory/PLANS_LOG.md`**: This is an append-only Markdown file that serves as a chronological log of when plans were archived. Each entry should summarize the archived plan, including its **full path within the `.ai/memory/plans/` directory** (e.g., `.ai/memory/plans/old-feature-plan.md`), a version or date stamp, the reason for archival (e.g., Completed, Deprecated, Superseded), and a brief description or title of the plan.
+- **`.ai/memory/plans/`**: This directory contains the full Markdown files of PRDs (both global `PLANS.md` versions and feature plans like `plan-{feature-name}.md`) that have been archived. Plans might be archived when they are completed (all associated features are implemented and stable), deprecated (the feature or project direction is abandoned), or superseded by a newer version of the plan.
+- **`.ai/memory/PLANS_LOG.md`**: This is an append-only Markdown file that serves as a chronological log of when plans were archived. Each entry should summarize the archived plan, including its **full path within the `.ai/memory/plans/` directory** (e.g., `.ai/memory/plans/plan-old-feature.md`), a version or date stamp, the reason for archival (e.g., Completed, Deprecated, Superseded), and a brief description or title of the plan.
 - **Log Entry Format Example for PLANS_LOG.md:**
 
   ```markdown
-  - **Archived Plan:** `.ai/memory/plans/old-feature-plan.md`
+  - **Archived Plan:** `.ai/memory/plans/plan-old-feature.md`
     - **Archived On:** YYYY-MM-DD HH:MM:SS
     - **Reason:** Deprecated
     - **Title:** PRD: Old Feature
-    - **Original File (Optional):** {.ai/plans/features/old-feature-plan.md}
+    - **Original File (Optional):** {.ai/plans/features/plan-old-feature.md}
   ```
 
 ## Directory and File Management
@@ -43,7 +43,7 @@ When working with the memory system, the agent should always verify that require
 1. **Check Directories Before Creation:** Before performing operations, check if directories like `.ai/memory/tasks/` or `.ai/memory/plans/` exist by using the `list_dir` tool on its parent (`.ai/memory/`) or by using `file_search` for the specific directory path. If a directory does not appear in the results, it can be implicitly created when using `edit_file` to write a file within that path, as `edit_file` creates necessary parent directories.
 2. **Check Files Before Operations:** Before operating on files like `.ai/memory/TASKS_LOG.md` or `.ai/memory/PLANS_LOG.md`, the agent should use the `file_search` tool with the full file path to check for its existence.
 3. **Safe File Creation/Modification:** If a file like `.ai/memory/TASKS_LOG.md` or `.ai/memory/PLANS_LOG.md` doesn't exist (as determined by `file_search`), and it needs to be created with initial content (e.g., `"\# Task Archive Log\\n\\n"` or `"\# Plan Archive Log\\n\\n"`), use the `edit_file` tool. To append to an existing file, first use `read_file` to get its current content, then append the new data to this content, and finally use `edit_file` to write the combined content back.
-4. **Archiving Plan Files:** When moving a plan file (e.g., from `.ai/plans/features/` to `.ai/memory/plans/`), always use the `run_terminal_cmd` tool with the `mv` command. Do not use `edit_file` to create a new file in the destination and `delete_file` to remove the original. This ensures the file is moved atomically and preserves its history if version control is used. Example: `mv .ai/plans/features/my-feature-plan.md .ai/memory/plans/my-feature-plan.md`.
+4. **Archiving Plan Files:** When moving a plan file (e.g., from `.ai/plans/features/` to `.ai/memory/plans/`), always use the `run_terminal_cmd` tool with the `mv` command. Do not use `edit_file` to create a new file in the destination and `delete_file` to remove the original. This ensures the file is moved atomically and preserves its history if version control is used. Example: `mv .ai/plans/features/plan-my-feature.md .ai/memory/plans/plan-my-feature.md`.
 
 ## Directory Structure
 
