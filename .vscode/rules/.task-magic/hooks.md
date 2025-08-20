@@ -1,55 +1,60 @@
 ---
-description: Defines how hooks (triggers) work in the Task Magic system, allowing automated actions to be executed at specific points in the task lifecycle.
+description: Defines how the agent should discover and execute automated hooks (triggers) at specific points in the plan and task lifecycle.
 globs:
+  - .ai/hooks/**/*.hook.md
 alwaysApply: false
 ---
 
-# Task Magic Hooks
+# AI Hook Execution Rule
 
-Hooks are special triggers in the Task Magic system that allow you to define automated actions that should occur at specific points in the task lifecycle.
-They provide a way to extend the system's functionality and integrate with other tools and workflows.
+Whenever you use this rule, start your message with the following:
 
-## Hook Types
+"Checking Task Magic hooks..."
 
-The Task Magic system supports the following hook types:
+This rule specifies the technical details for how an AI agent should discover, interpret, and execute automated hooks within the Task Magic system. Hooks allow for automated actions, such as running scripts or sending notifications, to be triggered by events like task completion or plan creation.
 
-1. **Task Creation Hooks**: Triggered when a new task is created.
-2. **Task Status Change Hooks**: Triggered when a task's status changes (e.g., from `pending` to `inprogress` or from `inprogress` to `completed`).
-3. **Task Archival Hooks**: Triggered when a task is archived.
-4. **Plan Creation Hooks**: Triggered when a new plan is created.
-5. **Plan Update Hooks**: Triggered when an existing plan is updated.
+## Core Concepts
 
-## Hook Configuration
+1. **Event-Driven Automation:** Hooks are actions that run automatically when a specific event occurs in the system (e.g., a task's status changes to `completed`).
+2. **File-Based Definition:** Each hook is defined in its own Markdown file (`.hook.md`) located in the `.ai/hooks/` directory.
+3. **Agent Responsibility:** The AI agent is solely responsible for detecting trigger events during its workflow, finding the corresponding hook files, and executing their defined actions.
 
-Hooks are defined in a `.ai/hooks/` directory in your project. Each hook is a separate file with a `.hook.md` extension. The file should contain:
+## Directory Structure
 
-1. **YAML Frontmatter**:
+All hook definition files **must** be located in the `.ai/hooks/` directory. The agent should check for the existence of this directory before attempting to find hooks.
 
-    ```yaml
-    ---
-    type: [hook type]
-    trigger: [specific trigger event]
-    priority: [numeric priority]
-    enabled: [true/false]
-    ---
-    ```
+```yaml
+.ai/
+  hooks/                                # Parent directory for all hook definitions
+    commit-on-complete.hook.md          # Example: A hook that runs on task completion
+    notify-on-fail.hook.md              # Example: A hook that sends a notification
+    ...                                 # Other .hook.md files
+```
 
-2. **Hook Description**: A brief description of what the hook does.
-3. **Hook Action**: The action to be performed when the hook is triggered. This can be:
-   - A shell command to execute
-   - A script to run
-   - An AI agent instruction
-   - A notification to send
+## Hook File Format
 
-## Example Hooks
+Each hook is a Markdown file with a `.hook.md` extension. The file consists of YAML frontmatter for configuration and a Markdown body containing the hook's description and the action to be executed.
 
-### Git Commit Hook
+### YAML Frontmatter
+
+The frontmatter defines the hook's behavior and trigger conditions.
 
 ```markdown
 ---
+# The type of event that can trigger this hook.
+# See "Hook Events and Triggers" section for all possible values.
 type: task_status_change
+
+# The specific event that triggers the action.
+# For 'task_status_change', this is the new status (e.g., 'completed', 'failed').
+# For other types, this might be 'created' or 'updated'.
 trigger: completed
+
+# Execution priority. Lower numbers execute first.
+# Hooks with the same priority are executed in alphabetical order of their filenames.
 priority: 10
+
+# Whether the hook is active. The agent MUST ignore hooks where this is 'false'.
 enabled: true
 ---
 ```

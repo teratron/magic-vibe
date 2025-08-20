@@ -324,6 +324,7 @@ graph TD
     - **Complete:** Update task file YAML (`status: completed`, `assigned_agent: null`, `completed_at`). Update `TASKS.md` line (`[x]`).
     - **Fail:** Update task file YAML (`status: failed`, `assigned_agent: null`, `completed_at`, `error_log`). Update `TASKS.md` line (`[!]`, add `(Failed)`).
 4. **Archival:** When instructed by the user (interpreting intent like "archive completed tasks", "clean up finished tasks"), perform the archive steps:
+5. **Hook Execution:** After creating a task or changing its status, the agent **must** check for and execute any relevant hooks as defined in `@hooks.md`.
     - Find completed/failed tasks **in `.ai/tasks/`** by reading their YAML status (use `read_file` for each task file identified by `list_dir` in `.ai/tasks/`).
     - For each task to be archived:
       - Read its full content (YAML frontmatter and Description section) using `read_file` **(this is needed for logging to TASKS_LOG.md).**
@@ -357,6 +358,7 @@ The agent should interpret user requests and map them to the following actions. 
     - First, plan all tasks to be created, determining their IDs, titles, priorities, dependencies, and descriptions.
     - Update `.ai/TASKS.md` with entries for ALL planned tasks using `read_file` and `edit_file`.
     - Then, for each task now listed in `.ai/TASKS.md`, create the individual `task{id}_{descriptive_name}.md` file in `.ai/tasks/` using `edit_file`, populating YAML and markdown body.
+    - After creating the task file, check for and execute any `task_creation` hooks.
   - **If creating sub-tasks for an existing `parent_id` (based on a recommendation from `@expand.md` or user):**
     - Follow the same process: plan all sub-tasks, update `.ai/TASKS.md` with all sub-task entries, then create each `task{parent_id}.{sub_id}_{descriptive_name}.md` file in `.ai/tasks/`.
     - Update the parent task file's description and details to list the new sub-tasks using `edit_file`.
@@ -370,7 +372,7 @@ The agent should interpret user requests and map them to the following actions. 
 - **Start/Work on Specific Task {id}:**
   - Verify task {id} (e.g., `15` or `15.1`) exists in `.ai/TASKS.md` and its status is `[ ]` (pending). If not, inform the user.
   - Check dependencies for task {id}.
-  - If met: Update task {id} YAML (`status: inprogress`, etc.) and update `TASKS.md`.
+  - If met: Update task {id} YAML (`status: inprogress`, etc.) and update `TASKS.md`. Then, check for and execute any `task_status_change` hooks for the `inprogress` status.
   - If not met: Inform the user that dependencies are missing.
 - **Verify Task Completion (MANDATORY PRE-COMPLETION STEP):**
   - **ALWAYS** check if the task file (e.g., `task{id}_{descriptive_name}.md`) contains a `## Test Strategy` section after completing the implementation work.
@@ -379,7 +381,8 @@ The agent should interpret user requests and map them to the following actions. 
 - **Complete Task {id}:**
   - **Cleanup:** Before marking as complete, review the code changes made for this task and remove any temporary logging or print statements (e.g., language-specific debug prints, verbose console logs) that were added for debugging or testing purposes. Only leave logs that are essential for production monitoring (e.g., errors, critical warnings).
   - **Update:** Update task {id} YAML (`status: completed`, `assigned_agent: null`, `completed_at`) and update the corresponding line in `TASKS.md` to `[x]`.
-- **Fail Task {id} "{Reason}":** Update task {id} YAML (`status: failed`, `error_log`, etc.) and update `TASKS.md`.
+  - **Hooks:** After updating the status, check for and execute any `task_status_change` hooks for the `completed` status.
+- **Fail Task {id} "{Reason}":** Update task {id} YAML (`status: failed`, `error_log`, etc.) and update `TASKS.md`. Then, check for and execute any `task_status_change` hooks for the `failed` status.
 - **Show Task {id} Details:** Read the full content (YAML and Markdown) of `task{id}_{descriptive_name}.md` (checking both `.ai/tasks` and `.ai/memory/tasks` for files like `task15_...md` or `task15.1_...md`) and display it.
 - **Archive Tasks:**
   - Identify tasks in `.ai/tasks/` with `status: completed` or `status: failed` in their YAML (use `list_dir` then `read_file` for each task to check status).
@@ -390,6 +393,7 @@ The agent should interpret user requests and map them to the following actions. 
     - **Ensure the destination directory `.ai/memory/tasks/` exists (e.g., using `list_dir` or `file_search`). If not, it will typically be created by `edit_file` if a file is written into it, or the `mv` command might create it.**
     - **Use `run_terminal_cmd` to execute an `mv` command (e.g., `mv .ai/tasks/task{id}_{descriptive_name}.md .ai/memory/tasks/`).**
   - Append entries to `.ai/memory/TASKS_LOG.md` using the new format (Title, Status, Timestamp, Dependencies, Description) via `read_file` and `edit_file`.
+  - After moving the file, check for and execute any `task_archival` hooks.
   - Remove corresponding entries from `.ai/TASKS.md` via `read_file` and `edit_file`.
 
 ## Utilities
