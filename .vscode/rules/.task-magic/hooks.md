@@ -54,12 +54,16 @@ enabled: true
 ---
 ```
 
-## Auto Git Commit on Task Completion
+### Auto Git Commit on Task Completion
 
-This hook automatically creates a git commit when a task is marked as completed:
+This hook automatically creates a git commit when a task is marked as completed, using the Conventional Commits format.
+
+The commit type (`feat`, `fix`, `chore`, etc.) is dynamically determined by the `commit_type` property in the task's YAML frontmatter. If the property is not set, it defaults to `chore`. The task's `feature` property is used as the commit scope.
 
 ```bash
-git commit -am "Completed task: {{task.id}} - {{task.title}}"
+COMMIT_TYPE="{{task.commit_type}}"
+COMMIT_SCOPE="{{task.feature}}"
+git commit -am "${COMMIT_TYPE:-chore}(${COMMIT_SCOPE:-tasks}): {{task.title}} (task #{{task.id}})"
 ```
 
 ### Notification Hook

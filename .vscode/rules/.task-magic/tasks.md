@@ -152,6 +152,7 @@ title: 'Example Task Title'  # Human-readable title
 status: pending              # Current status: pending, inprogress, completed, failed
 priority: medium             # Task priority: critical, high, medium, low
 feature: Example Feature     # Feature area or logical grouping
+commit_type: feat            # Optional. Type for Conventional Commits (e.g., feat, fix, chore). Defaults to 'chore' in the hook if not set.
 dependencies:                # List of task IDs (numeric or string like "42.1") this task depends on
   - 3
   - 5.2
@@ -189,6 +190,14 @@ To choose the correct priority, consider the following:
 1. **Evaluate Inherent Criticality:** How vital is this specific task to the overall user request or feature being built?
 2. **Analyze Dependencies:** Does this task unblock other tasks? If so, what are the priorities of those dependent tasks? A task that unblocks `critical` or `high` priority work should have its priority elevated accordingly.
 3. **Default to Medium:** If there's no strong reason to assign a different priority, `medium` is often appropriate.
+
+### Setting Commit Type (Optional)
+
+The `commit_type` field in the YAML frontmatter is optional and allows you to specify the type of commit according to the Conventional Commits specification. This is used by hooks, such as the automatic commit hook on task completion.
+
+- **Purpose**: To automatically generate standardized commit messages that reflect the nature of the change.
+- **Allowed Values**: It's recommended to use standard types like `feat` (for new features), `fix` (for bug fixes), `docs`, `style`, `refactor`, `perf`, `test`, or `chore` (for routine maintenance).
+- **Default Behavior**: If this field is omitted, hooks that use it should provide a sensible default (e.g., `chore`).
 
 ## Description
 
