@@ -1,5 +1,5 @@
 ---
-description: Defines how the agent should discover and execute automated hooks (triggers) at specific points in the plan and task lifecycle.
+description: Defines how the agent should discover and execute automated hooks (triggers) at specific points in the plan, task, and git lifecycle.
 globs:
   - .ai/hooks/**/*.hook.md
 alwaysApply: false
@@ -9,7 +9,7 @@ alwaysApply: false
 
 Whenever you use this rule, start your message with the following:
 
-"Checking Task Magic hooks..."
+"Проверяю хуки Task Magic..."
 
 This rule specifies the technical details for how an AI agent should discover, interpret, and execute automated hooks within the Task Magic system. Hooks allow for automated actions, such as running scripts or sending notifications, to be triggered by events like task completion or plan creation.
 
@@ -25,10 +25,10 @@ All hook definition files **must** be located in the `.ai/hooks/` directory. The
 
 ```yaml
 .ai/
-  hooks/                                # Parent directory for all hook definitions
-    commit-on-complete.hook.md          # Example: A hook that runs on task completion
-    notify-on-fail.hook.md              # Example: A hook that sends a notification
-    ...                                 # Other .hook.md files
+  hooks/                        # Parent directory for all hook definitions
+    commit-on-complete.hook.md  # Example: A hook that runs on task completion
+    notify-on-fail.hook.md      # Example: A hook that sends a notification
+    ...                         # Другие файлы .hook.md
 ```
 
 ## Hook File Format
@@ -39,7 +39,7 @@ Each hook is a Markdown file with a `.hook.md` extension. The file consists of Y
 
 The frontmatter defines the hook's behavior and trigger conditions.
 
-```markdown
+```yaml
 ---
 # The type of event that can trigger this hook.
 # See "Hook Events and Triggers" section for all possible values.
@@ -59,11 +59,85 @@ enabled: true
 ---
 ```
 
+### Markdown Body
+
+The body of the file should contain:
+
+1. A clear, human-readable title (H3 or similar).
+2. A short description of what the hook does.
+3. A **single** fenced code block containing the shell command to be executed. The agent will use the `run_terminal_cmd` tool to execute this command.
+
+## Hook Events and Triggers
+
+The agent must check for hooks whenever one of the following primary events occurs:
+
+| `type` (in YAML)     | `trigger` (in YAML)                            | When to Check                                                                                                                                                  |
+|----------------------|------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `task_creation`      | `created`                                      | Immediately after a new task file (`task...md`) is successfully created in `.ai/tasks/`.                                                                       |
+| `task_status_change` | `pending`, `inprogress`, `completed`, `failed` | Immediately after a task's `status` field is changed in its YAML frontmatter.                                                                                  |
+| `task_archival`      | `archived`                                     | Immediately after a task file is successfully moved from `.ai/tasks/` to `.ai/memory/tasks/`.                                                                  |
+| `plan_creation`      | `created`                                      | Immediately after a new plan file (`plan-...md` or `PLANS.md`) is successfully created in `.ai/plans/`.                                                        |
+| `plan_update`        | `updated`                                      | Immediately after an existing plan file in `.ai/plans/` is successfully modified.                                                                              |
+| `git_commit`         | `after`                                        | Immediately after the agent successfully executes a `git commit` command.                                                                                      |
+| `git_push`           | `before`, `after`                              | `before`: Immediately before the agent executes a `git push` command. A failing hook should stop the push. `after`: Immediately after a successful `git push`. |
+
+## Available Variables
+
+When executing a hook's action, the agent **must** replace the following placeholder variables in the command string with the actual values from the event's context.
+
+| Variable               | Description                                                   | Example Value                     | Available for...         |
+|------------------------|---------------------------------------------------------------|-----------------------------------|--------------------------|
+| `{{task.id}}`          | The full ID of the task (e.g., `42` or `42.1`).               | `42.1`                            | `task_*` events          |
+| `{{task.title}}`       | The title of the task.                                        | `Implement User Login API`        | `task_*` events          |
+| `{{task.status}}`      | The **current** status of the task.                           | `completed`                       | `task_*` events          |
+| `{{task.commit_type}}` | The `commit_type` from the task's YAML (e.g., `feat`, `fix`). | `feat`                            | `task_*` events          |
+| `{{task.feature}}`     | The `feature` from the task's YAML.                           | `User Authentication`             | `task_*` events          |
+| `{{task.path}}`        | The full path to the task file.                               | `.ai/tasks/task42.1_login.md`     | `task_*` events          |
+| `{{plan.title}}`       | The title of the plan.                                        | `PRD: User Authentication`        | `plan_*` events          |
+| `{{plan.path}}`        | The full path to the plan file.                               | `.ai/plans/features/plan-auth.md` | `plan_*` events          |
+| `{{git.commit_hash}}`  | The full SHA hash of the latest commit.                       | `a1b2c3d4...`                     | `git_commit`, `git_push` |
+| `{{git.branch}}`       | The current branch name.                                      | `feature/user-auth`               | `git_commit`, `git_push` |
+| `{{git.remote}}`       | The remote name for a push (e.g., `origin`).                  | `origin`                          | `git_push`               |
+
+**Note:** Variables are only available for their specified event types. For example, `task.*` variables are only available for `task_*` events.
+
+## Agent Responsibilities: The Hook Execution Workflow
+
+The agent **must** follow this precise workflow whenever a trigger event occurs:
+
+1. **Identify Trigger Event:** Recognize that an action you just performed is a trigger event (e.g., "I have just changed the status of task `42.1` to `completed`" or "I am about to run `git push`").
+2. **Discover Hooks:**
+    - Check if the `.ai/hooks/` directory exists. If not, there are no hooks to run.
+    - If it exists, list all files ending in `.hook.md` within it.
+3. **Filter and Sort Hooks:**
+    - For each `.hook.md` file found:
+        - Read the file content.
+        - Parse its YAML frontmatter.
+        - **Filter:** Keep only the hooks where `enabled: true` AND the `type` and `trigger` values exactly match the event that just occurred.
+    - **Sort:** Sort the remaining, valid hooks in ascending order based on their `priority`. If priorities are equal, sort them alphabetically by filename.
+4. **Execute Hooks in Order:**
+    - For each sorted hook:
+        - **Extract Action:** Get the shell command from the fenced code block in the hook's Markdown body.
+        - **Substitute Variables:** Replace all `{{...}}` placeholders in the command string with the corresponding values from the context of the event.
+        - **Execute:** Use the `run_terminal_cmd` tool to execute the final command string.
+        - **Handle Errors:** If a hook command fails, log the error. For `before` triggers (like `git_push`), a failure **must** prevent the subsequent action (e.g., the `git push` command should not be executed). For other triggers, the agent should log the error and continue to the next hook.
+
+## Example Hook: Auto Git Commit on Task Completion
+
+**File: `.ai/hooks/commit-on-complete.hook.md`**
+
+```yaml
+---
+type: task_status_change
+trigger: completed
+priority: 10
+enabled: true
+---
+```
+
 ### Auto Git Commit on Task Completion
 
-This hook automatically creates a git commit when a task is marked as completed, using the Conventional Commits format.
-
-The commit type (`feat`, `fix`, `chore`, etc.) is dynamically determined by the `commit_type` property in the task's YAML frontmatter. If the property is not set, it defaults to `chore`. The task's `feature` property is used as the commit scope.
+This hook automatically creates a git commit when a task is marked as completed.
 
 ```bash
 COMMIT_TYPE="{{task.commit_type}}"
@@ -73,7 +147,7 @@ git commit -am "${COMMIT_TYPE:-chore}(${COMMIT_SCOPE:-tasks}): {{task.title}} (t
 
 ### Notification Hook
 
-```markdown
+```yaml
 ---
 type: task_status_change
 trigger: failed
@@ -90,28 +164,15 @@ This hook sends a notification when a task is marked as failed:
 echo "Task {{task.id}} - {{task.title}} has failed. See error log for details." | mail -s "Task Failure Alert" team@example.com
 ```
 
-### Hook Variables
-
-The following variables are available for use in hook actions:
-
-- `{{task.id}}`: The ID of the task
-- `{{task.title}}`: The title of the task
-- `{{task.status}}`: The current status of the task
-- `{{task.previous_status}}`: The previous status of the task (for status change hooks)
-- `{{task.path}}`: The path to the task file
-- `{{plan.id}}`: The ID of the associated plan
-- `{{plan.title}}`: The title of the associated plan
-- `{{plan.path}}`: The path to the plan file
-
-### Hook Execution Order
+## Hook Execution Order
 
 Hooks are executed in order of priority (lower numbers execute first). If multiple hooks have the same priority, they are executed in alphabetical order by filename.
 
-### Disabling Hooks
+## Disabling Hooks
 
 You can disable a hook by setting `enabled: false` in its YAML frontmatter. You can also disable all hooks by setting the `TASK_MAGIC_HOOKS_ENABLED` environment variable to `false`.
 
-### Best Practices
+## Best Practices
 
 1. **Keep hooks simple**: Each hook should do one thing well.
 2. **Use descriptive filenames**: Name your hook files in a way that clearly indicates what they do.

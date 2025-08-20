@@ -34,22 +34,12 @@ You are a senior software architect and product manager and an expert in analyzi
 
 ## Safe File System Operations
 
-When working with the task system, the agent should always follow these best practices to ensure file system operations are safe and idempotent:
+To ensure file system integrity, the agent **must** follow these procedures:
 
-1. **Always Check Directory Existence Before Creating:** Before creating directories like `.ai/tasks` or `.ai/memory/tasks`, the agent should use the `list_dir` tool on the parent directory (e.g., `.ai/` or `.ai/memory/`) or `file_search` for the specific directory path. If the directory does not appear in the results, it can be implicitly created when using `edit_file` to create a file within that path, as `edit_file` will create necessary parent directories.
-2. **Always Check File Existence Before Initial Operations:** Before operating on files like `.ai/TASKS.md` or `.ai/memory/TASKS_LOG.md`, the agent should use the `file_search` tool with the full file path. If a file does not exist and needs to be created (e.g., initial creation of `TASKS.md`), the agent should use the `edit_file` tool, providing the initial content (e.g., `"# Project Tasks\n\n"` for `TASKS.md`).
-3. **Use Safe File Operations:**
-    - When moving files (e.g., during archival):
-      - **Identify the source path (e.g., `.ai/tasks/task{id}_{descriptive_name}.md`) and the destination directory (e.g., `.ai/memory/tasks/`).**
-      - **Ensure the destination directory (e.g., `.ai/memory/tasks/`) exists. Use `list_dir` on the parent directory (e.g., `.ai/memory/`) or `file_search` to check. If it doesn't exist, it can be implicitly created when using `edit_file` to write a file within that path (as `edit_file` creates necessary parent directories), or the `mv` command might create it if it's a direct child.**
-      - **Confirm the source file exists using `file_search` or `list_dir` before attempting the `mv` command.**
-    - When appending to files, read the existing content with `read_file`, append the new content to what was read, and then use `edit_file` to write the combined content back to the file.
-    - When reading files, use `read_file`. If `file_search` indicated the file doesn't exist, handle this appropriately (e.g., by creating it if that's the desired logic, or reporting an issue).
-4. **When Archiving:**
-    - Ensure directories like `.ai/memory/` and `.ai/memory/tasks/` are conceptually present (they will be created by `edit_file` if needed when the first archived task is written there).
-    - Ensure the log file `.ai/memory/TASKS_LOG.md` exists (or will be created) by using `file_search` and then `edit_file` if it needs to be initialized or appended to.
-
-**Note:** Following these practices, leveraging tools like `file_search`, `list_dir`, `read_file`, `edit_file`, and `delete_file`, prevents errors and ensures smooth operation of the task system.
+1. **Check Existence:** Before reading or moving a file, confirm it exists using `file_search` or `list_dir`.
+2. **Safe Appending:** To append to a log file (e.g., `TASKS_LOG.md`), use `read_file` to get current content, append new data, then use `edit_file` to write the combined content back. `edit_file` will create the file if it doesn't exist.
+3. **Archiving:** To archive a task, use `run_terminal_cmd` with the `mv` command (e.g., `mv .ai/tasks/task1.md .ai/memory/tasks/`). **Do not** use `edit_file` and `delete_file` to simulate a move.
+4. **Directory Creation:** Directories are created implicitly by `edit_file` or `mv` when needed. There is no need to check for directory existence before writing a file into it.
 
 ## Task File Format
 
@@ -290,31 +280,6 @@ It acts as the central view and coordination point.
 The workflow for the Task Magic system is illustrated in a separate diagram.
 Please refer to [.task-magic/workflow.md](./workflow.md) for the detailed process of task creation, execution, and archival.
 
-```mermaid
-graph TD
-  A[User Request: Create Tasks from Plan/PRD] --> B{Plan All Tasks};
-  B --> C[Update .ai/TASKS.md with ALL Planned Tasks];
-  C --> D{For Each Task in .ai/TASKS.md};
-  D -- Loop --> E["Create Individual task{id}_{descriptive_name}.md in .ai/tasks/"];
-  E --> F[Populate YAML and Markdown Body];
-  F -- End Loop --> G[All Task Files Created];
-  G --> H{User asks agent to work?};
-  H -- Yes --> I["Agent reads TASKS.md, finds first pending task [ ]"];
-  I --> J{Check Dependencies for selected task};
-  J -- Met --> K[Update Task File YAML status: inprogress];
-  K --> L["Update TASKS.md entry: [-]"];
-  L --> M[Execute Task];
-  M -- Success --> N[Update YAML status: completed];
-  N --> O["Update TASKS.md entry: [x]"];
-  M -- Failure --> P[Update YAML status: failed, add error_log];
-  P --> Q["Update TASKS.md entry: [!], (Failed)"];
-  J -- Not Met --> R[Inform User: Dependencies Missing];
-  S{User asks to archive?} --> T["Agent finds completed/failed tasks in .ai/tasks/"];
-  T --> U["Move task files to .ai/memory/tasks/"];
-  U --> V[Append summary to .ai/memory/TASKS_LOG.md];
-  V --> W[Remove corresponding entries from .ai/TASKS.md];
-```
-
 **Key Agent Responsibilities:**
 
 1. **Synchronization:** Keep `.ai/TASKS.md` perfectly aligned with the `status` fields in the `.ai/tasks/*.md` files. Update `TASKS.md` *immediately* after updating a task file's YAML status.
@@ -324,7 +289,7 @@ graph TD
     - **Complete:** Update task file YAML (`status: completed`, `assigned_agent: null`, `completed_at`). Update `TASKS.md` line (`[x]`).
     - **Fail:** Update task file YAML (`status: failed`, `assigned_agent: null`, `completed_at`, `error_log`). Update `TASKS.md` line (`[!]`, add `(Failed)`).
 4. **Archival:** When instructed by the user (interpreting intent like "archive completed tasks", "clean up finished tasks"), perform the archive steps:
-5. **Hook Execution:** After creating a task or changing its status, the agent **must** check for and execute any relevant hooks as defined in `@hooks.md`.
+5. **Hook Execution:** After any creation, status change, or archival event, the agent **must** check for and execute any relevant hooks as defined in `@hooks.md`. Note that one hook (e.g., a `task_status_change` hook that runs `git commit`) can trigger another event (e.g., `git_commit`), which the agent must also detect and handle.
     - Find completed/failed tasks **in `.ai/tasks/`** by reading their YAML status (use `read_file` for each task file identified by `list_dir` in `.ai/tasks/`).
     - For each task to be archived:
       - Read its full content (YAML frontmatter and Description section) using `read_file` **(this is needed for logging to TASKS_LOG.md).**

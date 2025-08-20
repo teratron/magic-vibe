@@ -22,6 +22,10 @@ The memory system consists of:
 - **`.ai/memory/tasks/`**: This directory contains the full Markdown files (`task{id}_{descriptive_name}.md`) of tasks that have been archived (status: `completed` or `failed`). These files retain the original details, descriptions, and test strategies defined when the task was active.
 - **`.ai/memory/TASKS_LOG.md`**: This is an append-only Markdown file that serves as a chronological log of when tasks were archived. Each entry summarizes the archived task, including its ID, Title, final Status, Dependencies, and the Description extracted from the task file at the time of archival.
 
+### Hook Log
+
+- **`.ai/memory/HOOKS_LOG.md`**: An append-only log file that records the execution of every hook. It provides a detailed, structured trace of all automated actions, including timestamps, success/failure status, commands executed, and their output. This is essential for debugging the automation system.
+
 ### Plan Archive
 
 - **`.ai/memory/plans/`**: This directory contains the full Markdown files of PRDs (both global `PLANS.md` versions and feature plans like `plan-{feature-name}.md`) that have been archived. Plans might be archived when they are completed (all associated features are implemented and stable), deprecated (the feature or project direction is abandoned), or superseded by a newer version of the plan.
@@ -49,6 +53,7 @@ When working with the memory system, the agent **must** adhere to the safe file 
     plans/        # Archive for completed/failed plan files
     TASKS_LOG.md  # Append-only log of archived tasks
     PLANS_LOG.md  # Append-only log of archived plans
+    HOOKS_LOG.md  # Append-only log of all hook executions
 ```
 
 ## Purpose and Usage
