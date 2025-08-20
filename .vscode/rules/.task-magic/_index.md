@@ -10,7 +10,7 @@ Whenever you use this rule, start your message with the following:
 
 "Accessing Task Magic system overview..."
 
-The Task Magic system is a file-based project management and AI agent operational framework designed to plan features, manage development tasks, and maintain a memory of past work.
+The Task Magic system is a file-based project management and AI agent operational framework designed to plan features, manage development tasks, and maintain a memory opast work.
 It consists of three main components, each governed by its own detailed rule file:
 
 1. **Plans (`@plans.md`)**:
@@ -28,5 +28,9 @@ It consists of three main components, each governed by its own detailed rule fil
     - **Location**: Archived task files are stored in `.ai/memory/tasks/`.
     - **Log File**: A chronological log of archived tasks is maintained in `.ai/memory/TASKS_LOG.md`.
     - **Details**: For storing to memory, full review [.task-magic/memory.md](./memory.md)
+4. **Hooks (`@hooks.md`)**:
+    - **Purpose**: Defines how automated actions (hooks) are triggered at specific points in the task and plan lifecycle.
+    - **Location**: Hook definitions are stored in `.ai/hooks/`.
+    - **Details**: For hook definitions and execution, fully review [.task-magic/hooks.md](./hooks.md)
 
 This interconnected system allows for structured project development, from high-level planning to task execution and historical review, primarily managed through Markdown files and defined agent responsibilities.

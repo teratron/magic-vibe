@@ -211,3 +211,4 @@ Use sentence case for headings unless otherwise specified.
 5. **Fill Content:** Populate the sections based on the user's request, project context (especially `PLANS.md`), and best practices for PRD writing.
 6. **Completeness:** Ensure all necessary user stories (primary, alternative, edge cases, security) are included with clear acceptance criteria.
 7. **Focus:** The agent's role is *only* to generate or update PRD Markdown files in the active planning directory (`.ai/plans/`). This means creating/editing the high-level `PLANS.md` or detailed `features/plan-{feature-name}.md` files. Task creation is a separate process handled by interpreting the detailed feature PRDs using the `ai-tasks` rule. Archiving plans is handled by the `.task-magic/memory` rule.
+8. **Hook Execution:** When creating or updating a plan, the agent must check for and execute any relevant hooks as defined in the `.ai/hooks/` directory, according to the rules in `@hooks.md`.

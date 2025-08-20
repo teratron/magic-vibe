@@ -31,6 +31,11 @@ There are three main parts to Task Magic:
       - `.ai/memory/plans/`: Archived plan files.
       - `.ai/memory/PLANS_LOG.md`: A log for archived plans.
     - **AI interaction**: The AI can consult the memory to understand how similar things were done in the past, or why a certain approach was taken.
+4. **Hooks (`.ai/hooks/`)**:
+    - **Purpose**: This is an advanced feature that allows for automated actions to be triggered at specific points in the task and plan lifecycle (e.g., on task completion, on plan creation).
+    - **Key files & structure**:
+      - `.ai/hooks/{hook-name}.hook.md`: Each hook is defined in its own file, specifying the trigger event (e.g., `task_status_change`) and the action to perform (e.g., a shell command).
+    - **AI interaction**: The AI agent is responsible for identifying and executing these hooks when their trigger conditions are met during its workflow. The specific rules for this are defined in `.vscode/rules/.task-magic/hooks.md`.
 
 ## Working with AI agents
 
