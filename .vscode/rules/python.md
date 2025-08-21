@@ -117,7 +117,7 @@ globs: /**/*.py, src/**/*.py, tests/**/*.py
 
 ## Development Workflow
 
-- Use virtual environments (venv)
+- Use virtual environments (.venv)
 - Implement pre-commit hooks
 - Use proper Git workflow
 - Follow semantic versioning
