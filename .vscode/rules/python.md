@@ -1,134 +1,91 @@
 ---
-description: Python best practices and patterns for modern software development with Flask and SQLite.
-globs: /**/*.py, src/**/*.py, tests/**/*.py
+description: Python best practices for modern software development, including guidelines for package management with pip, Poetry, and uv.
+globs: /**/*.py, src/**/*.py, tests/**/*.py, pyproject.toml, requirements.txt
 ---
 
-# Python Best Practices
+# Python Development Guidelines
 
-## Project Structure
+## 1. Project Structure
 
-- Use src-layout with `src/your_package_name/`
-- Place tests in `tests/` directory parallel to `src/`
-- Keep configuration in `config/` or as environment variables
-- Store requirements in `requirements.txt` or `pyproject.toml`
-- Place static files in `static/` directory
-- Use `templates/` for Jinja2 templates
+- **Layout**: Use a `src` layout (`src/your_package_name`).
+- **Tests**: Place tests in a top-level `tests/` directory.
+- **Configuration**: Manage environment-specific settings in a `config/` directory or via environment variables. Use a `.env` file for local development.
+- **Static & Templates**: For web applications, store static files in `static/` and templates in `templates/`.
 
-## Code Style
+## 2. Dependency Management
 
-- Follow Black code formatting
-- Use isort for import sorting
-- Follow PEP 8 naming conventions:
-  - snake_case for functions and variables
-  - PascalCase for classes
-  - UPPER_CASE for constants
-- Maximum line length of 88 characters (Black default)
-- Use absolute imports over relative imports
+When managing dependencies, adhere to the conventions of the package manager used in the project.
 
-## Type Hints
+### **`pip` with `requirements.in` and `pip-tools`**
 
-- Use type hints for all function parameters and returns
-- Import types from `typing` module
-- Use `Optional[Type]` instead of `Type | None`
-- Use `TypeVar` for generic types
-- Define custom types in `types.py`
-- Use `Protocol` for duck typing
+- **Source File**: Define abstract dependencies in `requirements.in`.
+- **Lock File**: Generate a `requirements.txt` lock file using `pip-compile requirements.in`.
+- **Installation**: Install dependencies using `pip install -r requirements.txt`.
+- **Development Dependencies**: Manage development dependencies in a separate `requirements-dev.in`.
 
-## Flask Structure
+### **`Poetry`**
 
-- Use Flask factory pattern
-- Organize routes using Blueprints
-- Use Flask-SQLAlchemy for database
-- Implement proper error handlers
-- Use Flask-Login for authentication
-- Structure views with proper separation of concerns
+- **Configuration**: Define all project metadata and dependencies in `pyproject.toml`.
+- **Lock File**: Use the `poetry.lock` file to ensure deterministic builds.
+- **Installation**: Install dependencies with `poetry install`.
+- **Dependency Management**: Add dependencies using `poetry add <package>` and for development, `poetry add --group dev <package>`.
+- **Virtual Environment**: Let Poetry manage the virtual environment automatically.
 
-## Database
+### **`uv` (as a `pip` replacement)**
 
-- Use SQLAlchemy ORM
-- Implement database migrations with Alembic
-- Use proper connection pooling
-- Define models in separate modules
-- Implement proper relationships
-- Use proper indexing strategies
+- **Virtual Environment**: Create and manage virtual environments with `uv venv`.
+- **Installation**: Use `uv pip install -r requirements.txt` for faster installations.
+- **Compilation**: Use `uv pip compile requirements.in -o requirements.txt` to generate lock files.
+- **Workflow**: `uv` can be used as a high-performance drop-in replacement for `pip` and `pip-tools`.
 
-## Authentication
+## 3. Code Style & Formatting
 
-- Use Flask-Login for session management
-- Implement Google OAuth using Flask-OAuth
-- Hash passwords with bcrypt
-- Use proper session security
-- Implement CSRF protection
-- Use proper role-based access control
+- **Formatter**: Use **Black** for uncompromising code formatting.
+- **Import Sorting**: Use **isort** to automatically sort and format imports.
+- **Linting**: Use **Ruff** or **Flake8** for linting to catch common errors and style issues.
+- **Naming Conventions (PEP 8)**:
+  - `snake_case` for functions, methods, and variables.
+  - `PascalCase` for classes.
+  - `UPPER_SNAKE_CASE` for constants.
+- **Line Length**: Keep lines under 88 characters (Black's default).
+- **Imports**: Prefer absolute imports (`from my_project.module import my_function`) over relative ones.
 
-## API Design
+## 4. Type Hinting
 
-- Use Flask-RESTful for REST APIs
-- Implement proper request validation
-- Use proper HTTP status codes
-- Handle errors consistently
-- Use proper response formats
-- Implement proper rate limiting
+- **Coverage**: Provide type hints for all function signatures (arguments and return values).
+- **Clarity**: Use the `typing` module for complex types (`List`, `Dict`, `Tuple`, `Callable`).
+- **Optionality**: Use `Optional[str]` or, in Python 3.10+, the more concise `str | None`.
+- **Generics**: Use `TypeVar` for creating generic functions and classes.
 
-## Testing
+## 5. Web Frameworks (Flask/FastAPI)
 
-- Use pytest for testing
-- Write tests for all routes
-- Use pytest-cov for coverage
-- Implement proper fixtures
-- Use proper mocking with pytest-mock
-- Test all error scenarios
+- **Application Factory**: Use the factory pattern (`create_app`) to initialize your application.
+- **Blueprints/Routers**: Organize routes into logical groups using Blueprints (Flask) or APIRouters (FastAPI).
+- **Dependencies**: Use a dependency injection framework where appropriate (e.g., FastAPI's `Depends`).
 
-## Security
+## 6. Database
 
-- Use HTTPS in production
-- Implement proper CORS
-- Sanitize all user inputs
-- Use proper session configuration
-- Implement proper logging
-- Follow OWASP guidelines
+- **ORM**: Use **SQLAlchemy ORM** for database interactions.
+- **Migrations**: Manage database schema changes with **Alembic**.
+- **Models**: Define database models in a dedicated `models/` or `db/` directory.
+- **Session Management**: Use a session scope that is tied to the request lifecycle.
 
-## Performance
+## 7. Testing
 
-- Use proper caching with Flask-Caching
-- Implement database query optimization
-- Use proper connection pooling
-- Implement proper pagination
-- Use background tasks for heavy operations
-- Monitor application performance
+- **Framework**: Use **pytest** as the primary testing framework.
+- **Fixtures**: Use `pytest.fixture` to provide reusable setup and teardown logic.
+- **Mocking**: Use `pytest-mock` or `unittest.mock` for mocking objects and functions.
+- **Coverage**: Measure test coverage with `pytest-cov`. Aim for high coverage on critical business logic.
+- **Organization**: Mirror the `src` directory structure in your `tests` directory.
 
-## Error Handling
+## 8. Security
 
-- Create custom exception classes
-- Use proper try-except blocks
-- Implement proper logging
-- Return proper error responses
-- Handle edge cases properly
-- Use proper error messages
+- **Input Sanitization**: Never trust user input. Sanitize and validate all incoming data.
+- **Secrets Management**: Load secrets from environment variables. Do not hardcode credentials.
+- **Dependencies**: Regularly scan dependencies for vulnerabilities using tools like `pip-audit` or `safety`.
 
-## Documentation
+## 9. Development Workflow
 
-- Use Google-style docstrings
-- Document all public APIs
-- Keep README.md updated
-- Use proper inline comments
-- Generate API documentation
-- Document environment setup
-
-## Development Workflow
-
-- Use virtual environments (.venv)
-- Implement pre-commit hooks
-- Use proper Git workflow
-- Follow semantic versioning
-- Use proper CI/CD practices
-- Implement proper logging
-
-## Dependencies
-
-- Pin dependency versions
-- Use requirements.txt for production
-- Separate dev dependencies
-- Use proper package versions
-- Regularly update dependencies
-- Check for security vulnerabilities
+- **Virtual Environments**: Always work inside a virtual environment (`.venv`).
+- **Pre-commit Hooks**: Use `pre-commit` to run linters, formatters, and tests before each commit.
+- **CI/CD**: Implement a CI/CD pipeline to automate testing, building, and deployment.
