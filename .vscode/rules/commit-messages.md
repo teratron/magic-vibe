@@ -1,17 +1,15 @@
 ---
-description: Conventional Commits specification.
+description: Comprehensive Conventional Commits guidelines optimized for AI agents. Includes validation patterns, automated formatting, and quality standards for consistent commit history.
 globs:
 ---
 
-# Conventional Commits
+# Conventional Commits Guidelines for AI Agents
 
-## Summary
+## 1. Core Specification Standards
 
-The Conventional Commits specification is a lightweight convention on top of commit messages.
-It provides an easy set of rules for creating an explicit commit history, which makes it easier to write automated tools on top of.
-This convention dovetails with [SemVer](http://semver.org), by describing the features, fixes, and breaking changes made in commit messages.
+### Message Structure Requirements
 
-The commit message should be structured as follows:
+**MANDATORY FORMAT:**
 
 ```text
 <type>[optional scope]: <description>
@@ -21,158 +19,446 @@ The commit message should be structured as follows:
 [optional footer(s)]
 ```
 
-The commit contains the following structural elements, to communicate intent to the consumers of your library:
+**VALIDATION RULES:**
 
-1. **fix:** a commit of the _type_ `fix` patches a bug in your codebase (this correlates with [`PATCH`](http://semver.org/#summary) in Semantic Versioning).
-2. **feat:** a commit of the _type_ `feat` introduces a new feature to the codebase (this correlates with [`MINOR`](http://semver.org/#summary) in Semantic Versioning).
-3. **BREAKING CHANGE:** a commit that has a footer `BREAKING CHANGE:`, or appends a `!` after the type/scope, introduces a breaking API change (correlating with [`MAJOR`](http://semver.org/#summary) in Semantic Versioning). A `BREAKING CHANGE` can be part of commits of any _type_.
-4. _types_ other than `fix:` and `feat:` are allowed, for example [@commitlint/config-conventional](https://github.com/conventional-changelog/commitlint/tree/master/@commitlint/config-conventional) (based on the [Angular convention](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines)) recommends `build:`, `chore:`, `ci:`, `docs:`, `style:`, `refactor:`, `perf:`, `test:`, and others.
-5. _footers_ other than `BREAKING CHANGE: <description>` may be provided and follow a convention similar to [git trailer format](https://git-scm.com/docs/git-interpret-trailers).
+- Type: REQUIRED, lowercase, max 10 characters
+- Scope: OPTIONAL, lowercase, parentheses-wrapped, max 20 characters
+- Description: REQUIRED, 10-72 characters, imperative mood, no period
+- Body: OPTIONAL, wrap at 72 characters, separated by blank line
+- Footer: OPTIONAL, follows git trailer format
 
-Additional types are not mandated by the Conventional Commits specification, and have no implicit effect in Semantic Versioning (unless they include a `BREAKING CHANGE`).
+### Primary Commit Types
 
-A scope may be provided to a commit's type, to provide additional contextual information and is contained within parenthesis, e.g., `feat(parser): add ability to parse arrays`.
-
-## Examples
-
-### Commit message with description and breaking change footer
+**SEMANTIC VERSION IMPACT:**
 
 ```text
-feat: allow provided config object to extend other configs
-
-BREAKING CHANGE: `extends` key in config file is now used for extending other config files
+fix:     → PATCH version (bug fixes)
+feat:    → MINOR version (new features)
+BREAKING CHANGE → MAJOR version (breaking changes)
 ```
 
-### Commit message with `!` to draw attention to breaking change
+**EXTENDED TYPES:**
 
 ```text
-feat!: send an email to the customer when a product is shipped
+build:    Changes to build system or dependencies
+ci:       Changes to CI configuration and scripts
+docs:     Documentation only changes
+perf:     Performance improvements
+refactor: Code changes that neither fix bugs nor add features
+style:    Code style changes (formatting, missing semi-colons)
+test:     Adding or modifying tests
+chore:    Maintenance tasks, tooling changes
+revert:   Reverting previous commits
 ```
 
-### Commit message with scope and `!` to draw attention to breaking change
+## 2. AI-Specific Formatting Rules
+
+### Type Selection Matrix
+
+**DECISION TREE FOR AI AGENTS:**
 
 ```text
-feat(api)!: send an email to the customer when a product is shipped
+Code changes that:
+├── Fix bugs or errors → fix
+├── Add new functionality → feat
+├── Improve performance → perf
+├── Restructure without changing behavior → refactor
+├── Add/modify tests → test
+├── Update documentation → docs
+├── Change build process → build
+├── Update CI/CD → ci
+├── Code formatting only → style
+└── Maintenance tasks → chore
 ```
 
-### Commit message with both `!` and BREAKING CHANGE footer
+### Scope Guidelines
+
+**RECOMMENDED SCOPES BY PROJECT TYPE:**
 
 ```text
-chore!: drop support for Node 6
+Web Applications:
+- api, auth, ui, db, config, middleware
+- components, pages, utils, services
 
-BREAKING CHANGE: use JavaScript features not available in Node 6.
+Libraries:
+- core, utils, types, parser, validator
+- client, server, common
+
+Microservices:
+- user-service, payment-service, notification
+- gateway, proxy, cache
+
+Monorepos:
+- packages/core, apps/web, tools/cli
+- workspace, deps, scripts
 ```
 
-### Commit message with no body
+### Description Writing Standards
+
+**FORMAT REQUIREMENTS:**
+
+- Use imperative mood: "add", "fix", "update", not "added", "fixed", "updated"
+- Start with lowercase letter
+- No trailing period
+- Be specific and descriptive
+- Maximum 72 characters
+- Minimum 10 characters
+
+**GOOD vs BAD EXAMPLES:**
 
 ```text
-docs: correct spelling of CHANGELOG
+✅ Good:
+feat(auth): add JWT token validation middleware
+fix(api): resolve null pointer exception in user endpoint
+perf(db): optimize user query with database indexing
+docs(readme): update installation instructions for Docker
+
+❌ Bad:
+feat: stuff                           # Too vague
+Fixed the bug                         # Wrong tense, no type
+feat: added new feature that does...  # Wrong tense, too long
+FEAT: ADD USER LOGIN                  # Wrong case
 ```
 
-### Commit message with scope
+## 3. Advanced Commit Patterns
+
+### Breaking Changes
+
+**BREAKING CHANGE FORMATS:**
 
 ```text
-feat(lang): add Polish language
+# Method 1: Using ! notation
+feat(api)!: remove deprecated v1 endpoints
+
+# Method 2: Using footer
+feat(api): update user authentication system
+
+BREAKING CHANGE: remove support for legacy token format
+
+# Method 3: Both (recommended for clarity)
+feat(api)!: update user authentication system
+
+BREAKING CHANGE: remove support for legacy token format.
+Migration guide available at docs/migration.md
 ```
 
-### Commit message with multi-paragraph body and multiple footers
+### Multi-line Commit Bodies
+
+**BODY FORMATTING RULES:**
 
 ```text
-fix: prevent racing of requests
+feat(payment): add subscription billing system
 
-Introduce a request id and a reference to latest request. Dismiss incoming responses other than from latest request.
+Implement recurring payment processing with the following features:
+- Monthly and yearly subscription plans
+- Automatic renewal with email notifications
+- Pro-rated upgrades and downgrades
+- Integration with Stripe webhooks for real-time updates
 
-Remove timeouts which were used to mitigate the racing issue but are obsolete now.
+The system supports both individual and team subscriptions with
+different pricing tiers based on usage limits.
 
-Reviewed-by: Z
-Refs: #123
+Closes #234
+Reviewed-by: @team-lead
+Tested-by: @qa-engineer
 ```
 
-## Specification
+### Footer Conventions
 
-The key words `MUST`, `MUST NOT`, `REQUIRED`, `SHALL`, `SHALL NOT`, `SHOULD`, `SHOULD NOT`, `RECOMMENDED`, `MAY` and `OPTIONAL` in this document are to be interpreted as described in [RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
-
-1. Commits MUST be prefixed with a type, which consists of a noun, `feat`, `fix`, etc., followed by the OPTIONAL scope, OPTIONAL `!`, and REQUIRED terminal colon and space.
-2. The type `feat` MUST be used when a commit adds a new feature to your application or library.
-3. The type `fix` MUST be used when a commit represents a bug fix for your application.
-4. A scope MAY be provided after a type. A scope MUST consist of a noun describing a section of the codebase surrounded by parenthesis, e.g., `fix(parser):`
-5. A description MUST immediately follow the colon and space after the type/scope prefix. The description is a short summary of the code changes, e.g., _fix: array parsing issue when multiple spaces were contained in string_.
-6. A longer commit body MAY be provided after the short description, providing additional contextual information about the code changes. The body MUST begin one blank line after the description.
-7. A commit body is free-form and MAY consist of any number of newline separated paragraphs.
-8. One or more footers MAY be provided one blank line after the body. Each footer MUST consist of a word token, followed by either a `:<space>` or `<space>#` separator, followed by a string value (this is inspired by the [git trailer convention](https://git-scm.com/docs/git-interpret-trailers)).
-9. A footer's token MUST use `-` in place of whitespace characters, e.g., `Acked-by` (this helps differentiate
-  the footer section from a multi-paragraph body). An exception is made for `BREAKING CHANGE`, which MAY also be used as a token.
-10. A footer's value MAY contain spaces and newlines, and parsing MUST terminate when the next valid footer token/separator pair is observed.
-11. Breaking changes MUST be indicated in the type/scope prefix of a commit, or as an entry in the footer.
-12. If included as a footer, a breaking change MUST consist of the uppercase text BREAKING CHANGE, followed by a colon, space, and description, e.g., _BREAKING CHANGE: environment variables now take precedence over config files_.
-13. If included in the type/scope prefix, breaking changes MUST be indicated by a `!` immediately before the `:`. If `!` is used, `BREAKING CHANGE:` MAY be omitted from the footer section, and the commit description SHALL be used to describe the breaking change.
-14. Types other than `feat` and `fix` MAY be used in your commit messages, e.g., _docs: update ref docs._
-15. The units of information that make up Conventional Commits MUST NOT be treated as case sensitive by implementors, with the exception of BREAKING CHANGE which MUST be uppercase.
-16. BREAKING-CHANGE MUST be synonymous with BREAKING CHANGE, when used as a token in a footer.
-
-## Why Use Conventional Commits
-
-- Automatically generating CHANGELOGs.
-- Automatically determining a semantic version bump (based on the types of commits landed).
-- Communicating the nature of changes to teammates, the public, and other stakeholders.
-- Triggering build and publish processes.
-- Making it easier for people to contribute to your projects, by allowing them to explore a more structured commit history.
-
-## FAQ
-
-### How should I deal with commit messages in the initial development phase?
-
-We recommend that you proceed as if you've already released the product. Typically _somebody_, even if it's your fellow software developers, is using your software. They'll want to know what's fixed, what breaks etc.
-
-### Are the types in the commit title uppercase or lowercase?
-
-Any casing may be used, but it's best to be consistent.
-
-### What do I do if the commit conforms to more than one of the commit types?
-
-Go back and make multiple commits whenever possible. Part of the benefit of Conventional Commits is its ability to drive us to make more organized commits and PRs.
-
-### Doesn’t this discourage rapid development and fast iteration?
-
-It discourages moving fast in a disorganized way. It helps you be able to move fast long term across multiple projects with varied contributors.
-
-### Might Conventional Commits lead developers to limit the type of commits they make because they'll be thinking in the types provided?
-
-Conventional Commits encourages us to make more of certain types of commits such as fixes. Other than that, the flexibility of Conventional Commits allows your team to come up with their own types and change those types over time.
-
-### How does this relate to SemVer?
-
-`fix` type commits should be translated to `PATCH` releases. `feat` type commits should be translated to `MINOR` releases. Commits with `BREAKING CHANGE` in the commits, regardless of type, should be translated to `MAJOR` releases.
-
-### How should I version my extensions to the Conventional Commits Specification, e.g. `@jameswomack/conventional-commit-spec`?
-
-We recommend using SemVer to release your own extensions to this specification (and encourage you to make these extensions!)
-
-### What do I do if I accidentally use the wrong commit type?
-
-#### When you used a type that's of the spec but not the correct type, e.g. `fix` instead of `feat`
-
-Prior to merging or releasing the mistake, we recommend using `git rebase -i` to edit the commit history. After release, the cleanup will be different according to what tools and processes you use.
-
-#### When you used a type _not_ of the spec, e.g. `feet` instead of `feat`
-
-In a worst case scenario, it's not the end of the world if a commit lands that does not meet the Conventional Commits specification. It simply means that commit will be missed by tools that are based on the spec.
-
-### Do all my contributors need to use the Conventional Commits specification?
-
-No! If you use a squash based workflow on Git lead maintainers can clean up the commit messages as they're merged—adding no workload to casual committers.
-A common workflow for this is to have your git system automatically squash commits from a pull request and present a form for the lead maintainer to enter the proper git commit message for the merge.
-
-### How does Conventional Commits handle revert commits?
-
-Reverting code can be complicated: are you reverting multiple commits? if you revert a feature, should the next release instead be a patch?
-
-Conventional Commits does not make an explicit effort to define revert behavior. Instead we leave it to tooling authors to use the flexibility of _types_ and _footers_ to develop their logic for handling reverts.
-
-One recommendation is to use the `revert` type, and a footer that references the commit SHAs that are being reverted:
+**STANDARD FOOTERS:**
 
 ```text
-revert: let us never again speak of the noodle incident
-
-Refs: 676104e, a215868
+Closes #123                    # Issue closure
+Fixes #456                     # Bug fix reference
+Resolves #789                  # General resolution
+Refs #101                      # General reference
+Reviewed-by: @username         # Code review
+Tested-by: @username           # Testing verification
+Signed-off-by: Name <email>    # Legal sign-off
+Co-authored-by: Name <email>   # Collaboration
+BREAKING CHANGE: description   # Breaking change
 ```
+
+## 4. Validation and Quality Assurance
+
+### Automated Validation Patterns
+
+**REGEX PATTERNS FOR VALIDATION:**
+
+```regex
+# Commit message format
+^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .{10,72}$
+
+# Type validation
+^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)$
+
+# Scope validation (optional, alphanumeric + hyphens)
+^[a-z0-9-]+$
+
+# Description validation (10-72 chars, no period at end)
+^[a-z].{9,71}[^.]$
+```
+
+**VALIDATION CHECKLIST:**
+
+- [ ] Type is from approved list
+- [ ] Scope follows naming conventions (if present)
+- [ ] Description is 10-72 characters
+- [ ] Description uses imperative mood
+- [ ] Description starts with lowercase
+- [ ] Description has no trailing period
+- [ ] Body is properly formatted (if present)
+- [ ] Footers follow git trailer format (if present)
+- [ ] Breaking changes are properly indicated
+
+### Quality Metrics
+
+**COMMIT QUALITY STANDARDS:**
+
+```text
+Excellent (9-10):
+- Clear, specific description
+- Appropriate type and scope
+- Includes relevant context in body
+- References issues/PRs
+- Follows all conventions
+
+Good (7-8):
+- Clear description
+- Correct type
+- Follows basic conventions
+- Minor formatting issues
+
+Acceptable (5-6):
+- Understandable description
+- Correct type
+- Some convention violations
+
+Poor (1-4):
+- Vague or unclear description
+- Wrong type or missing type
+- Major convention violations
+```
+
+## 5. Context-Specific Guidelines
+
+### Bug Fix Commits
+
+**BUG FIX PATTERN:**
+
+```text
+fix(scope): resolve specific issue description
+
+Detailed explanation of:
+- What was broken
+- Root cause analysis
+- How the fix addresses the issue
+- Any side effects or considerations
+
+Fixes #issue-number
+Tested-by: @tester
+```
+
+**EXAMPLES:**
+
+```text
+fix(auth): resolve token expiration edge case
+fix(api): handle null values in user profile endpoint
+fix(ui): correct responsive layout on mobile devices
+fix(db): resolve connection timeout in high-load scenarios
+```
+
+### Feature Addition Commits
+
+**FEATURE PATTERN:**
+
+```text
+feat(scope): add specific feature description
+
+Detailed description of:
+- New functionality added
+- User benefits
+- Implementation approach
+- Configuration or setup required
+
+Closes #feature-request
+Reviewed-by: @reviewer
+```
+
+**EXAMPLES:**
+
+```text
+feat(auth): add two-factor authentication support
+feat(api): implement user preference management
+feat(ui): add dark mode theme toggle
+feat(search): implement fuzzy search with highlighting
+```
+
+### Refactoring Commits
+
+**REFACTORING PATTERN:**
+
+```text
+refactor(scope): improve specific component/function
+
+Explanation of:
+- Code structure improvements
+- Performance benefits
+- Maintainability gains
+- No functional changes made
+
+No functional changes to user-facing features.
+```
+
+**EXAMPLES:**
+
+```text
+refactor(utils): extract common validation functions
+refactor(api): simplify error handling middleware
+refactor(ui): consolidate button component variants
+refactor(db): optimize query structure for better performance
+```
+
+## 6. Automation and Tooling
+
+### Git Hooks Integration
+
+**COMMIT-MSG HOOK EXAMPLE:**
+
+```bash
+#!/bin/sh
+# .git/hooks/commit-msg
+
+commit_regex='^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .{10,72}$'
+
+if ! grep -qE "$commit_regex" "$1"; then
+    echo "Invalid commit message format!"
+    echo "Format: <type>[scope]: <description>"
+    echo "Types: build, chore, ci, docs, feat, fix, perf, refactor, revert, style, test"
+    exit 1
+fi
+```
+
+### Automated Changelog Generation
+
+**CHANGELOG MAPPING:**
+
+```text
+feat     → Features
+fix      → Bug Fixes
+perf     → Performance Improvements
+docs     → Documentation
+refactor → Code Refactoring
+test     → Tests
+build    → Build System
+ci       → Continuous Integration
+style    → Code Style
+chore    → Maintenance
+revert   → Reverts
+```
+
+### Release Automation
+
+**SEMANTIC VERSION RULES:**
+
+```markdown
+Patch (x.x.X):
+- fix: bug fixes
+- perf: performance improvements
+- docs: documentation updates
+- style: code formatting
+- test: test updates
+- chore: maintenance
+
+Minor (x.X.x):
+- feat: new features
+- refactor: code restructuring
+
+Major (X.x.x):
+- Any commit with BREAKING CHANGE
+- Any commit with ! after type/scope
+```
+
+## 7. AI-Specific Implementation Guidelines
+
+### Code Generation Requirements
+
+**WHEN GENERATING COMMITS:**
+
+- Always analyze the actual code changes to determine correct type
+- Include specific scope based on modified files/components
+- Write clear, descriptive messages in imperative mood
+- Add appropriate footers for issue references
+- Include body text for complex changes
+- Validate format before suggesting commit message
+
+### Commit Message Templates
+
+**TEMPLATE SELECTION BASED ON CHANGE TYPE:**
+
+```text
+Bug Fix Template:
+fix({{scope}}): {{description}}
+
+{{explanation of fix}}
+
+Fixes #{{issue_number}}
+
+New Feature Template:
+feat({{scope}}): {{description}}
+
+{{feature details and benefits}}
+
+Closes #{{issue_number}}
+
+Refactoring Template:
+refactor({{scope}}): {{description}}
+
+{{explanation of improvements}}
+
+No functional changes.
+
+Breaking Change Template:
+{{type}}({{scope}})!: {{description}}
+
+{{detailed explanation}}
+
+BREAKING CHANGE: {{breaking change description}}
+```
+
+### Quality Assurance Checklist
+
+**PRE-COMMIT VALIDATION:**
+
+- [ ] Commit type matches actual changes made
+- [ ] Scope accurately reflects affected component
+- [ ] Description is clear and specific
+- [ ] Message follows conventional commit format
+- [ ] Breaking changes are properly marked
+- [ ] Issue/PR references are included
+- [ ] Commit represents atomic, logical change
+- [ ] Message will be useful for future debugging
+
+### Common Anti-Patterns to Avoid
+
+**NEVER DO:**
+
+- Use vague descriptions like "fix stuff" or "update code"
+- Mix multiple unrelated changes in one commit
+- Use wrong tense ("added" instead of "add")
+- Exceed character limits for description
+- Forget to mark breaking changes
+- Use uppercase for type or scope
+- Include implementation details in description
+- Make commits that don't represent logical units of work
+
+**ALWAYS DO:**
+
+- Make atomic commits that represent single logical changes
+- Use specific, descriptive language
+- Follow imperative mood consistently
+- Include context in body for complex changes
+- Reference related issues and PRs
+- Validate format before committing
+- Consider the audience who will read the commit history
+- Use consistent scoping conventions throughout the project
