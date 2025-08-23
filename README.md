@@ -6,7 +6,7 @@
 
 > **Comprehensive configuration and rule template repository designed for AI-powered code editors and agents**
 
-A standardized set of development guidelines, workflows, and best practices optimized for AI-assisted development tools including Cursor, Windsurf, Trae, Kiro, and other AI coding agents.
+A standardized set of development guidelines, workflows, and best practices optimized for AI-assisted development tools including Cursor, Windsurf, Trae, Kiro, Qoder and other AI coding agents.
 
 ## 🚀 Quick Start
 
