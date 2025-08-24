@@ -28,26 +28,26 @@ The main version configuration is stored in `.magic-vibe/ai/version.json`:
 ```json
 {
   "project": {
-    "version": "1.0.0",
+    "version": "0.1.0",
     "name": "template-ai-rules",
     "build": "1",
-    "release_date": "2024-01-15",
-    "changelog_url": "https://github.com/zigenzoog/template-ai-rules/releases"
+    "release_date": "2025-01-15",
+    "changelog_url": "https://gitverse.ru/zigenzoog/template-ai-rules/releases"
   },
   "documentation": {
-    "version": "1.0.0",
+    "version": "0.1.0",
     "format_version": "2.0",
-    "last_updated": "2024-01-15T10:00:00Z",
-    "last_auto_generation": "2024-01-15T10:00:00Z",
+    "last_updated": "2025-01-15T10:00:00Z",
+    "last_auto_generation": "2025-01-15T10:00:00Z",
     "generation_count": 1,
     "languages": ["en", "ru"],
     "primary_language": "en"
   },
   "task_magic": {
-    "system_version": "2.1.0",
-    "compatibility": "^2.0.0",
+    "system_version": "0.2.1",
+    "compatibility": "^0.2.0",
     "last_hook_execution": null,
-    "documentation_hooks_version": "1.1.0"
+    "documentation_hooks_version": "0.1.1"
   }
 }
 ```
@@ -151,9 +151,9 @@ Use the version manager script for manual version control:
 Version information is displayed via badges in README files:
 
 ```markdown
-[![Project Version](https://img.shields.io/badge/Project-v1.0.0-blue.svg)](https://gitverse.ru/zigenzoog/template-ai-rules/releases)
-[![Documentation Version](https://img.shields.io/badge/Docs-v1.0.0-green.svg)](../)
-[![Magic Vibe](https://img.shields.io/badge/Task%20Magic-v2.1.0-orange.svg)](../.vscode/rules/.magic-vibe/)
+[![Project Version](https://img.shields.io/badge/Project-v0.1.0-blue.svg)](https://gitverse.ru/zigenzoog/template-ai-rules/releases)
+[![Documentation Version](https://img.shields.io/badge/Docs-v0.1.0-green.svg)](../)
+[![Magic Vibe](https://img.shields.io/badge/Task%20Magic-v0.2.1-orange.svg)](../.vscode/rules/.magic-vibe/)
 ```
 
 ### Documentation Headers

@@ -37,7 +37,7 @@ A task might be a candidate for expansion if it meets several of the following c
 
 If a task is deemed too complex for direct execution based on the criteria above, the agent should:
 
-1. **Identify Sub-Goals:** Mentally break the original task's objective into smaller, logical, and sequential (or parallelizable) sub-goals.
+1. **Identify Sub-Goals:** Mentally break the original task's objective into smaller, logical, and sequential (or parallelize) sub-goals.
 2. **Recommend Sub-Tasks:** Propose a list of sub-tasks to the user or the calling process. For each proposed sub-task, suggest:
     - A descriptive title.
     - A brief description of its objective.
@@ -47,6 +47,7 @@ If a task is deemed too complex for direct execution based on the criteria above
 
   ```markdown
   Based on the complexity, I recommend expanding Task {original_task_id} '{Original Task Title}' into the following sub-tasks:
+
   1. **Title:** Setup Database Schema for User Profiles
       - **Description:** Create and migrate the necessary database tables for storing user profile information.
       - **Priority:** critical
@@ -61,6 +62,6 @@ If a task is deemed too complex for direct execution based on the criteria above
       - **Dependencies:** Sub-task 2
   ```
 
-**The actual creation of sub-task files, numbering, and updates to `TASKS.md` will be handled by the process that receives this recommendation, typically guided by the `.magic-vibe/tasks.md` rule.**
+**The actual creation of sub-task files, numbering, and updates to `TASKS.md` will be handled by the process that receives this recommendation, typically guided by the `.magic-vibe/tasks/TASKS.md` rule.**
 
 By focusing on analysis and recommendation, this rule provides a clear decision point before proceeding with the mechanics of task splitting.
