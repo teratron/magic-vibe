@@ -11,18 +11,19 @@ globs: .git/**, **/.gitignore, **/.gitattributes, **/ci.yml, **/cd.yml
 
 **MANDATORY PATTERNS:**
 
-```text
-Main Branch:          main (trunk)                      - Single source of truth
-Short-lived Branches: feature/[id]-[description]        - Max 3 days lifespan
-Release Branches:     release/v[X.Y.Z]                  - Only for release prep
-Hotfix Branches:      hotfix/[id]-[description]         - Max 4 hours lifespan
+| Branch Type         | Naming Pattern                   | Purpose / Lifetime            |
+|---------------------|----------------------------------|-------------------------------|
+| Main Branch         | `main` (trunk)                   | Single source of truth        |
+| Short-lived Feature | `feature/[id]-[description]`     | Max 3 days lifespan           |
+| Release Branch      | `release/v[X.Y.Z]`               | Only for release prep         |
+| Hotfix Branch       | `hotfix/[id]-[description]`      | Max 4 hours lifespan          |
 
 Branch Lifetime Limits:
+
 - Feature branches: Maximum 72 hours (3 days)
 - Release branches: Maximum 1 week
 - Hotfix branches: Maximum 4 hours
 - No long-lived feature branches allowed
-```
 
 **BRANCH VALIDATION SCRIPT:**
 
@@ -56,19 +57,17 @@ done
 
 **HIGH-FREQUENCY COMMIT REQUIREMENTS:**
 
-```text
-Commit Frequency:    Minimum 2-3 commits per day
-Commit Size:         Maximum 200 lines changed
-Commit Message:      Conventional format with feature flags
-Atomic Commits:      Single logical change per commit
-Revert Safety:       Each commit independently revertible
-```
+- **Commit Frequency:** Minimum 2-3 commits per day
+- **Commit Size:** Maximum 200 lines changed  
+- **Commit Message:** Conventional format with feature flags  
+- **Atomic Commits:** Single logical change per commit  
+- **Revert Safety:** Each commit independently revertible
 
 ### Feature Flag Integration
 
 **FEATURE FLAG PATTERN:**
 
-```typescript
+```tsx
 // Feature flag implementation for safe trunk deployment
 
 class FeatureFlagManager {
@@ -191,40 +190,44 @@ function validate_merge() {
 **Issue**: Closes #[number]
 
 ### Changes
+
 - [ ] Feature behind feature flag
 - [ ] Tests added (>90% coverage)
 - [ ] Documentation updated
 
 ### Deployment Readiness
+
 - [ ] Can deploy to production immediately
 - [ ] Feature flag configured
 - [ ] Backward compatible
 - [ ] Monitoring configured
 
 ### Branch Compliance
+
 - [ ] Branch age < 72 hours
 - [ ] Atomic commits
 - [ ] All CI checks pass
 - [ ] No merge conflicts
 
 ### Rollout Plan
-**Phase 1**: Deploy disabled (0%)  
-**Phase 2**: Internal users (5%)  
-**Phase 3**: Gradual rollout (25%, 50%, 100%)
+
+- **Phase 1**: Deploy disabled (0%)  
+- **Phase 2**: Internal users (5%)  
+- **Phase 3**: Gradual rollout (25%, 50%, 100%)
 ```
 
 ### Commit Message Format
 
 **ENHANCED CONVENTIONAL COMMITS:**
 
-```text
-Format: <type>[scope]: <description> [flag: name]
+`Format: <type>[scope]: <description> [flag: name]`
 
-Examples:
-feat(auth): add OAuth integration [flag: oauth-login]
-fix(api): resolve timeout in user endpoint
-flag(dashboard): increase beta-dashboard to 25%
-```
+**Examples:**
+
+- `feat(auth)`: add OAuth integration [flag: oauth-login]
+- `fix(api)`: resolve timeout in user endpoint
+- `flag(dashboard)`: increase beta-dashboard to 25%
+
 
 ## 4. Quality Assurance
 
@@ -482,7 +485,7 @@ optimize_trunk
 
 ## 8. AI-Specific Best Practices
 
-### Automated Decision Making
+### Automated Decision-Making
 
 **BRANCH STRATEGY SELECTOR:**
 

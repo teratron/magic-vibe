@@ -8,22 +8,22 @@ alwaysApply: false
 
 Whenever you use this rule, start your message with the following:
 
-"Checking Task Magic hooks..."
+"Checking Magic Vibe hooks..."
 
-This rule specifies the technical details for how an AI agent should discover, interpret, and execute automated hooks within the Task Magic system. Hooks allow for automated actions, such as running scripts or sending notifications, to be triggered by events like task completion or plan creation.
+This rule specifies the technical details for how an AI agent should discover, interpret, and execute automated hooks within the Magic Vibe system. Hooks allow for automated actions, such as running scripts or sending notifications, to be triggered by events like task completion or plan creation.
 
 ## Core Concepts
 
 1. **Event-Driven Automation:** Hooks are actions that run automatically when a specific event occurs in the system (e.g., a task's status changes to `completed`).
-2. **File-Based Definition:** Each hook is defined in its own Markdown file (`.hook.md`) located in the `.ai/hooks/` directory.
+2. **File-Based Definition:** Each hook is defined in its own Markdown file (`.hook.md`) located in the `.magic-vibe/ai/hooks/` directory.
 3. **Agent Responsibility:** The AI agent is solely responsible for detecting trigger events during its workflow, finding the corresponding hook files, and executing their defined actions.
 
 ## Directory Structure
 
-All hook definition files **must** be located in the `.ai/hooks/` directory. The agent should check for the existence of this directory before attempting to find hooks.
+All hook definition files **must** be located in the `.magic-vibe/ai/hooks/` directory. The agent should check for the existence of this directory before attempting to find hooks.
 
 ```yaml
-.ai/
+.magic-vibe/ai/
   hooks/                        # Parent directory for all hook definitions
     commit-on-complete.hook.md  # Example: A hook that runs on task completion
     notify-on-fail.hook.md      # Example: A hook that sends a notification
@@ -72,11 +72,11 @@ The agent must check for hooks whenever one of the following primary events occu
 
 | `type` (in YAML)       | `trigger` (in YAML)                            | When to Check                                                                                                                                                  |
 |------------------------|------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `task_creation`        | `created`                                      | Immediately after a new task file (`task...md`) is successfully created in `.ai/tasks/`.                                                                       |
+| `task_creation`        | `created`                                      | Immediately after a new task file (`task...md`) is successfully created in `.magic-vibe/ai/tasks/`.                                                                       |
 | `task_status_change`   | `pending`, `inprogress`, `completed`, `failed` | Immediately after a task's `status` field is changed in its YAML frontmatter.                                                                                  |
-| `task_archival`        | `archived`                                     | Immediately after a task file is successfully moved from `.ai/tasks/` to `.ai/memory/tasks/`.                                                                  |
-| `plan_creation`        | `created`                                      | Immediately after a new plan file (`plan-...md` or `PLANS.md`) is successfully created in `.ai/plans/`.                                                        |
-| `plan_update`          | `updated`                                      | Immediately after an existing plan file in `.ai/plans/` is successfully modified.                                                                              |
+| `task_archival`        | `archived`                                     | Immediately after a task file is successfully moved from `.magic-vibe/ai/tasks/` to `.magic-vibe/ai/memory/tasks/`.                                                                  |
+| `plan_creation`        | `created`                                      | Immediately after a new plan file (`plan-...md` or `PLANS.md`) is successfully created in `.magic-vibe/ai/plans/`.                                                        |
+| `plan_update`          | `updated`                                      | Immediately after an existing plan file in `.magic-vibe/ai/plans/` is successfully modified.                                                                              |
 | `git_commit`           | `after`                                        | Immediately after the agent successfully executes a `git commit` command.                                                                                      |
 | `git_push`             | `before`, `after`                              | `before`: Immediately before the agent executes a `git push` command. A failing hook should stop the push. `after`: Immediately after a successful `git push`. |
 | `documentation_update` | `generated`, `updated`                         | `generated`: After automatic documentation generation. `updated`: After manual documentation updates.                                                          |
@@ -93,9 +93,9 @@ When executing a hook's action, the agent **must** replace the following placeho
 | `{{task.status}}`      | The **current** status of the task.                           | `completed`                       | `task_*` events          |
 | `{{task.commit_type}}` | The `commit_type` from the task's YAML (e.g., `feat`, `fix`). | `feat`                            | `task_*` events          |
 | `{{task.feature}}`     | The `feature` from the task's YAML.                           | `User Authentication`             | `task_*` events          |
-| `{{task.path}}`        | The full path to the task file.                               | `.ai/tasks/task42.1_login.md`     | `task_*` events          |
+| `{{task.path}}`        | The full path to the task file.                               | `.magic-vibe/ai/tasks/task42.1_login.md`     | `task_*` events          |
 | `{{plan.title}}`       | The title of the plan.                                        | `PRD: User Authentication`        | `plan_*` events          |
-| `{{plan.path}}`        | The full path to the plan file.                               | `.ai/plans/features/plan-auth.md` | `plan_*` events          |
+| `{{plan.path}}`        | The full path to the plan file.                               | `.magic-vibe/ai/plans/features/plan-auth.md` | `plan_*` events          |
 | `{{git.commit_hash}}`  | The full SHA hash of the latest commit.                       | `a1b2c3d4...`                     | `git_commit`, `git_push` |
 | `{{git.branch}}`       | The current branch name.                                      | `feature/user-auth`               | `git_commit`, `git_push` |
 | `{{git.remote}}`       | The remote name for a push (e.g., `origin`).                  | `origin`                          | `git_push`               |
@@ -108,7 +108,7 @@ The agent **must** follow this precise workflow whenever a trigger event occurs:
 
 1. **Identify Trigger Event:** Recognize that an action you just performed is a trigger event (e.g., "I have just changed the status of task `42.1` to `completed`" or "I am about to run `git push`").
 2. **Discover Hooks:**
-    - Check if the `.ai/hooks/` directory exists. If not, there are no hooks to run.
+    - Check if the `.magic-vibe/ai/hooks/` directory exists. If not, there are no hooks to run.
     - If it exists, list all files ending in `.hook.md` within it.
 3. **Filter and Sort Hooks:**
     - For each `.hook.md` file found:
@@ -125,7 +125,7 @@ The agent **must** follow this precise workflow whenever a trigger event occurs:
 
 ## Example Hook: Auto Git Commit on Task Completion
 
-**File: `.ai/hooks/commit-on-complete.hook.md`**
+**File: `.magic-vibe/ai/hooks/commit-on-complete.hook.md`**
 
 ```yaml
 ---
@@ -199,7 +199,7 @@ cat > "docs/en/task-{{task.id}}-{{task.feature}}.md" << 'EOF'
 
 ---
 
-*Auto-generated by Task Magic*
+*Auto-generated by Magic Vibe*
 EOF
 
 # Generate Russian documentation
@@ -217,7 +217,7 @@ cat > "docs/ru/task-{{task.id}}-{{task.feature}}.md" << 'EOF'
 
 ---
 
-*Auto-generated by Task Magic*
+*Auto-generated by Magic Vibe*
 EOF
 ```
 
@@ -234,5 +234,5 @@ You can disable a hook by setting `enabled: false` in its YAML frontmatter. You 
 1. **Keep hooks simple**: Each hook should do one thing well.
 2. **Use descriptive filenames**: Name your hook files in a way that clearly indicates what they do.
 3. **Set appropriate priorities**: Consider the order in which hooks should execute.
-4. **Handle errors gracefully**: Make sure your hook actions can handle errors and won't break the Task Magic system if they fail.
+4. **Handle errors gracefully**: Make sure your hook actions can handle errors and won't break the Magic Vibe system if they fail.
 5. **Document your hooks**: Include a clear description of what each hook does and when it should be triggered.

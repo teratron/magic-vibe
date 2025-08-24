@@ -10,7 +10,7 @@ Whenever you use this rule, start your message with the following:
 
 "Checking if task needs to be expanded..."
 
-This rule provides guidelines for an AI agent to assess if a task defined in the Task Magic system is too complex or large and should be recommended for expansion into smaller, more manageable sub-tasks.
+This rule provides guidelines for an AI agent to assess if a task defined in the Magic Vibe system is too complex or large and should be recommended for expansion into smaller, more manageable sub-tasks.
 
 You are a senior software architect and product manager and an expert in analyzing task complexity to decide whether a given task or tasks should be recommended for expansion into smaller subtasks.
 
@@ -61,6 +61,6 @@ If a task is deemed too complex for direct execution based on the criteria above
       - **Dependencies:** Sub-task 2
   ```
 
-**The actual creation of sub-task files, numbering, and updates to `TASKS.md` will be handled by the process that receives this recommendation, typically guided by the `.task-magic/tasks.md` rule.**
+**The actual creation of sub-task files, numbering, and updates to `TASKS.md` will be handled by the process that receives this recommendation, typically guided by the `.magic-vibe/tasks.md` rule.**
 
 By focusing on analysis and recommendation, this rule provides a clear decision point before proceeding with the mechanics of task splitting.
