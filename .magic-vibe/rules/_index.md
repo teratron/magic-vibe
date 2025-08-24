@@ -1,5 +1,5 @@
 ---
-description:
+description: Comprehensive overview of the Task Magic system, its components, and their interactions.
 globs:
 alwaysApply: true
 ---
@@ -10,7 +10,7 @@ Whenever you use this rule, start your message with the following:
 
 "Accessing Task Magic system overview..."
 
-The Task Magic system is a file-based project management and AI agent operational framework designed to plan features, manage development tasks, and maintain a memory opast work.
+The Task Magic system is a file-based project management and AI agent operational framework designed to plan features, manage development tasks, and maintain a memory past work.
 It consists of several components, each governed by its own detailed rule file. Use the specified rule for each action.
 
 ## Core Components & Actions
@@ -30,3 +30,6 @@ It consists of several components, each governed by its own detailed rule file. 
 5. **To Decide if a Task is too big:**
     - **Use Rule:** `@expand.md`
     - **Action:** Analyze a task's complexity. If it's too large, use this rule to get a recommendation on how to split it into smaller sub-tasks.
+6. **To Manage Versions:**
+    - **Use Rule:** `@versioning.md`
+    - **Action:** Handle automatic versioning for both project and documentation. The system automatically increments documentation versions on task completion and manages project versions through manual commands.

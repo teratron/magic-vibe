@@ -1,0 +1,27 @@
+{
+    "project": {
+        "version": "1.0.0",
+        "name": "template-ai-rules",
+        "build": "1",
+        "release_date": "2024-01-15",
+        "changelog_url": "https://github.com/zigenzoog/template-ai-rules/releases"
+    },
+    "documentation": {
+        "version": "1.0.0",
+        "format_version": "2.0",
+        "last_updated": "2024-01-15T10:00:00Z",
+        "last_auto_generation": "2024-01-15T10:00:00Z",
+        "generation_count": 1,
+        "languages": [
+            "en",
+            "ru"
+        ],
+        "primary_language": "en"
+    },
+    "task_magic": {
+        "system_version": "2.1.0",
+        "compatibility": "^2.0.0",
+        "last_hook_execution": null,
+        "documentation_hooks_version": "1.1.0"
+    }
+}

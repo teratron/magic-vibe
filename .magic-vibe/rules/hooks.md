@@ -1,7 +1,6 @@
 ---
 description: Defines how the agent should discover and execute automated hooks (triggers) at specific points in the plan, task, and git lifecycle.
-globs:
-  - .ai/hooks/**/*.hook.md
+globs: hooks/**/*.hook.md
 alwaysApply: false
 ---
 
@@ -9,7 +8,7 @@ alwaysApply: false
 
 Whenever you use this rule, start your message with the following:
 
-"Проверяю хуки Task Magic..."
+"Checking Task Magic hooks..."
 
 This rule specifies the technical details for how an AI agent should discover, interpret, and execute automated hooks within the Task Magic system. Hooks allow for automated actions, such as running scripts or sending notifications, to be triggered by events like task completion or plan creation.
 
@@ -28,7 +27,7 @@ All hook definition files **must** be located in the `.ai/hooks/` directory. The
   hooks/                        # Parent directory for all hook definitions
     commit-on-complete.hook.md  # Example: A hook that runs on task completion
     notify-on-fail.hook.md      # Example: A hook that sends a notification
-    ...                         # Другие файлы .hook.md
+    ...                         # Other .hook.md files
 ```
 
 ## Hook File Format
@@ -71,15 +70,17 @@ The body of the file should contain:
 
 The agent must check for hooks whenever one of the following primary events occurs:
 
-| `type` (in YAML)     | `trigger` (in YAML)                            | When to Check                                                                                                                                                  |
-|----------------------|------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `task_creation`      | `created`                                      | Immediately after a new task file (`task...md`) is successfully created in `.ai/tasks/`.                                                                       |
-| `task_status_change` | `pending`, `inprogress`, `completed`, `failed` | Immediately after a task's `status` field is changed in its YAML frontmatter.                                                                                  |
-| `task_archival`      | `archived`                                     | Immediately after a task file is successfully moved from `.ai/tasks/` to `.ai/memory/tasks/`.                                                                  |
-| `plan_creation`      | `created`                                      | Immediately after a new plan file (`plan-...md` or `PLANS.md`) is successfully created in `.ai/plans/`.                                                        |
-| `plan_update`        | `updated`                                      | Immediately after an existing plan file in `.ai/plans/` is successfully modified.                                                                              |
-| `git_commit`         | `after`                                        | Immediately after the agent successfully executes a `git commit` command.                                                                                      |
-| `git_push`           | `before`, `after`                              | `before`: Immediately before the agent executes a `git push` command. A failing hook should stop the push. `after`: Immediately after a successful `git push`. |
+| `type` (in YAML)       | `trigger` (in YAML)                            | When to Check                                                                                                                                                  |
+|------------------------|------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `task_creation`        | `created`                                      | Immediately after a new task file (`task...md`) is successfully created in `.ai/tasks/`.                                                                       |
+| `task_status_change`   | `pending`, `inprogress`, `completed`, `failed` | Immediately after a task's `status` field is changed in its YAML frontmatter.                                                                                  |
+| `task_archival`        | `archived`                                     | Immediately after a task file is successfully moved from `.ai/tasks/` to `.ai/memory/tasks/`.                                                                  |
+| `plan_creation`        | `created`                                      | Immediately after a new plan file (`plan-...md` or `PLANS.md`) is successfully created in `.ai/plans/`.                                                        |
+| `plan_update`          | `updated`                                      | Immediately after an existing plan file in `.ai/plans/` is successfully modified.                                                                              |
+| `git_commit`           | `after`                                        | Immediately after the agent successfully executes a `git commit` command.                                                                                      |
+| `git_push`             | `before`, `after`                              | `before`: Immediately before the agent executes a `git push` command. A failing hook should stop the push. `after`: Immediately after a successful `git push`. |
+| `documentation_update` | `generated`, `updated`                         | `generated`: After automatic documentation generation. `updated`: After manual documentation updates.                                                          |
+| `project_milestone`    | `reached`                                      | When a significant project milestone is completed (multiple related tasks finished).                                                                           |
 
 ## Available Variables
 
@@ -162,6 +163,62 @@ This hook sends a notification when a task is marked as failed:
 
 ```bash
 echo "Task {{task.id}} - {{task.title}} has failed. See error log for details." | mail -s "Task Failure Alert" team@example.com
+```
+
+### Documentation Generation Hook
+
+```yaml
+---
+type: task_status_change
+trigger: completed
+priority: 20
+enabled: true
+---
+```
+
+## Auto Documentation Generation
+
+This hook automatically generates project documentation when a task is completed:
+
+```bash
+# Create docs directory structure
+mkdir -p docs/en docs/ru
+
+# Generate English documentation
+cat > "docs/en/task-{{task.id}}-{{task.feature}}.md" << 'EOF'
+# {{task.title}}
+
+**Task ID:** {{task.id}}  
+**Feature:** {{task.feature}}  
+**Status:** {{task.status}}  
+**Type:** {{task.commit_type}}
+
+## Implementation Details
+
+[Generated from task completion]
+
+---
+
+*Auto-generated by Task Magic*
+EOF
+
+# Generate Russian documentation
+cat > "docs/ru/task-{{task.id}}-{{task.feature}}.md" << 'EOF'
+# {{task.title}}
+
+**Task ID:** {{task.id}}  
+**Feature:** {{task.feature}}  
+**Status:** {{task.status}}  
+**Type:** {{task.commit_type}}
+
+## Implementation Details
+
+[Generated from task completion]
+
+---
+
+*Auto-generated by Task Magic*
+EOF
 ```
 
 ## Hook Execution Order

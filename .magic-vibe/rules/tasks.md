@@ -204,6 +204,45 @@ The `commit_type` field in the YAML frontmatter is optional and allows you to sp
 **Note on Testing:** When the test strategy involves background processes or jobs, prefer testing by using the application's standard mechanism for triggering that process (e.g., a command-line interface, API endpoint, or specific function call that initiates the job), rather than invoking the job's core logic directly in an isolated test environment if a more integrated test is feasible.
 This provides a more realistic integration test.
 
+## Documentation Requirements
+
+**Automatic Documentation Generation:** Upon task completion, the system will automatically generate documentation in the `docs/` directory with the following structure:
+
+- **Primary Language (English):** `docs/en/task-{id}-{feature}.md`
+- **Secondary Language (Russian):** `docs/ru/task-{id}-{feature}.md`
+
+**Documentation Standards:**
+
+1. **Content Requirements:**
+   - Implementation overview and technical details
+   - API changes or new endpoints (if applicable)
+   - Configuration changes (if applicable)
+   - Usage instructions and examples
+   - Testing results and verification steps
+   - Dependencies and integration notes
+
+2. **Format Requirements:**
+   - Use clear, descriptive headings
+   - Include code examples where applicable
+   - Provide both English and Russian versions
+   - Follow markdown best practices
+   - Include timestamps and task metadata
+
+3. **Update Requirements:**
+   - Update main project documentation index
+   - Link related documentation files
+   - Maintain documentation version history
+   - Ensure cross-references are valid
+
+**Manual Documentation Tasks:**
+
+For tasks requiring detailed technical documentation beyond automatic generation:
+
+- Create dedicated documentation task (e.g., `task{id}.doc_{descriptive_name}.md`)
+- Include documentation review in test strategy
+- Specify documentation deliverables in task details
+- Reference documentation requirements in task dependencies
+
 ## Agent Notes
 
 (Optional section for agents to add notes during execution)
@@ -346,9 +385,11 @@ The agent should interpret user requests and map them to the following actions. 
 - **Complete Task {id}:**
   - **Cleanup:** Before marking as complete, review the code changes made for this task and remove any temporary logging or print statements (e.g., language-specific debug prints, verbose console logs) that were added for debugging or testing purposes. Only leave logs that are essential for production monitoring (e.g., errors, critical warnings).
   - **Update:** Update task {id} YAML (`status: completed`, `assigned_agent: null`, `completed_at`) and update the corresponding line in `TASKS.md` to `[x]`.
+  - **Documentation:** After updating the status, the system will automatically generate documentation in both English and Russian in the `docs/` directory through hook execution.
   - **Hooks:** After updating the status, check for and execute any `task_status_change` hooks for the `completed` status.
 - **Fail Task {id} "{Reason}":** Update task {id} YAML (`status: failed`, `error_log`, etc.) and update `TASKS.md`. Then, check for and execute any `task_status_change` hooks for the `failed` status.
 - **Show Task {id} Details:** Read the full content (YAML and Markdown) of `task{id}_{descriptive_name}.md` (checking both `.ai/tasks` and `.ai/memory/tasks` for files like `task15_...md` or `task15.1_...md`) and display it.
+- **Generate Documentation:** Manually trigger documentation generation for a specific task or feature using available hooks.
 - **Archive Tasks:**
   - Identify tasks in `.ai/tasks/` with `status: completed` or `status: failed` in their YAML (use `list_dir` then `read_file` for each task to check status).
   - For each identified task file:
