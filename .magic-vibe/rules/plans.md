@@ -16,10 +16,10 @@ Your task is to create a comprehensive product requirements document (PRD) for t
 
 ## Core Concepts
 
-1. **Planning Folder:** The `.magic-vibe/ai/plans/` directory holds all PRD files.
-2. **Global Plan (`PLANS.md`):** A single, mandatory `PLANS.md` file must exist directly within `.magic-vibe/ai/plans/`. Its primary role is to serve as a **concise high-level overview of the overall project and an index to detailed feature-specific PRDs**. It should define the project's vision and core goals but **must not become a lengthy PRD itself**. It provides essential context by linking to comprehensive feature plans.
-3. **Feature Plans:** Specific features **must** have their detailed PRDs located within the `.magic-vibe/ai/plans/features/` subdirectory (e.g., `features/plan-{feature-name}.md`). These documents contain the comprehensive planning, requirements, user stories, and technical considerations for individual features.
-4. **Purpose:** PRDs serve as the detailed specification for specific features (`features/plan-{feature-name}.md`). The global `PLANS.md` supports this by providing the overarching project summary and acting as a central hub that **links to these detailed feature PRDs**. Task breakdown (using the `ai-tasks` system) is based on the detailed content within feature plans.
+1. **Global Plan (`PLANS.md`):** A single, mandatory `PLANS.md` file must exist directly within `.magic-vibe/ai/`. Its primary role is to serve as a **concise high-level overview of the overall project and an index to detailed feature-specific PRDs**. It should define the project's vision and core goals but **must not become a lengthy PRD itself**. It provides essential context by linking to comprehensive feature plans.
+2. **Planning Folder:** The `.magic-vibe/ai/plans/` directory holds all PRD files.
+3. **Feature Plans:** Specific features **must** have their detailed PRDs located directly within the `.magic-vibe/ai/plans/` directory (e.g., `plan-{feature-name}.md` or `{id}-{feature-name}.md`). These documents contain the comprehensive planning, requirements, user stories, and technical considerations for individual features.
+4. **Purpose:** PRDs serve as the detailed specification for specific features (e.g., `plan-{feature-name}.md`). The global `PLANS.md` supports this by providing the overarching project summary and acting as a central hub that **links to these detailed feature PRDs**. Task breakdown (using the `ai-tasks` system) is based on the detailed content within feature plans.
 5. **Plan Lifecycle:** Active plans reside in `.magic-vibe/ai/plans/`. Completed, deprecated, or superseded plans can be archived to `.magic-vibe/ai/memory/plans/` for historical reference, as detailed in the `.magic-vibe/memory` rule.
 
 ## Directory Structure
@@ -27,17 +27,15 @@ Your task is to create a comprehensive product requirements document (PRD) for t
 ```yaml
 .magic-vibe/ai/
   plans/                     # Parent directory for all PRDs
-    features/                # Directory for feature-specific PRDs
-      plan-{feature-name}.md # Example feature PRD
-    PLANS.md                 # Mandatory: Global project PRD
-  tasks/                     # (For reference - Tasks are generated based on PRDs)
+    plan-{feature-name}.md   # Example feature PRD
+    {id}-{feature-name}.md   # Alternative naming with ID prefix
   memory/                    # Parent directory for archive
     plans/                   # Archive for completed/failed plan files
     PLANS_LOG.md             # Append-only log of archived plans
-  TASKS.md                   # (For reference - Master task checklist)
+  PLANS.md                   # Mandatory: Global project PRD
 ```
 
-**Note:** Before creating directories like `.magic-vibe/ai/plans/` or `.magic-vibe/ai/plans/features/`, the agent should first check if they exist using `list_dir` on the parent directory or `file_search` for the specific directory path.
+**Note:** Before creating directories like `.magic-vibe/ai/plans/`, the agent should first check if they exist using `list_dir` on the parent directory or `file_search` for the specific directory path.
 If a directory does not exist, it can be implicitly created when using `edit_file` to place a file within that path, as `edit_file` will create necessary parent directories.
 The agent should also ensure `PLANS.md` exists (checking with `file_search` and creating with `edit_file` if necessary with a basic structure) before generating feature plans.
 
@@ -48,7 +46,7 @@ PRDs are Markdown files (`.md`) following a structured template.
 **Filename Convention:**
 
 - **Global:** `PLANS.md` (Mandatory).
-- **Feature:** `plan-{feature-name}.md`, where `{feature}` is a short, descriptive kebab-case name for the feature (e.g., `plan-user-authentication.md`).
+- **Feature:** `plan-{feature-name}.md` or `{id}-{feature-name}.md`, where `{feature-name}` is a short, descriptive kebab-case name for the feature (e.g., `plan-user-authentication.md` or `42-user-authentication.md`).
 
 **PRD Template (Markdown):**
 
@@ -204,11 +202,11 @@ Use sentence case for headings unless otherwise specified.
 
 ## Agent Responsibilities
 
-1. **Ensure Global Plan Exists:** Before creating feature plans, verify `.magic-vibe/ai/plans/PLANS.md` exists. If not, inform the user and offer to create a basic structure for it, emphasizing its role as a **concise project summary and an index to detailed feature plans**, not a comprehensive PRD itself.
-2. **Determine Scope:** Clarify if the request is to update the global `PLANS.md` (which should generally involve refining the overall project vision, updating core goals, or adding/modifying links to feature PRDs) or to create/update a **detailed feature-specific plan** in `.magic-vibe/ai/plans/features/plan-{feature-name}.md`. Avoid adding extensive feature details directly into `PLANS.md`.
+1. **Ensure Global Plan Exists:** Before creating feature plans, verify `.magic-vibe/ai/PLANS.md` exists. If not, inform the user and offer to create a basic structure for it, emphasizing its role as a **concise project summary and an index to detailed feature plans**, not a comprehensive PRD itself.
+2. **Determine Scope:** Clarify if the request is to update the global `PLANS.md` (which should generally involve refining the overall project vision, updating core goals, or adding/modifying links to feature PRDs) or to create/update a **detailed feature-specific plan** in `.magic-vibe/ai/plans/plan-{feature-name}.md` or `.magic-vibe/ai/plans/{id}-{feature-name}.md`. Avoid adding extensive feature details directly into `PLANS.md`.
 3. **Filename:** Use the correct filename convention. Create directories if they don't exist.
 4. **Use Template:** Generate the PRD content strictly following the Markdown template structure provided above.
 5. **Fill Content:** Populate the sections based on the user's request, project context (especially `PLANS.md`), and best practices for PRD writing.
 6. **Completeness:** Ensure all necessary user stories (primary, alternative, edge cases, security) are included with clear acceptance criteria.
-7. **Focus:** The agent's role is *only* to generate or update PRD Markdown files in the active planning directory (`.magic-vibe/ai/plans/`). This means creating/editing the high-level `PLANS.md` or detailed `features/plan-{feature-name}.md` files. Task creation is a separate process handled by interpreting the detailed feature PRDs using the `ai-tasks` rule. Archiving plans is handled by the `.magic-vibe/memory` rule.
-8. **Hook Execution:** When creating or updating a plan, the agent must check for and execute any relevant hooks as defined in the `.magic-vibe/ai/hooks/` directory, according to the rules in `@hooks.md`.
+7. **Focus:** The agent's role is *only* to generate or update PRD Markdown files in the active planning directory (`.magic-vibe/ai/plans/`). This means creating/editing the high-level `PLANS.md` or detailed `plan-{feature-name}.md` or `{id}-{feature-name}.md` files. Task creation is a separate process handled by interpreting the detailed feature PRDs using the `ai-tasks` rule. Archiving plans is handled by the `.magic-vibe/memory` rule.
+8. **Hook Execution:** When creating or updating a plan, the agent must check for and execute any relevant hooks as defined in the `.magic-vibe/rules/hooks/` or `.magic-vibe/ai/hooks/` directory, according to the rules in `@hooks.md`.

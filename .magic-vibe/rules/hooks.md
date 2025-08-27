@@ -95,7 +95,7 @@ When executing a hook's action, the agent **must** replace the following placeho
 | `{{task.feature}}`     | The `feature` from the task's YAML.                           | `User Authentication`             | `task_*` events          |
 | `{{task.path}}`        | The full path to the task file.                               | `.magic-vibe/ai/tasks/task42.1_login.md`     | `task_*` events          |
 | `{{plan.title}}`       | The title of the plan.                                        | `PRD: User Authentication`        | `plan_*` events          |
-| `{{plan.path}}`        | The full path to the plan file.                               | `.magic-vibe/ai/plans/features/plan-auth.md` | `plan_*` events          |
+| `{{plan.path}}`        | The full path to the plan file.                               | `.magic-vibe/ai/plans/plan-auth.md` | `plan_*` events          |
 | `{{git.commit_hash}}`  | The full SHA hash of the latest commit.                       | `a1b2c3d4...`                     | `git_commit`, `git_push` |
 | `{{git.branch}}`       | The current branch name.                                      | `feature/user-auth`               | `git_commit`, `git_push` |
 | `{{git.remote}}`       | The remote name for a push (e.g., `origin`).                  | `origin`                          | `git_push`               |
@@ -129,6 +129,7 @@ The agent **must** follow this precise workflow whenever a trigger event occurs:
 
 ```yaml
 ---
+description: Automatically commits changes to the repository when a task is marked as completed.
 type: task_status_change
 trigger: completed
 priority: 10
@@ -150,6 +151,7 @@ git commit -am "${COMMIT_TYPE:-chore}(${COMMIT_SCOPE:-tasks}): {{task.title}} (t
 
 ```yaml
 ---
+description: Notifies the team when a task fails.
 type: task_status_change
 trigger: failed
 priority: 5
@@ -169,6 +171,7 @@ echo "Task {{task.id}} - {{task.title}} has failed. See error log for details." 
 
 ```yaml
 ---
+description: Automatically generates project documentation in multiple languages when a task is completed.
 type: task_status_change
 trigger: completed
 priority: 20

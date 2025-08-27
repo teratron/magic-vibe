@@ -1,4 +1,5 @@
 ---
+description: This hook automatically generates or updates project documentation when a task is completed. Documentation is generated in English as the primary language and Russian as a secondary language.
 type: task_status_change
 trigger: completed
 priority: 20
@@ -6,8 +7,6 @@ enabled: true
 ---
 
 # Auto Documentation Generation on Task Completion
-
-This hook automatically generates or updates project documentation when a task is completed. Documentation is generated in English as the primary language and Russian as a secondary language.
 
 ```bash
 # Generate documentation based on completed task

@@ -1,4 +1,5 @@
 ---
+description: This hook sends a notification to a specified Slack channel when a task's status is changed to `failed`.
 type: task_status_change
 trigger: failed
 priority: 10
@@ -6,8 +7,6 @@ enabled: true
 ---
 
 # Slack Notification on Task Failure
-
-This hook sends a notification to a specified Slack channel when a task's status is changed to `failed`.
 
 It requires a `SLACK_WEBHOOK_URL` environment variable to be set with the incoming webhook URL for your Slack workspace.
 

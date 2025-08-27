@@ -1,4 +1,5 @@
 ---
+description: This hook automatically manages version tracking and updates when documentation is generated or updated.
 type: documentation_update
 trigger: generated
 priority: 5
@@ -6,8 +7,6 @@ enabled: true
 ---
 
 # Version Management Hook for Documentation Generation
-
-This hook automatically manages version tracking and updates when documentation is generated or updated.
 
 ```bash
 #!/bin/bash

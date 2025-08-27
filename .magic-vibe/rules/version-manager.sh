@@ -3,9 +3,9 @@
 # Version Management Script for template-ai-rules project
 # This script manages versioning for both project and documentation
 
-VERSION_FILE=".vscode/rules/.magic-vibe/version.json"
-#DOCS_EN_README="docs/en/README.md"
-#DOCS_RU_README="docs/ru/README.md"
+VERSION_FILE=".magic-vibe/ai/version.json"
+DOCS_EN_README="docs/en/README.md"
+DOCS_RU_README="docs/ru/README.md"
 MAIN_README="README.md"
 
 # Color codes for output
@@ -174,7 +174,7 @@ show_versions() {
 # Function to update version badges in README files
 update_version_badges() {
     local project_version=$1
-    #local doc_version=$2
+    local doc_version=$2
     
     if [ -f "$MAIN_README" ]; then
         # Update main README version badge

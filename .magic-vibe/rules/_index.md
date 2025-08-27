@@ -20,7 +20,7 @@ It consists of several components, each governed by its own detailed rule file. 
     - **Action:** Generate or modify PRD files in `.magic-vibe/ai/plans/`. This is the first step for defining new features.
 2. **To Create or Manage Tasks:**
     - **Use Rule:** `@tasks.md`
-    - **Action:** Break down plans into actionable tasks. Create, update status, and manage dependencies of task files in `.magic-vibe/ai/tasks/`. Keep `.magic-vibe/ai/tasks/TASKS.md` synchronized.
+    - **Action:** Break down plans into actionable tasks. Create, update status, and manage dependencies of task files in `.magic-vibe/ai/tasks/`. Keep `.magic-vibe/ai/TASKS.md` synchronized.
 3. **To Archive Old Tasks/Plans:**
     - **Use Rule:** `@memory.md`
     - **Action:** Move completed/failed items from active directories (`.magic-vibe/ai/tasks/`, `.magic-vibe/ai/plans/`) to the archive (`.magic-vibe/ai/memory/`) and update the corresponding log files.

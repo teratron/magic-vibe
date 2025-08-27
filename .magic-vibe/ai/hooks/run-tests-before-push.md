@@ -1,4 +1,5 @@
 ---
+description: This hook acts as a quality gate, ensuring that all project tests pass before the agent is allowed to push code to the remote repository.
 type: git_push
 trigger: before
 priority: 1
@@ -6,8 +7,6 @@ enabled: true
 ---
 
 # Run Tests Before Pushing
-
-This hook acts as a quality gate, ensuring that all project tests pass before the agent is allowed to push code to the remote repository.
 
 If the test command fails (returns a non-zero exit code), the agent MUST abort the `git push` operation.
 

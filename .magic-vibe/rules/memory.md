@@ -37,7 +37,7 @@ The memory system consists of:
     - **Archived On:** YYYY-MM-DD HH:MM:SS
     - **Reason:** Deprecated
     - **Title:** PRD: Old Feature
-    - **Original File (Optional):** {.magic-vibe/ai/plans/features/plan-old-feature.md}
+    - **Original File (Optional):** {.magic-vibe/ai/plans/plan-old-feature.md}
   ```
 
 ## Directory and File Management

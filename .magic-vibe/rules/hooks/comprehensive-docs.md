@@ -1,13 +1,12 @@
 ---
+description: This hook creates detailed documentation with technical implementation details, extracts information from task files, and updates the project documentation index.
 type: task_status_change
 trigger: completed
 priority: 25
 enabled: true
 ---
 
-### Comprehensive Documentation Integration
-
-This hook creates detailed documentation with technical implementation details, extracts information from task files, and updates the project documentation index.
+# Comprehensive Documentation Integration
 
 ```bash
 #!/bin/bash

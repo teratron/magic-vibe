@@ -62,6 +62,6 @@ If a task is deemed too complex for direct execution based on the criteria above
       - **Dependencies:** Sub-task 2
   ```
 
-**The actual creation of sub-task files, numbering, and updates to `TASKS.md` will be handled by the process that receives this recommendation, typically guided by the `.magic-vibe/tasks/TASKS.md` rule.**
+**The actual creation of sub-task files, numbering, and updates to `TASKS.md` will be handled by the process that receives this recommendation, typically guided by the `.magic-vibe/ai/TASKS.md` rule.**
 
 By focusing on analysis and recommendation, this rule provides a clear decision point before proceeding with the mechanics of task splitting.

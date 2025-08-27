@@ -1,4 +1,5 @@
 ---
+description: This hook updates the main project documentation index when a new plan is created.
 type: plan_creation
 trigger: created
 priority: 15
@@ -6,8 +7,6 @@ enabled: true
 ---
 
 # Project Documentation Update on Plan Creation
-
-This hook updates the main project documentation index when a new plan is created.
 
 ```bash
 # Update project documentation index
