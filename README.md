@@ -57,17 +57,22 @@ A standardized set of development guidelines, workflows, and best practices opti
 
 **[Magic Vibe System](.magic-vibe/rules/)** - Comprehensive workflow management framework for AI agents:
 
-- **[README](.magic-vibe/rules/README.md)** - English documentation
-- **[README на русском](.magic-vibe/rules/README.ru.md)** - Russian documentation
-- **[Index](.magic-vibe/rules/_index.md)** - System overview
-- **[Workflow](.magic-vibe/rules/workflow.md)** - Process management
-- **[Tasks](.magic-vibe/rules/tasks.md)** - Task definition and tracking
-- **[Plans](.magic-vibe/rules/plans.md)** - Project planning strategies
-- **[Memory](.magic-vibe/rules/memory.md)** - Context management
-- **[Expand](.magic-vibe/rules/expand.md)** - Scalability patterns
-- **[Hooks](.magic-vibe/rules/hooks.md)** - Event-driven automation
+- **[English Documentation](.magic-vibe/rules/README.md)** - Complete system guide
+- **[Russian Documentation](.magic-vibe/rules/README.ru.md)** - Полное руководство системы
 
-### 🏗️ Development Process Standards
+- **[System Overview](.magic-vibe/rules/_index.md)** - Complete system documentation
+- **[Workflow Management](.magic-vibe/rules/workflow.md)** - Process management
+- **[Task Definition & Tracking](.magic-vibe/rules/tasks.md)** - Task system rules
+- **[Project Planning](.magic-vibe/rules/plans.md)** - Planning strategies
+- **[Memory & Context](.magic-vibe/rules/memory.md)** - Context management
+- **[Task Expansion](.magic-vibe/rules/expand.md)** - Scalability patterns
+- **[Event Automation](.magic-vibe/rules/hooks.md)** - Hook system
+- **[Version Management](.magic-vibe/rules/versioning.md)** - Automated versioning
+- **[Development Principles](.magic-vibe/rules/principles/)** - OOP, SOLID, DRY, KISS, YAGNI
+
+### 🏗️ Language & Framework Rules
+
+**[AI-Optimized Development Standards](.vscode/rules/)** - Technology-specific rules for consistent code generation:
 
 #### Version Control & Workflows
 
@@ -154,13 +159,13 @@ Create custom combinations of rules for specific project types:
 
 ```bash
 # Full-stack TypeScript project
-cp rules/typescript.md rules/react.md rules/nextjs.md rules/tailwindcss.md ./project-rules/
+cp .vscode/rules/typescript.md .vscode/rules/react.md .vscode/rules/nextjs.md .vscode/rules/tailwindcss.md ./project-rules/
 
 # Python API project
-cp rules/python.md rules/fastapi.md rules/database.md ./project-rules/
+cp .vscode/rules/python.md .vscode/rules/fastapi.md .vscode/rules/database.md ./project-rules/
 
 # Systems programming
-cp rules/cpp.md rules/rust.md ./project-rules/
+cp .vscode/rules/cpp.md .vscode/rules/rust.md ./project-rules/
 ```
 
 ### Integration Examples
@@ -282,4 +287,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Made with ❤️ for the AI development community**
+Made with ❤️ for the AI development community
