@@ -16,20 +16,20 @@ You are a senior software architect and product manager and an expert in analyzi
 ## Core Concepts
 
 1. **Single Active Folder:** The `.magic-vibe/ai/tasks/` directory holds *all* currently relevant task files, regardless of their status (pending, inprogress, failed). Task status is tracked *within* each file's YAML frontmatter.
-2. **Master Checklist:** The `.magic-vibe/ai/tasks/TASKS.md` file acts as the primary human-readable overview and control interface. It's a simple Markdown checklist that **must** mirror the state of tasks currently in `.magic-vibe/ai/tasks/`. **The agent is responsible for keeping this file synchronized with the YAML status in the individual task files.**
-3. **Archive:** The `.magic-vibe/ai/memory/tasks/` directory is used exclusively for storing task files that are fully completed or failed and no longer need active tracking in `.magic-vibe/ai/tasks/TASKS.md`. The `.magic-vibe/ai/memory/` directory itself contains the log file.
+2. **Master Checklist:** The `.magic-vibe/ai/TASKS.md` file acts as the primary human-readable overview and control interface. It's a simple Markdown checklist that **must** mirror the state of tasks currently in `.magic-vibe/ai/tasks/`. **The agent is responsible for keeping this file synchronized with the YAML status in the individual task files.**
+3. **Archive:** The `.magic-vibe/ai/memory/tasks/` directory is used exclusively for storing task files that are fully completed or failed and no longer need active tracking in `.magic-vibe/ai/TASKS.md`. The `.magic-vibe/ai/memory/` directory itself contains the log file.
 4. **Archive Log:** The `.magic-vibe/ai/memory/TASKS_LOG.md` file is a persistent, append-only log. When tasks are archived from `.magic-vibe/ai/tasks/` to `.magic-vibe/ai/memory/tasks/`, a summary line for each is added here.
 
 ## Directory Structure
 
 ```yaml
 .magic-vibe/ai/
-  tasks/                           # Holds ALL active task files
-    task{id}_{descriptive_name}.md # Example: task42_implement_user_feature.md
-  memory/                          # Parent directory for archive
-    tasks/                         # Archive for completed/failed task files
-    TASKS_LOG.md                   # Append-only log of archived tasks
-  TASKS.md                         # Master checklist view of tasks in .magic-vibe/ai/tasks/
+  tasks/                            # Holds ALL active task files
+    task_{id}_{descriptive_name}.md # Example: task_42_implement_user_feature.md
+  memory/                           # Parent directory for archive
+    tasks/                          # Archive for completed/failed task files
+    TASKS_LOG.md                    # Append-only log of archived tasks
+  TASKS.md                          # Master checklist view of tasks in .magic-vibe/ai/tasks/
 ```
 
 ## Safe File System Operations
@@ -38,7 +38,7 @@ To ensure file system integrity, the agent **must** follow these procedures:
 
 1. **Check Existence:** Before reading or moving a file, confirm it exists using `file_search` or `list_dir`.
 2. **Safe Appending:** To append to a log file (e.g., `TASKS_LOG.md`), use `read_file` to get current content, append new data, then use `edit_file` to write the combined content back. `edit_file` will create the file if it doesn't exist.
-3. **Archiving:** To archive a task, use `run_terminal_cmd` with the `mv` command (e.g., `mv .magic-vibe/ai/tasks/task1.md .magic-vibe/ai/memory/tasks/`). **Do not** use `edit_file` and `delete_file` to simulate a move.
+3. **Archiving:** To archive a task, use `run_terminal_cmd` with the `mv` command (e.g., `mv .magic-vibe/ai/tasks/task_1.md .magic-vibe/ai/memory/tasks/`). **Do not** use `edit_file` and `delete_file` to simulate a move.
 4. **Directory Creation:** Directories are created implicitly by `edit_file` or `mv` when needed. There is no need to check for directory existence before writing a file into it.
 
 ## Task File Format
@@ -47,8 +47,8 @@ Each task is a Markdown file (`.md`) with YAML frontmatter.
 
 **Filename Convention:**
 
-Use the format `task{id}_{descriptive_name}.md`, where `{id}` is a **unique sequential integer ID** for top-level tasks, and `{descriptive_name}` is a short, kebab-case summary of the task title (e.g., `prompt_list_page`).
-Sub-task filenames follow `task{parent_id}.{sub_id}_{descriptive_name}.md`.
+Use the format `task_{id}_{descriptive_name}.md`, where `{id}` is a **unique sequential integer ID** for top-level tasks, and `{descriptive_name}` is a short, kebab-case summary of the task title (e.g., `prompt_list_page`).
+Sub-task filenames follow `task_{parent_id}.{sub_id}_{descriptive_name}.md`.
 **Always refer to tasks by their full ID (e.g., `7` for a top-level task, `7.1` for a sub-task) in dependencies and commands.**
 
 **Determining the Next Task ID (`{id}` for top-level tasks):**
@@ -58,7 +58,7 @@ To do this, the agent should:
 
 1. Use the `list_dir` tool to get the contents of the `.magic-vibe/ai/tasks/` directory.
 2. Use the `list_dir` tool to get the contents of the `.magic-vibe/ai/memory/tasks/` directory.
-3. Combine the file listings. From this combined list, identify all filenames that *only* match the pattern `task{id}_{descriptive_name}.md` (e.g., `task1_init.md`, `task123_another_feature.md`). This pattern specifically targets top-level tasks, ensuring filenames like `task1.2_sub_feature.md` are excluded from this specific ID generation.
+3. Combine the file listings. From this combined list, identify all filenames that *only* match the pattern `task_{id}_{descriptive_name}.md` (e.g., `task_1_init.md`, `task_123_another_feature.md`). This pattern specifically targets top-level tasks, ensuring filenames like `task_1.2_sub_feature.md` are excluded from this specific ID generation.
 4. For each matching filename, parse the numeric `{id}` part. This involves extracting the number between "task" and the first underscore.
 5. Find the highest numeric ID among all parsed IDs for top-level tasks.
 6. The next top-level task ID is this highest ID + 1.
@@ -75,13 +75,13 @@ The [.magic-vibe/expand.md](expand.md) rule provides guidance on *when* and *how
 
 1. **Receive Sub-Task Definitions:** The agent receives a list of proposed sub-tasks, typically including titles, descriptions, priorities, and their interdependencies, as well as the ID of the parent task (e.g., parent task ID `42`).
 2. **Sub-Task Filename Convention:**
-    - For each proposed sub-task, determine its filename using the format: `task{parent_id}.{sub_id}_{descriptive_name}.md`
+    - For each proposed sub-task, determine its filename using the format: `task_{parent_id}.{sub_id}_{descriptive_name}.md`
       - `{parent_id}`: The numeric ID of the original parent task (e.g., `42`).
       - `{sub_id}`: A sequential integer for the sub-task (e.g., 1, 2, 3), unique *within the scope of that parent*.
-      - Example: `task42.1_implement_user_model.md`, `task42.2_create_api_endpoints.md`.
+      - Example: `task_42.1_implement_user_model.md`, `task_42.2_create_api_endpoints.md`.
     - To determine the next `{sub_id}` for a given `{parent_id}`:
       1. Use `list_dir` on `.magic-vibe/ai/tasks/` and `.magic-vibe/ai/memory/tasks/`.
-      2. Filter for files matching `task{parent_id}.*_*.md` (e.g., `task42.*_*.md`).
+      2. Filter for files matching `task{parent_id}.*_*.md` (e.g., `task_42.*_*.md`).
       3. Parse the `{sub_id}` from these filenames (the number between the first dot and the subsequent underscore).
       4. The next `{sub_id}` is the highest found + 1, or 1 if no relevant sub-task files exist for that parent.
 3. **Create Sub-Task Files:**
@@ -92,27 +92,27 @@ The [.magic-vibe/expand.md](expand.md) rule provides guidance on *when* and *how
         - Dependencies for sub-tasks can refer to other sub-tasks of the same parent (e.g., `42.2` depends on `42.1`) or external/top-level tasks (e.g., `15`).
       - Add the `## Description`, `## Details`, and `## Test Strategy` sections as provided or generated.
 4. **Update Parent Task File:**
-    - Modify the original parent task's file (e.g., `task42_implement_user_feature.md`) using `edit_file`:
+    - Modify the original parent task's file (e.g., `task_42_implement_user_feature.md`) using `edit_file`:
       - Update its `## Description` to note that it has been expanded and now serves as a Parent Task or tracker.
       - In its `## Details` section, add a list like:
 
         ```markdown
         **Sub-tasks:**
 
-        - task42.1_implement_user_model.md
-        - task42.2_create_api_endpoints.md
+        - task_42.1_implement_user_model.md
+        - task_42.2_create_api_endpoints.md
         ```
 
       - The parent task's `status` might remain `pending` or `inprogress`. Its completion is typically dependent on all its sub-tasks being `completed`.
 5. **Update `TASKS.md` Master Checklist:**
-    - Using `read_file` then `edit_file` on `.magic-vibe/ai/tasks/TASKS.md`:
+    - Using `read_file` then `edit_file` on `.magic-vibe/ai/TASKS.md`:
       - For each newly created sub-task, add a new entry following the standard format. The ID displayed should be the full sub-task ID (e.g., `ID 42.1`).
       - The entry for the parent task in `TASKS.md` should also be updated to reflect its new role as a Parent Task/tracker, potentially by modifying its description.
 
 **YAML `id` field for Sub-Tasks:**
 
 Crucially, the `id` field in the YAML frontmatter for a sub-task **must use the dot-notation string**, not just the sub-id number.
-Example for `task42.1_implement_user_model.md`:
+Example for `task_42.1_implement_user_model.md`:
 
 ```yaml
 ---
@@ -131,9 +131,9 @@ dependencies:
 
 When listing dependencies:
 
-- A sub-task can depend on another sub-task of the *same parent*: e.g., `task42.2` might have `42.1` in its `dependencies` list.
-- A sub-task can depend on a regular task: e.g., `task42.1` might have `15` in its `dependencies`.
-- A regular task can depend on a sub-task: e.g., `task43` might have `42.2` in its `dependencies`. **Always use the full task ID string (e.g., `42.1`, `15`) in the `dependencies` list.**
+- A sub-task can depend on another sub-task of the *same parent*: e.g., `task_42.2` might have `42.1` in its `dependencies` list.
+- A sub-task can depend on a regular task: e.g., `task_42.1` might have `15` in its `dependencies`.
+- A regular task can depend on a sub-task: e.g., `task_43` might have `42.2` in its `dependencies`. **Always use the full task ID string (e.g., `42.1`, `15`) in the `dependencies` list.**
 
 ```yaml
 ---
@@ -238,7 +238,7 @@ This provides a more realistic integration test.
 
 For tasks requiring detailed technical documentation beyond automatic generation:
 
-- Create dedicated documentation task (e.g., `task{id}.doc_{descriptive_name}.md`)
+- Create dedicated documentation task (e.g., `task_{id}.doc_{descriptive_name}.md`)
 - Include documentation review in test strategy
 - Specify documentation deliverables in task details
 - Reference documentation requirements in task dependencies
@@ -321,7 +321,7 @@ Please refer to [.magic-vibe/workflow.md](workflow.md) for the detailed process 
 
 **Key Agent Responsibilities:**
 
-1. **Synchronization:** Keep `.magic-vibe/ai/tasks/TASKS.md` perfectly aligned with the `status` fields in the `.magic-vibe/ai/tasks/*.md` files. Update `TASKS.md` *immediately* after updating a task file's YAML status.
+1. **Synchronization:** Keep `.magic-vibe/ai/TASKS.md` perfectly aligned with the `status` fields in the `.magic-vibe/ai/tasks/*.md` files. Update `TASKS.md` *immediately* after updating a task file's YAML status.
 2. **Dependency Check:** Before changing a task's status to `inprogress` (**after identifying it as pending in `TASKS.md`**), verify *each* ID listed in its `dependencies` corresponds to a task file (in `.magic-vibe/ai/tasks/` OR `.magic-vibe/ai/memory/tasks/`) with `status: completed` in its YAML. IDs can be numeric (e.g., `12`) or string (e.g., `12.1`). **If not met, the agent cannot start the task and must inform the user.**
 3. **Status Updates:**
     - **Start:** Update task file YAML (`status: inprogress`, `assigned_agent`, `started_at`). Update `TASKS.md` line (`[-]`).
@@ -332,11 +332,11 @@ Please refer to [.magic-vibe/workflow.md](workflow.md) for the detailed process 
     - Find completed/failed tasks **in `.magic-vibe/ai/tasks/`** by reading their YAML status (use `read_file` for each task file identified by `list_dir` in `.magic-vibe/ai/tasks/`).
     - For each task to be archived:
       - Read its full content (YAML frontmatter and Description section) using `read_file` **(this is needed for logging to TASKS_LOG.md).**
-      - **Identify the source path (e.g., `.magic-vibe/ai/tasks/task{id}_{descriptive_name}.md`) and the destination directory (`.magic-vibe/ai/memory/tasks/`).**
+      - **Identify the source path (e.g., `.magic-vibe/ai/tasks/task_{id}_{descriptive_name}.md`) and the destination directory (`.magic-vibe/ai/memory/tasks/`).**
       - **Ensure the destination directory `.magic-vibe/ai/memory/tasks/` exists (e.g., using `list_dir` or `file_search`). If not, it will typically be created by `edit_file` if a file is written into it, or the `mv` command might create it.**
-      - **Use `run_terminal_cmd` to execute an `mv` command (e.g., `mv .magic-vibe/ai/tasks/task{id}_{descriptive_name}.md .magic-vibe/ai/memory/tasks/`).**
+      - **Use `run_terminal_cmd` to execute an `mv` command (e.g., `mv .magic-vibe/ai/tasks/task_{id}_{descriptive_name}.md .magic-vibe/ai/memory/tasks/`).**
     - Log the summary (including description and dependencies) to `TASKS_LOG.md` by reading its current content, appending the new log entries, and using `edit_file` to write it back.
-    - Remove corresponding entries from `.magic-vibe/ai/tasks/TASKS.md` via `read_file` and `edit_file`.
+    - Remove corresponding entries from `.magic-vibe/ai/TASKS.md` via `read_file` and `edit_file`.
 
 ## `TASKS_LOG.md` Format
 
@@ -356,30 +356,30 @@ If archiving multiple tasks as part of a single user request (batch archive), us
 
 The agent should interpret user requests and map them to the following actions. Use full task IDs (numeric for top-level, string like "7.1" for sub-tasks) when referring to tasks.
 
-- **Show/List Tasks:** Read and display the current content of `.magic-vibe/ai/tasks/TASKS.md`.
+- **Show/List Tasks:** Read and display the current content of `.magic-vibe/ai/TASKS.md`.
 - **Create Task / Create Sub-Tasks:**
   - **If creating a regular top-level task or multiple tasks (from a plan/PRD):**
     - First, plan all tasks to be created, determining their IDs, titles, priorities, dependencies, and descriptions.
-    - Update `.magic-vibe/ai/tasks/TASKS.md` with entries for ALL planned tasks using `read_file` and `edit_file`.
-    - Then, for each task now listed in `.magic-vibe/ai/tasks/TASKS.md`, create the individual `task{id}_{descriptive_name}.md` file in `.magic-vibe/ai/tasks/` using `edit_file`, populating YAML and markdown body.
+    - Update `.magic-vibe/ai/TASKS.md` with entries for ALL planned tasks using `read_file` and `edit_file`.
+    - Then, for each task now listed in `.magic-vibe/ai/TASKS.md`, create the individual `task_{id}_{descriptive_name}.md` file in `.magic-vibe/ai/tasks/` using `edit_file`, populating YAML and markdown body.
     - After creating the task file, check for and execute any `task_creation` hooks.
   - **If creating sub-tasks for an existing `parent_id` (based on a recommendation from `@expand.md` or user):**
-    - Follow the same process: plan all sub-tasks, update `.magic-vibe/ai/tasks/TASKS.md` with all sub-task entries, then create each `task{parent_id}.{sub_id}_{descriptive_name}.md` file in `.magic-vibe/ai/tasks/`.
+    - Follow the same process: plan all sub-tasks, update `.magic-vibe/ai/TASKS.md` with all sub-task entries, then create each `task_{parent_id}.{sub_id}_{descriptive_name}.md` file in `.magic-vibe/ai/tasks/`.
     - Update the parent task file's description and details to list the new sub-tasks using `edit_file`.
     - Update the parent task's entry in `TASKS.md` if its description needs to change, using `read_file` and `edit_file`.
 - **Start/Work on Next Task / Continue:**
-  - Read `.magic-vibe/ai/tasks/TASKS.md` and identify the **first** task listed with the `[ ]` (pending) icon.
+  - Read `.magic-vibe/ai/TASKS.md` and identify the **first** task listed with the `[ ]` (pending) icon.
   - If no pending tasks are found, inform the user.
   - If a pending task is found, proceed to check its dependencies (by reading the task file if needed).
   - If dependencies met: Update task file YAML (`status: inprogress`, etc.) and update the corresponding line in `TASKS.md` to `[-]`. Announce which task is being started.
   - If dependencies not met: Inform the user, stating which task is blocked and which dependencies are missing.
 - **Start/Work on Specific Task {id}:**
-  - Verify task {id} (e.g., `15` or `15.1`) exists in `.magic-vibe/ai/tasks/TASKS.md` and its status is `[ ]` (pending). If not, inform the user.
+  - Verify task {id} (e.g., `15` or `15.1`) exists in `.magic-vibe/ai/TASKS.md` and its status is `[ ]` (pending). If not, inform the user.
   - Check dependencies for task {id}.
   - If met: Update task {id} YAML (`status: inprogress`, etc.) and update `TASKS.md`. Then, check for and execute any `task_status_change` hooks for the `inprogress` status.
   - If not met: Inform the user that dependencies are missing.
 - **Verify Task Completion (MANDATORY PRE-COMPLETION STEP):**
-  - **ALWAYS** check if the task file (e.g., `task{id}_{descriptive_name}.md`) contains a `## Test Strategy` section after completing the implementation work.
+  - **ALWAYS** check if the task file (e.g., `task_{id}_{descriptive_name}.md`) contains a `## Test Strategy` section after completing the implementation work.
   - If a `## Test Strategy` section exists: **DO NOT** mark the task as complete yet. You **MUST** explicitly ask the user: "This task has a Test Strategy. Would you like to run the tests (preferably by triggering the dispatching command/action if applicable), or should I mark it as complete based on your verification?"
   - If no `## Test Strategy` section exists, or if the user confirms after being asked about the tests: Proceed to the "Complete Task {id}" step.
 - **Complete Task {id}:**
@@ -388,19 +388,19 @@ The agent should interpret user requests and map them to the following actions. 
   - **Documentation:** After updating the status, the system will automatically generate documentation in both English and Russian in the `docs/` directory through hook execution.
   - **Hooks:** After updating the status, check for and execute any `task_status_change` hooks for the `completed` status.
 - **Fail Task {id} "{Reason}":** Update task {id} YAML (`status: failed`, `error_log`, etc.) and update `TASKS.md`. Then, check for and execute any `task_status_change` hooks for the `failed` status.
-- **Show Task {id} Details:** Read the full content (YAML and Markdown) of `task{id}_{descriptive_name}.md` (checking both `.magic-vibe/ai/tasks` and `.magic-vibe/ai/memory/tasks` for files like `task15_...md` or `task15.1_...md`) and display it.
+- **Show Task {id} Details:** Read the full content (YAML and Markdown) of `task_{id}_{descriptive_name}.md` (checking both `.magic-vibe/ai/tasks` and `.magic-vibe/ai/memory/tasks` for files like `task_15_...md` or `task_15.1_...md`) and display it.
 - **Generate Documentation:** Manually trigger documentation generation for a specific task or feature using available hooks.
 - **Archive Tasks:**
   - Identify tasks in `.magic-vibe/ai/tasks/` with `status: completed` or `status: failed` in their YAML (use `list_dir` then `read_file` for each task to check status).
   - For each identified task file:
     - Read its YAML frontmatter (to get Title, Status, Dependencies) and its Markdown body (to get the Description) using `read_file`.
   - Move identified files:
-    - **Construct the source path (e.g., `.magic-vibe/ai/tasks/task{id}_{descriptive_name}.md`) and destination directory (`.magic-vibe/ai/memory/tasks/`).**
+    - **Construct the source path (e.g., `.magic-vibe/ai/tasks/task_{id}_{descriptive_name}.md`) and destination directory (`.magic-vibe/ai/memory/tasks/`).**
     - **Ensure the destination directory `.magic-vibe/ai/memory/tasks/` exists (e.g., using `list_dir` or `file_search`). If not, it will typically be created by `edit_file` if a file is written into it, or the `mv` command might create it.**
-    - **Use `run_terminal_cmd` to execute an `mv` command (e.g., `mv .magic-vibe/ai/tasks/task{id}_{descriptive_name}.md .magic-vibe/ai/memory/tasks/`).**
+    - **Use `run_terminal_cmd` to execute an `mv` command (e.g., `mv .magic-vibe/ai/tasks/task_{id}_{descriptive_name}.md .magic-vibe/ai/memory/tasks/`).**
   - Append entries to `.magic-vibe/ai/memory/TASKS_LOG.md` using the new format (Title, Status, Timestamp, Dependencies, Description) via `read_file` and `edit_file`.
   - After moving the file, check for and execute any `task_archival` hooks.
-  - Remove corresponding entries from `.magic-vibe/ai/tasks/TASKS.md` via `read_file` and `edit_file`.
+  - Remove corresponding entries from `.magic-vibe/ai/TASKS.md` via `read_file` and `edit_file`.
 
 ## Utilities
 

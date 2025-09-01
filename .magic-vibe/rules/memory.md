@@ -33,11 +33,11 @@ The memory system consists of:
 - **Log Entry Format Example for PLANS_LOG.md:**
 
   ```markdown
-  - **Archived Plan:** `.magic-vibe/ai/memory/plans/plan-old-feature.md`
+  - **Archived Plan:** `.magic-vibe/ai/memory/plans/plan-42-old-feature.md`
     - **Archived On:** YYYY-MM-DD HH:MM:SS
     - **Reason:** Deprecated
     - **Title:** PRD: Old Feature
-    - **Original File (Optional):** {.magic-vibe/ai/plans/plan-old-feature.md}
+    - **Original File (Optional):** {.magic-vibe/ai/plans/plan-42-old-feature.md}
   ```
 
 ## Directory and File Management

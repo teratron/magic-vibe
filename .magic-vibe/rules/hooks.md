@@ -72,11 +72,11 @@ The agent must check for hooks whenever one of the following primary events occu
 
 | `type` (in YAML)       | `trigger` (in YAML)                            | When to Check                                                                                                                                                  |
 |------------------------|------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `task_creation`        | `created`                                      | Immediately after a new task file (`task...md`) is successfully created in `.magic-vibe/ai/tasks/`.                                                                       |
+| `task_creation`        | `created`                                      | Immediately after a new task file (`task...md`) is successfully created in `.magic-vibe/ai/tasks/`.                                                            |
 | `task_status_change`   | `pending`, `inprogress`, `completed`, `failed` | Immediately after a task's `status` field is changed in its YAML frontmatter.                                                                                  |
-| `task_archival`        | `archived`                                     | Immediately after a task file is successfully moved from `.magic-vibe/ai/tasks/` to `.magic-vibe/ai/memory/tasks/`.                                                                  |
-| `plan_creation`        | `created`                                      | Immediately after a new plan file (`plan-...md` or `PLANS.md`) is successfully created in `.magic-vibe/ai/plans/`.                                                        |
-| `plan_update`          | `updated`                                      | Immediately after an existing plan file in `.magic-vibe/ai/plans/` is successfully modified.                                                                              |
+| `task_archival`        | `archived`                                     | Immediately after a task file is successfully moved from `.magic-vibe/ai/tasks/` to `.magic-vibe/ai/memory/tasks/`.                                            |
+| `plan_creation`        | `created`                                      | Immediately after a new plan file (`plan-...md` or `plan-{id}-...md` or `PLANS.md`) is successfully created in `.magic-vibe/ai/plans/`.                        |
+| `plan_update`          | `updated`                                      | Immediately after an existing plan file in `.magic-vibe/ai/plans/` is successfully modified.                                                                   |
 | `git_commit`           | `after`                                        | Immediately after the agent successfully executes a `git commit` command.                                                                                      |
 | `git_push`             | `before`, `after`                              | `before`: Immediately before the agent executes a `git push` command. A failing hook should stop the push. `after`: Immediately after a successful `git push`. |
 | `documentation_update` | `generated`, `updated`                         | `generated`: After automatic documentation generation. `updated`: After manual documentation updates.                                                          |
@@ -86,19 +86,19 @@ The agent must check for hooks whenever one of the following primary events occu
 
 When executing a hook's action, the agent **must** replace the following placeholder variables in the command string with the actual values from the event's context.
 
-| Variable               | Description                                                   | Example Value                     | Available for...         |
-|------------------------|---------------------------------------------------------------|-----------------------------------|--------------------------|
-| `{{task.id}}`          | The full ID of the task (e.g., `42` or `42.1`).               | `42.1`                            | `task_*` events          |
-| `{{task.title}}`       | The title of the task.                                        | `Implement User Login API`        | `task_*` events          |
-| `{{task.status}}`      | The **current** status of the task.                           | `completed`                       | `task_*` events          |
-| `{{task.commit_type}}` | The `commit_type` from the task's YAML (e.g., `feat`, `fix`). | `feat`                            | `task_*` events          |
-| `{{task.feature}}`     | The `feature` from the task's YAML.                           | `User Authentication`             | `task_*` events          |
-| `{{task.path}}`        | The full path to the task file.                               | `.magic-vibe/ai/tasks/task42.1_login.md`     | `task_*` events          |
-| `{{plan.title}}`       | The title of the plan.                                        | `PRD: User Authentication`        | `plan_*` events          |
-| `{{plan.path}}`        | The full path to the plan file.                               | `.magic-vibe/ai/plans/plan-auth.md` | `plan_*` events          |
-| `{{git.commit_hash}}`  | The full SHA hash of the latest commit.                       | `a1b2c3d4...`                     | `git_commit`, `git_push` |
-| `{{git.branch}}`       | The current branch name.                                      | `feature/user-auth`               | `git_commit`, `git_push` |
-| `{{git.remote}}`       | The remote name for a push (e.g., `origin`).                  | `origin`                          | `git_push`               |
+| Variable               | Description                                                   | Example Value                             | Available for...         |
+|------------------------|---------------------------------------------------------------|-------------------------------------------|--------------------------|
+| `{{task.id}}`          | The full ID of the task (e.g., `42` or `42.1`).               | `42.1`                                    | `task_*` events          |
+| `{{task.title}}`       | The title of the task.                                        | `Implement User Login API`                | `task_*` events          |
+| `{{task.status}}`      | The **current** status of the task.                           | `completed`                               | `task_*` events          |
+| `{{task.commit_type}}` | The `commit_type` from the task's YAML (e.g., `feat`, `fix`). | `feat`                                    | `task_*` events          |
+| `{{task.feature}}`     | The `feature` from the task's YAML.                           | `User Authentication`                     | `task_*` events          |
+| `{{task.path}}`        | The full path to the task file.                               | `.magic-vibe/ai/tasks/task_42.1_login.md` | `task_*` events          |
+| `{{plan.title}}`       | The title of the plan.                                        | `PRD: User Authentication`                | `plan_*` events          |
+| `{{plan.path}}`        | The full path to the plan file.                               | `.magic-vibe/ai/plans/plan-42-auth.md`    | `plan_*` events          |
+| `{{git.commit_hash}}`  | The full SHA hash of the latest commit.                       | `a1b2c3d4...`                             | `git_commit`, `git_push` |
+| `{{git.branch}}`       | The current branch name.                                      | `feature/user-auth`                       | `git_commit`, `git_push` |
+| `{{git.remote}}`       | The remote name for a push (e.g., `origin`).                  | `origin`                                  | `git_push`               |
 
 **Note:** Variables are only available for their specified event types. For example, `task.*` variables are only available for `task_*` events.
 
@@ -108,7 +108,7 @@ The agent **must** follow this precise workflow whenever a trigger event occurs:
 
 1. **Identify Trigger Event:** Recognize that an action you just performed is a trigger event (e.g., "I have just changed the status of task `42.1` to `completed`" or "I am about to run `git push`").
 2. **Discover Hooks:**
-    - Check if the `.magic-vibe/ai/hooks/` directory exists. If not, there are no hooks to run.
+    - Check if the `.magic-vibe/rules/hooks/` or `.magic-vibe/ai/hooks/` directory exists. If not, there are no hooks to run.
     - If it exists, list all files ending in `.hook.md` within it.
 3. **Filter and Sort Hooks:**
     - For each `.hook.md` file found:
@@ -125,7 +125,7 @@ The agent **must** follow this precise workflow whenever a trigger event occurs:
 
 ## Example Hook: Auto Git Commit on Task Completion
 
-**File: `.magic-vibe/ai/hooks/commit-on-complete.hook.md`**
+**File: `.magic-vibe/rules/hooks/commit-on-complete.hook.md`**
 
 ```yaml
 ---

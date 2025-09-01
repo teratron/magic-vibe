@@ -112,19 +112,19 @@ Use the version manager script for manual version control:
 
 ```bash
 # Show current versions
-./.vscode/rules/.magic-vibe/version-manager.sh show
+./.magic-vibe/version-manager.sh show
 
 # Bump project version
-./.vscode/rules/.magic-vibe/version-manager.sh bump-project minor
+./.magic-vibe/version-manager.sh bump-project minor
 
 # Set specific project version
-./.vscode/rules/.magic-vibe/version-manager.sh set-project 2.0.0
+./.magic-vibe/version-manager.sh set-project 2.0.0
 
 # Bump documentation version
-./.vscode/rules/.magic-vibe/version-manager.sh bump-docs patch
+./.magic-vibe/version-manager.sh bump-docs patch
 
 # Set specific documentation version
-./.vscode/rules/.magic-vibe/version-manager.sh set-docs 1.5.0
+./.magic-vibe/version-manager.sh set-docs 1.5.0
 ```
 
 ### Version Commands
@@ -153,7 +153,7 @@ Version information is displayed via badges in README files:
 ```markdown
 [![Project Version](https://img.shields.io/badge/Project-v0.1.0-blue.svg)](https://gitverse.ru/zigenzoog/template-ai-rules/releases)
 [![Documentation Version](https://img.shields.io/badge/Docs-v0.1.0-green.svg)](../)
-[![Magic Vibe](https://img.shields.io/badge/Task%20Magic-v0.2.1-orange.svg)](../.vscode/rules/.magic-vibe/)
+[![Magic Vibe](https://img.shields.io/badge/Task%20Magic-v0.2.1-orange.svg)](../.magic-vibe/)
 ```
 
 ### Documentation Headers
@@ -220,7 +220,7 @@ Each task completion adds version tracking to documentation indexes:
 **Type:** feat  
 **Documentation Version:** 1.0.5  
 
-[View Documentation](tasks/task42_user_management.md)
+[View Documentation](.magic-vibe/ai/tasks/task_42_user_management.md)
 ```
 
 ### Version History Logs

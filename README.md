@@ -55,17 +55,17 @@ A standardized set of development guidelines, workflows, and best practices opti
 
 ### 🎯 Task Management System
 
-**[Task Magic System](.vscode/rules/.task-magic/)** - Comprehensive workflow management framework for AI agents:
+**[Magic Vibe System](.magic-vibe/rules/)** - Comprehensive workflow management framework for AI agents:
 
-- **[README](.vscode/rules/.task-magic/README.md)** - English documentation
-- **[README на русском](.vscode/rules/.task-magic/README.ru.md)** - Russian documentation
-- **[Index](.vscode/rules/.task-magic/_index.md)** - System overview
-- **[Workflow](.vscode/rules/.task-magic/workflow.md)** - Process management
-- **[Tasks](.vscode/rules/.task-magic/tasks.md)** - Task definition and tracking
-- **[Plans](.vscode/rules/.task-magic/plans.md)** - Project planning strategies
-- **[Memory](.vscode/rules/.task-magic/memory.md)** - Context management
-- **[Expand](.vscode/rules/.task-magic/expand.md)** - Scalability patterns
-- **[Hooks](.vscode/rules/.task-magic/hooks.md)** - Event-driven automation
+- **[README](.magic-vibe/rules/README.md)** - English documentation
+- **[README на русском](.magic-vibe/rules/README.ru.md)** - Russian documentation
+- **[Index](.magic-vibe/rules/_index.md)** - System overview
+- **[Workflow](.magic-vibe/rules/workflow.md)** - Process management
+- **[Tasks](.magic-vibe/rules/tasks.md)** - Task definition and tracking
+- **[Plans](.magic-vibe/rules/plans.md)** - Project planning strategies
+- **[Memory](.magic-vibe/rules/memory.md)** - Context management
+- **[Expand](.magic-vibe/rules/expand.md)** - Scalability patterns
+- **[Hooks](.magic-vibe/rules/hooks.md)** - Event-driven automation
 
 ### 🏗️ Development Process Standards
 

@@ -8,8 +8,8 @@ graph TD
   B --> B1{Expansion Needed for Any Task?};
   B1 -- Yes --> B2["Define Sub-tasks & Update Parent Task Definitions to Parent Tasks (listing sub-tasks in parent\'s details)"];
   B1 -- No --> C;
-  B2 --> C["Update .magic-vibe/ai/tasks/TASKS.md with ALL Planned Tasks"];
-  C --> D["For Each Task in .magic-vibe/ai/tasks/TASKS.md"];
+  B2 --> C["Update .magic-vibe/ai/TASKS.md with ALL Planned Tasks"];
+  C --> D["For Each Task in .magic-vibe/ai/TASKS.md"];
   D -- Loop --> E["Create/Update Individual task file"];
   E --> E_HOOK["Check & Run 'task_creation' Hooks"];
   E_HOOK --> F["Populate YAML & Markdown Body"];
@@ -32,5 +32,5 @@ graph TD
   T --> U["Move task files to .magic-vibe/ai/memory/tasks/"];
   U --> U_HOOK["Check & Run 'task_archival' Hooks"];
   U_HOOK --> V["Append to .magic-vibe/ai/memory/TASKS_LOG.md"];
-  V --> W["Remove entries from .magic-vibe/ai/tasks/TASKS.md"];
+  V --> W["Remove entries from .magic-vibe/ai/TASKS.md"];
 ```
