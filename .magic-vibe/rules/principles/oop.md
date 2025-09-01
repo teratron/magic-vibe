@@ -426,4 +426,4 @@ OOP principles work together with:
 - **KISS principle** by keeping class interfaces simple
 - **YAGNI principle** by not over-engineering class hierarchies
 
-Remember: Good OOP design creates code that is maintainable, extensible, and easy to understand while avoiding common pitfalls and anti-patterns.
+**Remember:** Good OOP design creates code that is maintainable, extensible, and easy to understand while avoiding common pitfalls and anti-patterns.
