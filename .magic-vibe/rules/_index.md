@@ -13,7 +13,7 @@ Whenever you use this rule, start your message with the following:
 The Magic Vibe system is a file-based project management and AI agent operational framework designed to plan features, manage development tasks, and maintain a memory past work.
 It consists of several components, each governed by its own detailed rule file. Use the specified rule for each action.
 
-## Core Components & Actions
+## Core System Components
 
 1. **To Create or Update a Plan (PRD):**
     - **Use Rule:** `@plans.md`
@@ -33,3 +33,21 @@ It consists of several components, each governed by its own detailed rule file. 
 6. **To Manage Versions:**
     - **Use Rule:** `@versioning.md`
     - **Action:** Handle automatic versioning for both project and documentation. The system automatically increments documentation versions on task completion and manages project versions through manual commands.
+
+## Development Principles & Guidelines
+
+1. **To Apply Object-Oriented Programming Principles:**
+    - **Use Rule:** `@principles/oop.md`
+    - **Action:** Ensure code follows fundamental OOP principles including encapsulation, inheritance, polymorphism, and abstraction.
+2. **To Apply SOLID Design Principles:**
+    - **Use Rule:** `@principles/solid.md`
+    - **Action:** Follow the five SOLID principles (SRP, OCP, LSP, ISP, DIP) for maintainable and flexible software design.
+3. **To Apply DRY Principle:**
+    - **Use Rule:** `@principles/dry.md`
+    - **Action:** Eliminate code duplication and ensure single source of truth for knowledge and logic.
+4. **To Apply KISS Principle:**
+    - **Use Rule:** `@principles/kiss.md`
+    - **Action:** Keep code simple, clear, and maintainable by avoiding unnecessary complexity.
+5. **To Apply YAGNI Principle:**
+    - **Use Rule:** `@principles/yagni.md`
+    - **Action:** Implement only what is currently needed, avoiding over-engineering and speculative features.
