@@ -15,20 +15,59 @@ This rule specifies the technical details for how an AI agent should discover, i
 ## Core Concepts
 
 1. **Event-Driven Automation:** Hooks are actions that run automatically when a specific event occurs in the system (e.g., a task's status changes to `completed`).
-2. **File-Based Definition:** Each hook is defined in its own Markdown file (`.hook.md`) located in the `.magic-vibe/ai/hooks/` directory.
-3. **Agent Responsibility:** The AI agent is solely responsible for detecting trigger events during its workflow, finding the corresponding hook files, and executing their defined actions.
+2. **Dual Directory System:** The Magic Vibe system uses two directories for hooks:
+   - **System hooks** (`.magic-vibe/rules/hooks/`) - Core functionality for all users
+   - **User template hooks** (`.magic-vibe/ai/hooks/`) - Customizable templates for specific projects
+3. **File-Based Definition:** Each hook is defined in its own Markdown file (`.hook.md`) with YAML frontmatter for configuration.
+4. **Agent Responsibility:** The AI agent is solely responsible for detecting trigger events during its workflow, finding the corresponding hook files from both directories, and executing their defined actions.
 
 ## Directory Structure
 
-All hook definition files **must** be located in the `.magic-vibe/ai/hooks/` directory. The agent should check for the existence of this directory before attempting to find hooks.
+The Magic Vibe system uses two distinct directories for hook files, each serving a different purpose:
+
+### System-Wide Hooks (`.magic-vibe/rules/hooks/`)
+
+This directory contains **system-wide hooks** that are common to all users and essential for the overall operation of the Magic Vibe rule system. These hooks are:
+
+- Part of the core system functionality
+- Shared across all project implementations
+- Maintained as part of the template repository
+- Should not be modified by end users
+
+```yaml
+.magic-vibe/rules/
+  hooks/                           # System-wide hooks directory
+    comprehensive-docs.hook.md     # Core documentation generation
+    generate-docs.hook.md          # Basic documentation automation
+    update-project-docs.hook.md    # Project documentation updates
+    version-management.hook.md     # Version tracking system
+    ...                            # Other system hooks
+```
+
+### User Template Hooks (`.magic-vibe/ai/hooks/`)
+
+This directory contains **user template hooks** that serve as examples and templates for custom user implementations. These hooks are:
+
+- Templates and examples for user customization
+- Project-specific implementations
+- Can be modified, extended, or replaced by users
+- Provide starting points for common automation patterns
 
 ```yaml
 .magic-vibe/ai/
-  hooks/                        # Parent directory for all hook definitions
-    commit-on-complete.hook.md  # Example: A hook that runs on task completion
-    notify-on-fail.hook.md      # Example: A hook that sends a notification
-    ...                         # Other .hook.md files
+  hooks/                          # User template hooks directory
+    run-tests-before-push.hook.md # Example: Quality gate hook
+    slack-notify-on-fail.hook.md  # Example: Notification hook
+    ...                           # Other template hooks
 ```
+
+### Hook Discovery Priority
+
+The AI agent should check for hooks in **both directories** with the following priority:
+
+1. **System hooks** (`.magic-vibe/rules/hooks/`) are processed first
+2. **User hooks** (`.magic-vibe/ai/hooks/`) are processed second
+3. Hooks with the same priority are executed in alphabetical order within each directory
 
 ## Hook File Format
 
@@ -108,14 +147,15 @@ The agent **must** follow this precise workflow whenever a trigger event occurs:
 
 1. **Identify Trigger Event:** Recognize that an action you just performed is a trigger event (e.g., "I have just changed the status of task `42.1` to `completed`" or "I am about to run `git push`").
 2. **Discover Hooks:**
-    - Check if the `.magic-vibe/rules/hooks/` or `.magic-vibe/ai/hooks/` directory exists. If not, there are no hooks to run.
-    - If it exists, list all files ending in `.hook.md` within it.
+    - Check if the `.magic-vibe/rules/hooks/` directory exists. If it exists, list all files ending in `.hook.md` within it.
+    - Check if the `.magic-vibe/ai/hooks/` directory exists. If it exists, list all files ending in `.hook.md` within it.
+    - Combine both lists of hook files for processing.
 3. **Filter and Sort Hooks:**
-    - For each `.hook.md` file found:
+    - For each `.hook.md` file found in both directories:
         - Read the file content.
         - Parse its YAML frontmatter.
         - **Filter:** Keep only the hooks where `enabled: true` AND the `type` and `trigger` values exactly match the event that just occurred.
-    - **Sort:** Sort the remaining, valid hooks in ascending order based on their `priority`. If priorities are equal, sort them alphabetically by filename.
+    - **Sort:** Sort the remaining, valid hooks in ascending order based on their `priority`. If priorities are equal, process system hooks (`.magic-vibe/rules/hooks/`) before user hooks (`.magic-vibe/ai/hooks/`), then sort alphabetically by filename within each directory.
 4. **Execute Hooks in Order:**
     - For each sorted hook:
         - **Extract Action:** Get the shell command from the fenced code block in the hook's Markdown body.
@@ -123,7 +163,9 @@ The agent **must** follow this precise workflow whenever a trigger event occurs:
         - **Execute:** Use the `run_terminal_cmd` tool to execute the final command string.
         - **Handle Errors:** If a hook command fails, log the error. For `before` triggers (like `git_push`), a failure **must** prevent the subsequent action (e.g., the `git push` command should not be executed). For other triggers, the agent should log the error and continue to the next hook.
 
-## Example Hook: Auto Git Commit on Task Completion
+## Example Hooks
+
+### System Hook Example: Auto Git Commit on Task Completion
 
 **File: `.magic-vibe/rules/hooks/commit-on-complete.hook.md`**
 
@@ -147,7 +189,9 @@ COMMIT_SCOPE="{{task.feature}}"
 git commit -am "${COMMIT_TYPE:-chore}(${COMMIT_SCOPE:-tasks}): {{task.title}} (task #{{task.id}})"
 ```
 
-### Notification Hook
+### User Template Hook Example: Notification Hook
+
+**File: `.magic-vibe/ai/hooks/notify-on-fail.hook.md`**
 
 ```yaml
 ---
@@ -167,7 +211,9 @@ This hook sends a notification when a task is marked as failed:
 echo "Task {{task.id}} - {{task.title}} has failed. See error log for details." | mail -s "Task Failure Alert" team@example.com
 ```
 
-### Documentation Generation Hook
+### System Hook Example: Documentation Generation Hook
+
+**File: `.magic-vibe/rules/hooks/generate-docs.hook.md`**
 
 ```yaml
 ---
@@ -234,8 +280,23 @@ You can disable a hook by setting `enabled: false` in its YAML frontmatter. You 
 
 ## Best Practices
 
-1. **Keep hooks simple**: Each hook should do one thing well.
-2. **Use descriptive filenames**: Name your hook files in a way that clearly indicates what they do.
-3. **Set appropriate priorities**: Consider the order in which hooks should execute.
-4. **Handle errors gracefully**: Make sure your hook actions can handle errors and won't break the Magic Vibe system if they fail.
-5. **Document your hooks**: Include a clear description of what each hook does and when it should be triggered.
+### For System Hooks (`.magic-vibe/rules/hooks/`)
+
+1. **Keep system-wide functionality**: Only include hooks that are essential for the Magic Vibe system operation.
+2. **Maintain compatibility**: Ensure system hooks work across different project types and configurations.
+3. **Use conservative priorities**: System hooks should typically use lower priority numbers (execute first).
+4. **Document thoroughly**: System hooks should have comprehensive documentation since they affect all users.
+
+### For User Template Hooks (`.magic-vibe/ai/hooks/`)
+
+1. **Provide clear examples**: Template hooks should demonstrate common automation patterns.
+2. **Keep templates simple**: Each template hook should do one thing well and be easy to understand.
+3. **Include customization notes**: Document how users should modify the templates for their needs.
+4. **Use descriptive filenames**: Name template files to clearly indicate their purpose and usage.
+
+### General Hook Guidelines
+
+1. **Set appropriate priorities**: Consider the order in which hooks should execute, with system hooks typically having precedence.
+2. **Handle errors gracefully**: Make sure hook actions can handle errors and won't break the Magic Vibe system if they fail.
+3. **Use environment variables**: For user-specific configuration (like API keys), use environment variables with clear documentation.
+4. **Test hook interactions**: Ensure hooks work correctly when multiple hooks are triggered by the same event.
