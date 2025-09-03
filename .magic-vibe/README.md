@@ -143,31 +143,31 @@ touch .magic-vibe/ai/memory/TASKS_LOG.md
 
 ### 2. Let AI Discover Your Project
 
-```
+```text
 Initialize Magic Vibe system for this project
 ```
 
-*AI will scan and report detected languages, frameworks, and applicable rules*
+***AI will scan and report detected languages, frameworks, and applicable rules***
 
 ### 3. Create Your First Plan
 
-```
+```text
 @.magic-vibe/rules/core/plans.md create a plan for user authentication
 ```
 
 ### 4. Generate Tasks from Plans
 
-```
+```text
 @.magic-vibe/rules/core/tasks.md generate tasks for the authentication plan
 ```
 
 ### 5. Start Development
 
-```
+```text
 Start working on the first authentication task
 ```
 
-*AI will apply relevant language and framework rules automatically*
+***AI will apply relevant language and framework rules automatically***
 
 ## 🔗 Integration with VS Code Rules
 
@@ -191,6 +191,6 @@ Magic Vibe complements existing `.vscode/rules/` systems:
 
 ---
 
-*Magic Vibe System v2.1.0 - Intelligent AI Agent Workflow Management*
+***Magic Vibe System v2.1.0** - Intelligent AI Agent Workflow Management*
 
 *Based on [Task Magic](https://github.com/iannuttall/task-magic) with comprehensive enhancements for modern AI-assisted development.*

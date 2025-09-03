@@ -45,15 +45,15 @@ find . -maxdepth 3 -type f \( -name ".gitignore" -o -name ".pre-commit-config.ya
 
 Priority files to analyze for context detection:
 
-| File | Language/Framework | Information Extracted |
-|------|-------------------|----------------------|
-| `package.json` | JavaScript/TypeScript | Dependencies, scripts, framework detection |
-| `requirements.txt` | Python | Package dependencies |
-| `pyproject.toml` | Python | Modern Python project configuration |
-| `Cargo.toml` | Rust | Dependencies and project metadata |
-| `CMakeLists.txt` | C++ | Build configuration and dependencies |
-| `go.mod` | Go | Module dependencies |
-| `composer.json` | PHP | Package dependencies |
+| File               | Language/Framework    | Information Extracted                      |
+|--------------------|-----------------------|--------------------------------------------|
+| `package.json`     | JavaScript/TypeScript | Dependencies, scripts, framework detection |
+| `requirements.txt` | Python                | Package dependencies                       |
+| `pyproject.toml`   | Python                | Modern Python project configuration        |
+| `Cargo.toml`       | Rust                  | Dependencies and project metadata          |
+| `CMakeLists.txt`   | C++                   | Build configuration and dependencies       |
+| `go.mod`           | Go                    | Module dependencies                        |
+| `composer.json`    | PHP                   | Package dependencies                       |
 
 ## Phase 2: Context Detection
 
@@ -214,24 +214,24 @@ def detect_workflows(project_structure, git_info):
 
 ### Rule Selection Matrix
 
-| Context Type | Detection Method | Rule Applied | Priority |
-|--------------|------------------|--------------|----------|
-| **Core System** | Always | `@core/*.md` | 1 (Highest) |
-| **Python Project** | `.py` files, `requirements.txt` | `@languages/python.md` | 2 |
-| **TypeScript Project** | `.ts/.tsx` files, `tsconfig.json` | `@languages/typescript.md` | 2 |
-| **C++ Project** | `.cpp/.hpp` files, `CMakeLists.txt` | `@languages/cpp.md` | 2 |
-| **Rust Project** | `.rs` files, `Cargo.toml` | `@languages/rust.md` | 2 |
-| **React Project** | `react` in dependencies | `@frameworks/react.md` | 3 |
-| **Next.js Project** | `next` in dependencies | `@frameworks/nextjs.md` | 3 |
-| **Vue Project** | `vue` in dependencies | `@frameworks/vue.md` | 3 |
-| **FastAPI Project** | `fastapi` in requirements | `@frameworks/fastapi.md` | 3 |
-| **TailwindCSS** | `tailwindcss` in dependencies | `@frameworks/tailwindcss.md` | 3 |
-| **Git Repository** | `.git` directory | `@workflows/gitflow.md` | 4 |
-| **Trunk-based** | Single main branch | `@workflows/trunk-based-development.md` | 4 |
-| **Code Quality** | Linting/formatting tools | `@workflows/code-quality.md` | 4 |
-| **Clean Code** | Always | `@workflows/clean-code.md` | 4 |
-| **Commit Standards** | Git repository | `@workflows/commit-messages.md` | 4 |
-| **Development Principles** | Always | `@principles/*.md` | 5 (Lowest) |
+| Context Type               | Detection Method                    | Rule Applied                            | Priority    |
+|----------------------------|-------------------------------------|-----------------------------------------|-------------|
+| **Core System**            | Always                              | `@core/*.md`                            | 1 (Highest) |
+| **Python Project**         | `.py` files, `requirements.txt`     | `@languages/python.md`                  | 2           |
+| **TypeScript Project**     | `.ts/.tsx` files, `tsconfig.json`   | `@languages/typescript.md`              | 2           |
+| **C++ Project**            | `.cpp/.hpp` files, `CMakeLists.txt` | `@languages/cpp.md`                     | 2           |
+| **Rust Project**           | `.rs` files, `Cargo.toml`           | `@languages/rust.md`                    | 2           |
+| **React Project**          | `react` in dependencies             | `@frameworks/react.md`                  | 3           |
+| **Next.js Project**        | `next` in dependencies              | `@frameworks/nextjs.md`                 | 3           |
+| **Vue Project**            | `vue` in dependencies               | `@frameworks/vue.md`                    | 3           |
+| **FastAPI Project**        | `fastapi` in requirements           | `@frameworks/fastapi.md`                | 3           |
+| **TailwindCSS**            | `tailwindcss` in dependencies       | `@frameworks/tailwindcss.md`            | 3           |
+| **Git Repository**         | `.git` directory                    | `@workflows/gitflow.md`                 | 4           |
+| **Trunk-based**            | Single main branch                  | `@workflows/trunk-based-development.md` | 4           |
+| **Code Quality**           | Linting/formatting tools            | `@workflows/code-quality.md`            | 4           |
+| **Clean Code**             | Always                              | `@workflows/clean-code.md`              | 4           |
+| **Commit Standards**       | Git repository                      | `@workflows/commit-messages.md`         | 4           |
+| **Development Principles** | Always                              | `@principles/*.md`                      | 5 (Lowest)  |
 
 ### Automatic Rule Selection Function
 
@@ -344,7 +344,7 @@ When rules conflict, apply this resolution hierarchy:
 
 ### Example Rule Application Output
 
-```
+```text
 Initializing Magic Vibe rule discovery...
 
 Project Analysis Results:
