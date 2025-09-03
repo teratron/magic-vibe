@@ -16,6 +16,7 @@ This document defines how AI agents should automatically discover and apply the 
 ## Discovery Algorithm Overview
 
 The rule discovery system operates in four phases:
+
 1. **Project Scanning** - Analyze project structure and files
 2. **Context Detection** - Identify languages, frameworks, and workflows
 3. **Rule Selection** - Choose applicable rules based on detected context

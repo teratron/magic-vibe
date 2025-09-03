@@ -60,6 +60,8 @@ For framework-based development:
 - **FastAPI Projects:** `@frameworks/fastapi.md`
 - **TailwindCSS:** `@frameworks/tailwindcss.md`
 - **Svelte Applications:** `@frameworks/svelte.md`
+- **SASS/SCSS Styling:** `@frameworks/sass.md`
+- **Database Integration:** `@frameworks/database.md`
 
 ### Workflow Rules
 

@@ -10,10 +10,13 @@ Framework-specific rules for AI agents to apply when working with projects using
 - **[FastAPI](fastapi.md)** - FastAPI development patterns, async programming, API design
 - **[TailwindCSS](tailwindcss.md)** - Utility-first CSS framework patterns and best practices
 - **[Svelte](svelte.md)** - Svelte component patterns, reactivity, SvelteKit integration
+- **[SASS/SCSS](sass.md)** - SASS/SCSS coding style guide, BEM methodology, file organization
+- **[Database](database.md)** - Database best practices with Prisma and Supabase integration
 
 ## Auto-Detection
 
 AI agents automatically detect frameworks by analyzing:
+
 - Package dependencies in configuration files
 - Import statements and framework-specific usage patterns
 - Configuration files and directory structures

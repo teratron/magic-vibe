@@ -13,6 +13,7 @@
 Magic Vibe now features a **dual-architecture system**:
 
 ### Core Magic Vibe System (`.magic-vibe/`)
+
 File-based project management with intelligent rule discovery:
 
 1. **Plans (`.magic-vibe/ai/plans/`)**:
@@ -48,19 +49,21 @@ Automatically detects project context and applies relevant rules:
 ## 🚀 Key Features
 
 ### Intelligent Context Detection
+
 - **Automatic Language Detection:** Scans file extensions, config files, and project structure
 - **Framework Recognition:** Identifies React, Vue, Next.js, FastAPI, and more
 - **Workflow Analysis:** Detects Git patterns, CI/CD setup, and quality tools
 - **Smart Rule Application:** Applies relevant rules based on detected context
 
 ### Comprehensive Rule Coverage
+
 - **4 Programming Languages:** Python, TypeScript/JavaScript, C++, Rust
 - **6+ Frameworks:** React, Vue, Next.js, FastAPI, TailwindCSS, Svelte
 - **5 Workflow Standards:** Git, Trunk-based Development, Clean Code, Quality Assurance
 - **5 Development Principles:** OOP, SOLID, DRY, KISS, YAGNI
 
-
 ### Rule Priority and Conflict Resolution
+
 - **Hierarchical Application:** Core > Language > Framework > Workflow > Principles
 - **Specificity Wins:** More specific rules override general ones
 - **Intelligent Composition:** Rules complement rather than conflict
@@ -103,20 +106,25 @@ Automatically detects project context and applies relevant rules:
 Magic Vibe is designed for seamless AI agent integration:
 
 ### Automatic Rule Discovery
+
 AI agents automatically:
+
 1. **Scan Project Context:** Detect languages, frameworks, and workflows
 2. **Select Applicable Rules:** Choose relevant rules based on project analysis
 3. **Apply Rule Hierarchy:** Execute rules in priority order with conflict resolution
 4. **Report Active Rules:** Inform users which rules are being applied
 
 ### Manual Rule Guidance
+
 For specific control, use @-tags:
+
 - `@.magic-vibe/rules/core/tasks.md` - Core task management
 - `@.magic-vibe/rules/languages/python.md` - Python-specific rules
 - `@.magic-vibe/rules/frameworks/react.md` - React development patterns
 - `@.magic-vibe/rules/workflows/clean-code.md` - Code quality standards
 
 ### Context Integration
+
 - **Automatic Context:** `_index.md` files provide system overviews
 - **On-demand Rules:** Specific rule files loaded when relevant
 - **Dynamic Adaptation:** Rules adapt to project changes and growth
@@ -124,6 +132,7 @@ For specific control, use @-tags:
 ## 🚀 Getting Started
 
 ### 1. Initialize Magic Vibe Structure
+
 ```bash
 # AI agents will create these automatically, or create manually:
 mkdir -p .magic-vibe/ai/{plans,tasks,memory,hooks}
@@ -133,30 +142,37 @@ touch .magic-vibe/ai/memory/TASKS_LOG.md
 ```
 
 ### 2. Let AI Discover Your Project
+
 ```
 Initialize Magic Vibe system for this project
 ```
+
 *AI will scan and report detected languages, frameworks, and applicable rules*
 
 ### 3. Create Your First Plan
+
 ```
 @.magic-vibe/rules/core/plans.md create a plan for user authentication
 ```
 
 ### 4. Generate Tasks from Plans
+
 ```
 @.magic-vibe/rules/core/tasks.md generate tasks for the authentication plan
 ```
 
 ### 5. Start Development
+
 ```
 Start working on the first authentication task
 ```
+
 *AI will apply relevant language and framework rules automatically*
 
 ## 🔗 Integration with VS Code Rules
 
 Magic Vibe complements existing `.vscode/rules/` systems:
+
 - **Unified Standards:** Consistent rules across AI editors
 - **Template Compatibility:** Works with Cursor, Windsurf, and other AI IDEs
 - **Migration Support:** Smooth transition from .vscode-based rules

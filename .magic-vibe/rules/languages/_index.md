@@ -27,6 +27,7 @@ AI agents automatically detect the primary programming language(s) in a project 
 ## Detection Priority
 
 When multiple languages are detected in a project:
+
 1. **Primary Language:** The language with the most source files
 2. **Configuration Language:** Languages with build/config files present
 3. **Imported Languages:** Languages used in dependencies or modules
@@ -38,6 +39,7 @@ Language rules are applied alongside core Magic Vibe rules and should complement
 ## Conflict Resolution
 
 If language rules conflict with each other or core rules:
+
 - More specific language rules take precedence over general ones
 - Language rules supplement but don't override core Magic Vibe functionality
 - When multiple languages conflict, prioritize the primary project language

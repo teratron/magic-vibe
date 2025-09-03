@@ -29,18 +29,21 @@ Workflow rules are applied based on:
 ## Workflow Integration Patterns
 
 ### Git-Based Workflows
+
 - **Feature Branch Workflow:** Suitable for small to medium teams
 - **Gitflow:** Comprehensive branching model for larger projects
 - **Trunk-Based Development:** High-velocity development with CI/CD
 - **GitHub Flow:** Simplified workflow for continuous deployment
 
 ### Quality Assurance Workflows
+
 - **Code Review Process:** Pull request workflows and review standards
 - **Automated Testing:** CI/CD integration with test automation
 - **Code Quality Gates:** Linting, formatting, and quality metrics
 - **Documentation Standards:** Inline docs, README files, API documentation
 
 ### Development Process Workflows
+
 - **Task Management:** Integration with issue tracking and project management
 - **Release Management:** Versioning, tagging, and release processes
 - **Deployment Workflows:** Staging, production deployment patterns
@@ -59,6 +62,7 @@ Workflow rules should be applied consistently across all projects regardless of 
 ## Precedence and Conflicts
 
 When workflow rules conflict with language or framework rules:
+
 1. **Process Over Implementation:** Workflow rules define the "how" of development
 2. **Language/Framework Specifics:** Technical rules adapt to workflow requirements
 3. **Project Context:** Consider team size, timeline, and quality requirements
@@ -67,6 +71,7 @@ When workflow rules conflict with language or framework rules:
 ## Integration with Magic Vibe Core
 
 Workflow rules complement Magic Vibe core functionality:
+
 - **Task Management:** Workflow rules inform how tasks should be executed
 - **Planning:** Development workflows influence plan structure and timing
 - **Hooks:** Workflow events can trigger automated actions

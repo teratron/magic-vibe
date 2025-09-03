@@ -12,6 +12,7 @@ Programming language-specific rules for AI agents to apply when working with pro
 ## Auto-Detection
 
 AI agents automatically detect programming languages based on:
+
 - File extensions and source code patterns
 - Project configuration files (package.json, requirements.txt, etc.)
 - Build system files and tooling configurations

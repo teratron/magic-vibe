@@ -21,42 +21,49 @@ This directory contains the core Magic Vibe system rules that provide essential 
 ## Core System Responsibilities
 
 ### Task Management (`@core/tasks.md`)
+
 - Create and manage individual development tasks
 - Track task status and dependencies
 - Maintain task synchronization with TASKS.md file
 - Handle task lifecycle from creation to completion or archival
 
 ### Planning (`@core/plans.md`)
+
 - Generate Product Requirements Documents (PRDs)
 - Define feature specifications and requirements
 - Coordinate plan-to-task breakdown
 - Maintain plan versioning and updates
 
 ### Automation (`@core/hooks.md`)
+
 - Execute automated actions based on system events
 - Coordinate between system-wide and user-specific hooks
 - Handle trigger event detection and hook execution
 - Manage hook priority and conflict resolution
 
 ### Archive Management (`@core/memory.md`)
+
 - Archive completed and failed tasks/plans
 - Maintain project history and knowledge base
 - Organize archived items for future reference
 - Support knowledge retrieval and learning
 
 ### Task Analysis (`@core/expand.md`)
+
 - Analyze task complexity and scope
 - Provide decomposition recommendations
 - Guide task sizing and estimation
 - Support hierarchical task structures
 
 ### Version Control (`@core/versioning.md`)
+
 - Manage project version tracking
 - Coordinate documentation versioning
 - Handle automated version increments
 - Support release management workflows
 
 ### Process Coordination (`@core/workflow.md`)
+
 - Coordinate overall Magic Vibe system processes
 - Manage workflow state and transitions
 - Handle cross-component integration
@@ -65,6 +72,7 @@ This directory contains the core Magic Vibe system rules that provide essential 
 ## Application Priority
 
 Core rules have the highest priority in the Magic Vibe system:
+
 1. **Always Applied:** Core rules are mandatory for all Magic Vibe operations
 2. **Foundation Layer:** Other rule categories build upon core functionality
 3. **System Integrity:** Core rules ensure system consistency and reliability
@@ -73,6 +81,7 @@ Core rules have the highest priority in the Magic Vibe system:
 ## Integration with Other Rule Categories
 
 Core rules provide the foundation that other rule categories extend:
+
 - **Language Rules:** Apply language-specific practices within core task management
 - **Framework Rules:** Implement framework patterns using core planning and task structure
 - **Workflow Rules:** Enhance core processes with specific development workflows
@@ -81,6 +90,7 @@ Core rules provide the foundation that other rule categories extend:
 ## System Dependencies
 
 Core rules manage critical Magic Vibe directories and files:
+
 - `.magic-vibe/ai/tasks/` - Active task files
 - `.magic-vibe/ai/plans/` - Active plan files  
 - `.magic-vibe/ai/memory/` - Archived items

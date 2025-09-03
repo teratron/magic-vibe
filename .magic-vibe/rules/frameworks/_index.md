@@ -16,6 +16,8 @@ This directory contains framework-specific rules that AI agents should apply whe
 - **FastAPI:** `@frameworks/fastapi.md` - FastAPI development patterns, async programming, API design
 - **TailwindCSS:** `@frameworks/tailwindcss.md` - Utility-first CSS framework patterns and best practices
 - **Svelte:** `@frameworks/svelte.md` - Svelte component patterns, reactivity, SvelteKit integration
+- **SASS/SCSS:** `@frameworks/sass.md` - SASS/SCSS coding style guide, BEM methodology, file organization
+- **Database:** `@frameworks/database.md` - Database best practices with Prisma and Supabase integration
 
 ## Rule Application
 
@@ -40,6 +42,7 @@ When multiple frameworks are detected, apply rules in this order:
 ## Framework Ecosystem Integration
 
 Frameworks often work together in a stack:
+
 - **Frontend + Meta-framework:** React + Next.js, Vue + Nuxt.js
 - **Frontend + Styling:** React + TailwindCSS, Vue + Vuetify
 - **Backend + Frontend:** FastAPI + React, Django + Vue
@@ -48,6 +51,7 @@ Frameworks often work together in a stack:
 ## Integration Guidelines
 
 Framework rules should be applied consistently while respecting the framework ecosystem:
+
 - Meta-framework rules take precedence over base framework rules
 - Styling framework rules supplement but don't override component framework rules
 - Backend framework rules are independent but can inform API design for frontend frameworks
@@ -56,6 +60,7 @@ Framework rules should be applied consistently while respecting the framework ec
 ## Conflict Resolution
 
 When framework rules conflict:
+
 1. **Specificity Wins:** More specific framework rules override general ones
 2. **Ecosystem Respect:** Follow the intended framework ecosystem patterns
 3. **Meta-framework Priority:** Meta-frameworks (Next.js, Nuxt.js) override base frameworks
