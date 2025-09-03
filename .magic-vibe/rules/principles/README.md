@@ -1,88 +1,23 @@
 # Development Principles
 
-This directory contains comprehensive guides for fundamental software development principles that should be applied during AI-assisted code generation and development.
+Universal development principles that AI agents should apply across all programming languages, frameworks, and project types to ensure high-quality, maintainable code.
 
 ## Available Principles
 
-### 1. Object-Oriented Programming (OOP)
+- **[Object-Oriented Programming](oop.md)** - Encapsulation, inheritance, polymorphism, and abstraction
+- **[SOLID Design Principles](solid.md)** - Five fundamental principles for maintainable design
+- **[DRY Principle](dry.md)** - "Don't Repeat Yourself" - eliminate code duplication
+- **[KISS Principle](kiss.md)** - "Keep It Simple, Stupid" - maintain simplicity
+- **[YAGNI Principle](yagni.md)** - "You Ain't Gonna Need It" - implement only what's needed
 
-**File:** `oop.md`  
-**Description:** Comprehensive guide covering the four fundamental OOP principles:
+## Universal Application
 
-- Encapsulation
-- Inheritance  
-- Polymorphism
-- Abstraction
+These principles apply to every piece of code regardless of programming language, framework, or project complexity. They form the foundation of quality software development practices.
 
-Includes practical examples, best practices, and common anti-patterns to avoid.
+## Principle Priority
 
-### 2. SOLID Design Principles
-
-**File:** `solid.md`  
-**Description:** Detailed coverage of all five SOLID principles:
-
-- **S**ingle Responsibility Principle (SRP)
-- **O**pen/Closed Principle (OCP)
-- **L**iskov Substitution Principle (LSP)
-- **I**nterface Segregation Principle (ISP)
-- **D**ependency Inversion Principle (DIP)
-
-Each principle includes examples, implementation guidelines, and testing strategies.
-
-### 3. DRY Principle (Don't Repeat Yourself)
-
-**File:** `dry.md`  
-**Description:** Guide for eliminating code duplication and promoting reusability:
-
-- Code duplication identification and elimination
-- Configuration and knowledge centralization
-- Template patterns and utility functions
-- When NOT to apply DRY (avoiding over-abstraction)
-
-### 4. KISS Principle (Keep It Simple, Stupid)
-
-**File:** `kiss.md`  
-**Description:** Principles for writing simple, clear, and maintainable code:
-
-- Simplicity guidelines and best practices
-- Avoiding over-engineering and unnecessary complexity
-- Clear naming conventions and readable code structure
-- Balance between simplicity and functionality
-
-### 5. YAGNI Principle (You Aren't Gonna Need It)
-
-**File:** `yagni.md`  
-**Description:** Guide for avoiding premature feature implementation:
-
-- Focus on current requirements vs. speculative features
-- Avoiding over-flexible configurations
-- Incremental development approaches
-- When to add complexity vs. when to keep it simple
-
-## Usage
-
-Each principle file is designed to be referenced by AI coding assistants and follows the standardized rule format:
-
-```markdown
----
-description: Brief description of the principle.
-globs:
-alwaysApply: true
----
-
-# Principle Name
-
-Whenever you use this rule, start your message with the following:
-"Applying [Principle] principle..."
-```
+When principles conflict, apply in order: KISS → YAGNI → DRY → SOLID → OOP, always favoring simplicity and current needs over speculative complexity.
 
 ## Integration
 
-These principles work together and complement each other:
-
-- **OOP + SOLID**: Provide structure for object-oriented design
-- **DRY + KISS**: Balance reusability with simplicity  
-- **YAGNI + KISS**: Prevent over-engineering and unnecessary complexity
-- **SOLID + DRY**: Promote maintainable and reusable code architecture
-
-All principles include validation checklists, code examples, testing guidelines, and integration strategies with other development practices.
+Development principles work with all other Magic Vibe rules, providing the philosophical foundation that guides language-specific implementations, framework usage patterns, and workflow processes.
