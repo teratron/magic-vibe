@@ -1,70 +1,180 @@
-# Magic Vibe
+# Magic Vibe System
 
-**Magic Vibe** is a file-based system.
-This means all your project plans, tasks, and history are stored in plain text files (mostly Markdown) right in your project's `.magic-vibe/ai/` directory.
-This makes it easy to version control, track changes, and for AI agents to read and understand your project.
+[![Magic Vibe](https://img.shields.io/badge/Magic%20Vibe-v2.1.0-orange.svg)](./.magic-vibe/)
+[![English](https://img.shields.io/badge/Language-English-blue.svg)](README.md)
+[![Russian](https://img.shields.io/badge/Язык-Русский-red.svg)](README.ru.md)
 
-*Based on this repository: [Task Magic](https://github.com/iannuttall/task-magic).*
+> **Comprehensive AI Agent Workflow Management System with Dynamic Rule Discovery**
 
-## How it works
+**Magic Vibe** is a file-based project management and AI agent operational framework designed to plan features, manage development tasks, and provide intelligent rule discovery for programming languages, frameworks, and workflows.
 
-There are three main parts to Magic Vibe:
+## 🎯 System Architecture
+
+Magic Vibe now features a **dual-architecture system**:
+
+### Core Magic Vibe System (`.magic-vibe/`)
+File-based project management with intelligent rule discovery:
 
 1. **Plans (`.magic-vibe/ai/plans/`)**:
-    - **Purpose**: This is where you define the "what" and "why" of your project or specific features. Think of these as your Product Requirements Documents (PRDs).
-    - **Key files**:
-      - `.magic-vibe/ai/PLANS.md`: A global overview of your entire project. It should be a concise summary and index, linking to more detailed feature plans.
-      - `.magic-vibe/ai/plans/plan-{id}-{feature-name}.md`: Detailed PRDs for each specific feature you're building. This is where the AI will look for specifics when generating tasks.
-    - **AI interaction**: AI agents use these plans to understand the scope and requirements, helping to generate tasks.
+   - Product Requirements Documents (PRDs) for feature definition
+   - Global project overview and detailed feature specifications
+   - AI-assisted plan generation and management
+
 2. **Tasks (`.magic-vibe/ai/tasks/` & `.magic-vibe/ai/TASKS.md`)**:
-    - **Purpose**: This is where the actual work items live. AI agents (or you) can break down plans into individual, manageable tasks.
-    - **Key files & structure**:
-      - `.magic-vibe/ai/tasks/task_{id}_{descriptive_name}.md`: Each task gets its own Markdown file. It includes details like status (pending, in progress, completed), priority, dependencies, a description, and how to test it.
-      - `.magic-vibe/ai/TASKS.md`: This is your master checklist. It's a human-friendly overview of all tasks in the `.magic-vibe/ai/tasks/` directory, showing their status at a glance. **This file and the individual task files are kept in sync by the AI.**
-    - **AI interaction**: AI agents can create tasks from plans, update their status as they work on them, and help you manage dependencies.
+   - Individual work items broken down from plans
+   - Status tracking (pending, in progress, completed)
+   - Dependency management and priority handling
+
 3. **Memory (`.magic-vibe/ai/memory/`)**:
-    - **Purpose**: Completed and failed tasks, as well as old plans, are archived here. This provides a valuable history for the AI to learn from and for you to reference.
-    - **Key files**:
-      - `.magic-vibe/ai/memory/tasks/`: Archived task files.
-      - `.magic-vibe/ai/memory/TASKS_LOG.md`: A log of when tasks were archived.
-      - `.magic-vibe/ai/memory/plans/`: Archived plan files.
-      - `.magic-vibe/ai/memory/PLANS_LOG.md`: A log for archived plans.
-    - **AI interaction**: The AI can consult the memory to understand how similar things were done in the past, or why a certain approach was taken.
-4. **Hooks (`.magic-vibe/rules/hooks/` or `.magic-vibe/ai/hooks/`)**:
-    - **Purpose**: This is an advanced feature that allows for automated actions to be triggered at specific points in the task and plan lifecycle (e.g., on task completion, on plan creation).
-    - **Key files & structure**:
-      - `.magic-vibe/rules/hooks/{hook-name}.hook.md` or `.magic-vibe/ai/hooks/{hook-name}.hook.md`: Each hook is defined in its own file, specifying the trigger event (e.g., `task_status_change`) and the action to perform (e.g., a shell command).
-    - **AI interaction**: The AI agent is responsible for identifying and executing these hooks when their trigger conditions are met during its workflow. The specific rules for this are defined in `.magic-vibe/rules/hooks.md`.
+   - Archived completed and failed tasks/plans
+   - Historical project knowledge base
+   - AI learning and reference system
 
-## Working with AI agents
+4. **Automated Hooks (`.magic-vibe/rules/hooks/` & `.magic-vibe/ai/hooks/`)**:
+   - System-wide hooks for core functionality
+   - User template hooks for project-specific automation
+   - Event-driven workflow automation
 
-Magic Vibe is designed to work closely with AI agents. Here's how rules and context are handled:
+### Dynamic Rule Discovery System (`.magic-vibe/rules/`)
 
-- **Automatic context (`_index.md` files)**:
-  - File named `_index.md` (like the one in `.magic-vibe/rules/_index.md`) provide a high-level overview of a system or a set of rules.
-  - These `_index.md` files are **automatically included in the AI's context** when you're working within a project that uses them. This gives the AI a foundational understanding without you needing to do anything extra.
-- **On-demand rules (other `.md` or `.mdc` rule files)**:
-  - Other rule files (e.g., `tasks.md`, `plans.md` located in `.magic-vibe/rules/`) define specific behaviors or knowledge for the AI.
-  - Each of these rule files has a `description` in its header. The AI agent (Cursor/Windsurf) can read these descriptions and **decide dynamically whether a specific rule is relevant** to your current request or the task it's performing.
-  - If the AI deems a rule relevant, it will "fetch" and use that rule.
-- **Your role: Guiding the AI with @-tags**:
-  - While the agent is usually pretty good at figuring out which rules to use, you can manually tag the rules you want to use.
-  - **For best results, @-tag specific rule files or directories in your prompts.** For example:
-    - `@.magic-vibe/rules/tasks.md create tasks for this feature`
-    - `@.magic-vibe/rules/plans.md generate a plan for X`
-    - `@TASKS.md what is the status of my project?` (to refer to the main task checklist)
-    - `@.magic-vibe/ai/plans/plan-my-cool-feature.md can you review this plan?`
-  - This helps ensure the AI looks at the exact information you want it to.
+Automatically detects project context and applies relevant rules:
 
-## Getting started
+- **Core Rules** (`@core/`) - Essential Magic Vibe functionality (always applied)
+- **Language Rules** (`@languages/`) - Programming language-specific standards
+- **Framework Rules** (`@frameworks/`) - Framework-specific patterns and practices
+- **Workflow Rules** (`@workflows/`) - Development process standards
+- **Development Principles** (`@principles/`) - Universal coding principles
 
-1. **Initialize `.magic-vibe/ai/` structure**: If these directories don't exist, the AI will typically create them as needed when you ask it to create a plan or task. You can also create them manually.
-    - `.magic-vibe/ai/PLANS.md` (start with a simple project title and overview)
-    - `.magic-vibe/ai/TASKS.md` (can start with just `# Project Tasks`)
-    - `.magic-vibe/ai/memory/TASKS_LOG.md` (can start with `# Task Archive Log`)
-2. **Create a plan**: Ask your AI assistant to create a new feature plan using the planning rule (e.g., `@.magic-vibe/rules/plans.md create a plan for user authentication`).
-3. **Generate tasks**: Once a plan is ready, ask the AI to generate tasks from it (e.g., `@.magic-vibe/rules/tasks.md generate tasks for the plan-user-authentication.md`).
-4. **Work on tasks**: Tell the AI to start working on tasks. It will update `.magic-vibe/ai/TASKS.md` and the individual task files as it progresses.
-5. **Archive**: Periodically, ask the AI to archive completed or failed tasks to keep your active task list clean.
+## 🚀 Key Features
 
-By using Magic Vibe, you get a structured, AI-friendly way to manage your projects, ensuring both you and your AI assistants are always on the same page.
+### Intelligent Context Detection
+- **Automatic Language Detection:** Scans file extensions, config files, and project structure
+- **Framework Recognition:** Identifies React, Vue, Next.js, FastAPI, and more
+- **Workflow Analysis:** Detects Git patterns, CI/CD setup, and quality tools
+- **Smart Rule Application:** Applies relevant rules based on detected context
+
+### Comprehensive Rule Coverage
+- **4 Programming Languages:** Python, TypeScript/JavaScript, C++, Rust
+- **6+ Frameworks:** React, Vue, Next.js, FastAPI, TailwindCSS, Svelte
+- **5 Workflow Standards:** Git, Trunk-based Development, Clean Code, Quality Assurance
+- **5 Development Principles:** OOP, SOLID, DRY, KISS, YAGNI
+
+
+### Rule Priority and Conflict Resolution
+- **Hierarchical Application:** Core > Language > Framework > Workflow > Principles
+- **Specificity Wins:** More specific rules override general ones
+- **Intelligent Composition:** Rules complement rather than conflict
+- **Transparent Resolution:** All conflicts documented and resolved systematically
+
+## 📁 Directory Structure
+
+```text
+.magic-vibe/
+├── rules/                      # Rule discovery system
+│   ├── core/                    # Essential Magic Vibe rules (always applied)
+│   │   ├── tasks.md             # Task management
+│   │   ├── plans.md             # Planning and PRDs
+│   │   ├── hooks.md             # Automation system
+│   │   └── ...                  # Other core rules
+│   ├── languages/               # Programming language rules
+│   │   ├── python.md            # Python standards
+│   │   ├── typescript.md        # TypeScript/JavaScript
+│   │   └── ...                  # C++, Rust, etc.
+│   ├── frameworks/              # Framework-specific rules
+│   │   ├── react.md             # React patterns
+│   │   ├── nextjs.md            # Next.js conventions
+│   │   └── ...                  # Vue, FastAPI, etc.
+│   ├── workflows/               # Development workflows
+│   │   ├── gitflow.md           # Git workflows
+│   │   ├── clean-code.md        # Code quality
+│   │   └── ...                  # Other workflows
+│   ├── principles/              # Development principles
+│   ├── hooks/                   # System-wide automation hooks
+│   └── _index.md               # Rule discovery overview
+└── ai/                         # Active project workspace
+    ├── tasks/                   # Current task files
+    ├── plans/                   # Current plan files
+    ├── hooks/                   # User template hooks
+    └── memory/                  # Archived items
+```
+
+## 🤖 Working with AI Agents
+
+Magic Vibe is designed for seamless AI agent integration:
+
+### Automatic Rule Discovery
+AI agents automatically:
+1. **Scan Project Context:** Detect languages, frameworks, and workflows
+2. **Select Applicable Rules:** Choose relevant rules based on project analysis
+3. **Apply Rule Hierarchy:** Execute rules in priority order with conflict resolution
+4. **Report Active Rules:** Inform users which rules are being applied
+
+### Manual Rule Guidance
+For specific control, use @-tags:
+- `@.magic-vibe/rules/core/tasks.md` - Core task management
+- `@.magic-vibe/rules/languages/python.md` - Python-specific rules
+- `@.magic-vibe/rules/frameworks/react.md` - React development patterns
+- `@.magic-vibe/rules/workflows/clean-code.md` - Code quality standards
+
+### Context Integration
+- **Automatic Context:** `_index.md` files provide system overviews
+- **On-demand Rules:** Specific rule files loaded when relevant
+- **Dynamic Adaptation:** Rules adapt to project changes and growth
+
+## 🚀 Getting Started
+
+### 1. Initialize Magic Vibe Structure
+```bash
+# AI agents will create these automatically, or create manually:
+mkdir -p .magic-vibe/ai/{plans,tasks,memory,hooks}
+touch .magic-vibe/ai/PLANS.md
+touch .magic-vibe/ai/TASKS.md
+touch .magic-vibe/ai/memory/TASKS_LOG.md
+```
+
+### 2. Let AI Discover Your Project
+```
+Initialize Magic Vibe system for this project
+```
+*AI will scan and report detected languages, frameworks, and applicable rules*
+
+### 3. Create Your First Plan
+```
+@.magic-vibe/rules/core/plans.md create a plan for user authentication
+```
+
+### 4. Generate Tasks from Plans
+```
+@.magic-vibe/rules/core/tasks.md generate tasks for the authentication plan
+```
+
+### 5. Start Development
+```
+Start working on the first authentication task
+```
+*AI will apply relevant language and framework rules automatically*
+
+## 🔗 Integration with VS Code Rules
+
+Magic Vibe complements existing `.vscode/rules/` systems:
+- **Unified Standards:** Consistent rules across AI editors
+- **Template Compatibility:** Works with Cursor, Windsurf, and other AI IDEs
+- **Migration Support:** Smooth transition from .vscode-based rules
+- **Cross-Editor Portability:** Rules work across different development environments
+
+## 📚 Documentation
+
+- **English:** [README.md](README.md) (this file)
+- **Russian:** [README.ru.md](README.ru.md)
+- **Rule Categories:**
+  - [Core Rules](rules/core/README.md)
+  - [Language Rules](rules/languages/README.md)
+  - [Framework Rules](rules/frameworks/README.md)
+  - [Workflow Rules](rules/workflows/README.md)
+  - [Development Principles](rules/principles/README.md)
+
+---
+
+*Magic Vibe System v2.1.0 - Intelligent AI Agent Workflow Management*
+
+*Based on [Task Magic](https://github.com/iannuttall/task-magic) with comprehensive enhancements for modern AI-assisted development.*
