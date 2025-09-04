@@ -66,10 +66,6 @@ For framework-based development:
 - **Database Integration:** `@frameworks/database.md`
 - **Laravel Framework:** `@frameworks/laravel.md`
 
-### Integration Protocols
-
-- **MCP (Model Context Protocol):** `@integrations/mcp.md`
-
 ### Workflow Rules
 
 For development process management:
@@ -111,7 +107,6 @@ AI agents should follow this protocol for dynamic rule application:
    - Relevant language rules from `@languages/`
    - Applicable framework rules from `@frameworks/`
    - Appropriate workflow rules from `@workflows/`
-   - Integration protocol rules from `@integrations/`
    - Core Magic Vibe rules from `@core/`
    - Universal principles from `@principles/`
 
@@ -119,7 +114,6 @@ AI agents should follow this protocol for dynamic rule application:
    - Core system rules (highest priority)
    - Language-specific rules
    - Framework-specific rules
-   - Integration protocol rules
    - Workflow rules
    - Development principles (lowest priority, but always applied)
 
