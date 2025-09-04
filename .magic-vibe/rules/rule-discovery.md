@@ -34,7 +34,7 @@ find . -type f \( -name "*.py" -o -name "*.js" -o -name "*.ts" -o -name "*.tsx" 
 find . -maxdepth 3 -type f \( -name "package.json" -o -name "requirements.txt" -o -name "Cargo.toml" -o -name "CMakeLists.txt" -o -name "pyproject.toml" -o -name "go.mod" -o -name "composer.json" -o -name "pom.xml" \)
 
 # Scan for framework indicators
-find . -maxdepth 3 -type f \( -name "next.config.*" -o -name "vue.config.*" -o -name "svelte.config.*" -o -name "tailwind.config.*" -o -name "vite.config.*" \)
+find . -maxdepth 3 -type f \( -name "next.config.*" -o -name "vue.config.*" -o -name "svelte.config.*" -o -name "tailwind.config.*" -o -name "vite.config.*" -o -name "mcp.json" -o -name "mcp.yaml" \)
 
 # Scan for workflow indicators
 find . -maxdepth 2 -type d \( -name ".git" -o -name ".github" -o -name ".gitlab" \)
@@ -54,6 +54,7 @@ Priority files to analyze for context detection:
 | `CMakeLists.txt`   | C++                   | Build configuration and dependencies       |
 | `go.mod`           | Go                    | Module dependencies                        |
 | `composer.json`    | PHP                   | Package dependencies                       |
+| `mcp.json`         | MCP Integration       | Model Context Protocol server configuration |
 | `composer.json`    | PHP                   | Package dependencies                       |
 
 ## Phase 2: Context Detection
@@ -162,6 +163,10 @@ def detect_frameworks(package_files, import_patterns):
         if 'laravel/framework' in composer_deps or 'laravel/laravel' in composer_deps:
             frameworks.append('laravel')
     
+    # MCP configuration analysis
+    if 'mcp.json' in package_files or 'mcp.yaml' in package_files:
+        frameworks.append('mcp')
+    
     # Configuration file detection
     config_frameworks = {
         'next.config.js': 'nextjs',
@@ -240,6 +245,7 @@ def detect_workflows(project_structure, git_info):
 | **FastAPI Project**        | `fastapi` in requirements           | `@frameworks/fastapi.md`                | 3           |
 | **TailwindCSS**            | `tailwindcss` in dependencies       | `@frameworks/tailwindcss.md`            | 3           |
 | **Laravel Project**        | `laravel/framework` in composer.json | `@frameworks/laravel.md`                | 3           |
+| **MCP Integration**        | `mcp.json`, `mcp.yaml` configuration | `@integrations/mcp.md`                  | 3           |
 | **Git Repository**         | `.git` directory                    | `@workflows/gitflow.md`                 | 4           |
 | **Trunk-based**            | Single main branch                  | `@workflows/trunk-based-development.md` | 4           |
 | **Code Quality**           | Linting/formatting tools            | `@workflows/code-quality.md`            | 4           |
@@ -288,7 +294,8 @@ def select_applicable_rules(project_context):
         'fastapi': "@frameworks/fastapi.md",
         'tailwindcss': "@frameworks/tailwindcss.md",
         'svelte': "@frameworks/svelte.md",
-        'laravel': "@frameworks/laravel.md"
+        'laravel': "@frameworks/laravel.md",
+        'mcp': "@integrations/mcp.md"
     }
     
     for framework in project_context.frameworks:
