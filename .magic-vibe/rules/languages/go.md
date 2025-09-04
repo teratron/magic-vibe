@@ -649,27 +649,27 @@ CMD ["./main"]
 .PHONY: build test lint fmt vet clean
 
 build:
-	go build -o bin/app ./cmd/app
+ go build -o bin/app ./cmd/app
 
 test:
-	go test -race -coverprofile=coverage.out ./...
+ go test -race -coverprofile=coverage.out ./...
 
 lint:
-	golangci-lint run
+ golangci-lint run
 
 fmt:
-	go fmt ./...
+ go fmt ./...
 
 vet:
-	go vet ./...
+ go vet ./...
 
 clean:
-	rm -rf bin/
-	go clean -testcache
+ rm -rf bin/
+ go clean -testcache
 
 install-tools:
-	go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-	go install golang.org/x/vuln/cmd/govulncheck@latest
+ go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+ go install golang.org/x/vuln/cmd/govulncheck@latest
 ```
 
 This comprehensive Go standard ensures AI agents generate high-quality, idiomatic, secure, and maintainable Go code following established community practices and modern development standards.
