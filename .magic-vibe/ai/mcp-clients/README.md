@@ -104,12 +104,12 @@ graph TB
 
 The system automatically detects required MCP clients based on task content analysis:
 
-| Keywords | Required Client | Purpose |
-|----------|----------------|---------|
-| database, sql, query, migration | Database Client | Database operations |
-| file, directory, upload, storage | Filesystem Client | File system access |
-| github, repository, commit, branch | GitHub Client | Repository integration |
-| api, rest, endpoint, service | API Client | External API access |
+| Keywords                           | Required Client   | Purpose                |
+|------------------------------------|-------------------|------------------------|
+| database, sql, query, migration    | Database Client   | Database operations    |
+| file, directory, upload, storage   | Filesystem Client | File system access     |
+| github, repository, commit, branch | GitHub Client     | Repository integration |
+| api, rest, endpoint, service       | API Client        | External API access    |
 
 ### Client Configuration
 

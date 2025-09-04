@@ -6,7 +6,7 @@ priority: 15
 enabled: true
 ---
 
-### MCP Client Cleanup and Results Collection
+# MCP Client Cleanup and Results Collection
 
 This hook manages MCP client disconnection, collects execution results, and archives task-specific MCP data when a task completes.
 

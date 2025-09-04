@@ -6,7 +6,7 @@ priority: 5
 enabled: true
 ---
 
-### Multi-MCP Client Orchestration Hook
+# Multi-MCP Client Orchestration Hook
 
 This hook initializes and manages multiple MCP client connections when a task requiring external system integration starts.
 

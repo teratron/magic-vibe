@@ -6,7 +6,7 @@ priority: 20
 enabled: true
 ---
 
-### MCP Error Handling and Recovery
+# MCP Error Handling and Recovery
 
 This hook manages MCP client errors, provides diagnostic information, and implements recovery strategies when a task fails.
 
