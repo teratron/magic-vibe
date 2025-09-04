@@ -12,6 +12,7 @@ Framework-specific rules for AI agents to apply when working with projects using
 - **[Svelte](svelte.md)** - Svelte component patterns, reactivity, SvelteKit integration
 - **[SASS/SCSS](sass.md)** - SASS/SCSS coding style guide, BEM methodology, file organization
 - **[Database](database.md)** - Database best practices with Prisma and Supabase integration
+- **[Laravel](laravel.md)** - Laravel framework development with MVC architecture, Eloquent ORM, and modern PHP practices
 
 ## Auto-Detection
 

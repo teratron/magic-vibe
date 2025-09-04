@@ -50,6 +50,7 @@ When working with specific programming languages, the system automatically appli
 - **C++ Projects:** `@languages/cpp.md`
 - **Rust Projects:** `@languages/rust.md`
 - **Go Projects:** `@languages/go.md`
+- **PHP Projects:** `@languages/php.md`
 
 ### Framework-Specific Rules
 
@@ -63,6 +64,7 @@ For framework-based development:
 - **Svelte Applications:** `@frameworks/svelte.md`
 - **SASS/SCSS Styling:** `@frameworks/sass.md`
 - **Database Integration:** `@frameworks/database.md`
+- **Laravel Framework:** `@frameworks/laravel.md`
 
 ### Workflow Rules
 

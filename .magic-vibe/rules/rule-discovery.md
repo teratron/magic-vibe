@@ -28,10 +28,10 @@ The rule discovery system operates in four phases:
 
 ```bash
 # Scan for programming languages (first 50 files to avoid performance issues)
-find . -type f \( -name "*.py" -o -name "*.js" -o -name "*.ts" -o -name "*.tsx" -o -name "*.jsx" -o -name "*.cpp" -o -name "*.hpp" -o -name "*.rs" -o -name "*.go" -o -name "*.java" -o -name "*.c" -o -name "*.h" \) | head -50
+find . -type f \( -name "*.py" -o -name "*.js" -o -name "*.ts" -o -name "*.tsx" -o -name "*.jsx" -o -name "*.cpp" -o -name "*.hpp" -o -name "*.rs" -o -name "*.go" -o -name "*.php" -o -name "*.java" -o -name "*.c" -o -name "*.h" \) | head -50
 
 # Scan for package managers and build files
-find . -maxdepth 3 -type f \( -name "package.json" -o -name "requirements.txt" -o -name "Cargo.toml" -o -name "CMakeLists.txt" -o -name "pyproject.toml" -o -name "go.mod" -o -name "pom.xml" \)
+find . -maxdepth 3 -type f \( -name "package.json" -o -name "requirements.txt" -o -name "Cargo.toml" -o -name "CMakeLists.txt" -o -name "pyproject.toml" -o -name "go.mod" -o -name "composer.json" -o -name "pom.xml" \)
 
 # Scan for framework indicators
 find . -maxdepth 3 -type f \( -name "next.config.*" -o -name "vue.config.*" -o -name "svelte.config.*" -o -name "tailwind.config.*" -o -name "vite.config.*" \)
@@ -54,6 +54,7 @@ Priority files to analyze for context detection:
 | `CMakeLists.txt`   | C++                   | Build configuration and dependencies       |
 | `go.mod`           | Go                    | Module dependencies                        |
 | `composer.json`    | PHP                   | Package dependencies                       |
+| `composer.json`    | PHP                   | Package dependencies                       |
 
 ## Phase 2: Context Detection
 
@@ -74,6 +75,7 @@ def detect_languages(project_files):
         '.hpp': 'cpp',
         '.rs': 'rust',
         '.go': 'go',
+        '.php': 'php',
         '.java': 'java',
         '.c': 'c',
         '.h': 'c'
@@ -93,7 +95,8 @@ def detect_languages(project_files):
         'pyproject.toml': ['python'],
         'Cargo.toml': ['rust'],
         'CMakeLists.txt': ['cpp'],
-        'go.mod': ['go']
+        'go.mod': ['go'],
+        'composer.json': ['php']
     }
     
     for config_file, languages in config_boosts.items():
@@ -150,6 +153,14 @@ def detect_frameworks(package_files, import_patterns):
         # Flask detection
         if 'flask' in reqs:
             frameworks.append('flask')
+    
+    # Composer.json analysis for PHP
+    if 'composer.json' in package_files:
+        composer_deps = parse_composer_dependencies(package_files['composer.json'])
+        
+        # Laravel detection
+        if 'laravel/framework' in composer_deps or 'laravel/laravel' in composer_deps:
+            frameworks.append('laravel')
     
     # Configuration file detection
     config_frameworks = {
@@ -222,11 +233,13 @@ def detect_workflows(project_structure, git_info):
 | **C++ Project**            | `.cpp/.hpp` files, `CMakeLists.txt` | `@languages/cpp.md`                     | 2           |
 | **Rust Project**           | `.rs` files, `Cargo.toml`           | `@languages/rust.md`                    | 2           |
 | **Go Project**             | `.go` files, `go.mod`               | `@languages/go.md`                      | 2           |
+| **PHP Project**            | `.php` files, `composer.json`       | `@languages/php.md`                     | 2           |
 | **React Project**          | `react` in dependencies             | `@frameworks/react.md`                  | 3           |
 | **Next.js Project**        | `next` in dependencies              | `@frameworks/nextjs.md`                 | 3           |
 | **Vue Project**            | `vue` in dependencies               | `@frameworks/vue.md`                    | 3           |
 | **FastAPI Project**        | `fastapi` in requirements           | `@frameworks/fastapi.md`                | 3           |
 | **TailwindCSS**            | `tailwindcss` in dependencies       | `@frameworks/tailwindcss.md`            | 3           |
+| **Laravel Project**        | `laravel/framework` in composer.json | `@frameworks/laravel.md`                | 3           |
 | **Git Repository**         | `.git` directory                    | `@workflows/gitflow.md`                 | 4           |
 | **Trunk-based**            | Single main branch                  | `@workflows/trunk-based-development.md` | 4           |
 | **Code Quality**           | Linting/formatting tools            | `@workflows/code-quality.md`            | 4           |
@@ -259,7 +272,8 @@ def select_applicable_rules(project_context):
         'javascript': "@languages/typescript.md",  # Use TypeScript rules for JS
         'cpp': "@languages/cpp.md",
         'rust': "@languages/rust.md",
-        'go': "@languages/go.md"
+        'go': "@languages/go.md",
+        'php': "@languages/php.md"
     }
     
     for language, score in project_context.languages:
@@ -273,7 +287,8 @@ def select_applicable_rules(project_context):
         'nextjs': "@frameworks/nextjs.md",
         'fastapi': "@frameworks/fastapi.md",
         'tailwindcss': "@frameworks/tailwindcss.md",
-        'svelte': "@frameworks/svelte.md"
+        'svelte': "@frameworks/svelte.md",
+        'laravel': "@frameworks/laravel.md"
     }
     
     for framework in project_context.frameworks:

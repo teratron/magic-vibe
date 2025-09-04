@@ -9,6 +9,7 @@ Programming language-specific rules for AI agents to apply when working with pro
 - **[C++](cpp.md)** - Modern C++ standards, memory management, performance optimization
 - **[Rust](rust.md)** - Rust development patterns, ownership, error handling, cargo workflows
 - **[Go](go.md)** - Go programming standards, idioms, concurrency patterns, and best practices
+- **[PHP](php.md)** - Modern PHP development, PSR standards, type safety, and performance optimization
 
 ## Auto-Detection
 

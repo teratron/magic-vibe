@@ -15,13 +15,14 @@ This directory contains programming language-specific rules that AI agents shoul
 - **C++:** `@languages/cpp.md` - Modern C++ standards, memory management, performance optimization
 - **Rust:** `@languages/rust.md` - Rust development patterns, ownership, error handling, cargo workflows
 - **Go:** `@languages/go.md` - Go programming standards, idioms, concurrency patterns, and best practices
+- **PHP:** `@languages/php.md` - Modern PHP development, PSR standards, type safety, and performance optimization
 
 ## Rule Application
 
 AI agents automatically detect the primary programming language(s) in a project and apply the corresponding rules. Detection is based on:
 
-1. **File Extensions:** `.py`, `.ts`, `.js`, `.cpp`, `.hpp`, `.rs`, etc.
-2. **Project Configuration Files:** `package.json`, `Cargo.toml`, `requirements.txt`, `pyproject.toml`, etc.
+1. **File Extensions:** `.py`, `.ts`, `.js`, `.cpp`, `.hpp`, `.rs`, `.go`, `.php`, etc.
+2. **Project Configuration Files:** `package.json`, `Cargo.toml`, `requirements.txt`, `pyproject.toml`, `composer.json`, `go.mod`, etc.
 3. **Build System Files:** `CMakeLists.txt`, `setup.py`, `tsconfig.json`, etc.
 4. **Directory Structures:** Language-specific folder patterns and conventions
 
