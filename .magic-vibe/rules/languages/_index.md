@@ -14,6 +14,7 @@ This directory contains programming language-specific rules that AI agents shoul
 - **TypeScript:** `@languages/typescript.md` - TypeScript/JavaScript development, type safety, modern ECMAScript
 - **C++:** `@languages/cpp.md` - Modern C++ standards, memory management, performance optimization
 - **Rust:** `@languages/rust.md` - Rust development patterns, ownership, error handling, cargo workflows
+- **Go:** `@languages/go.md` - Go programming standards, idioms, concurrency patterns, and best practices
 
 ## Rule Application
 

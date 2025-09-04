@@ -8,6 +8,7 @@ Programming language-specific rules for AI agents to apply when working with pro
 - **[TypeScript](typescript.md)** - TypeScript/JavaScript development, type safety, modern ECMAScript  
 - **[C++](cpp.md)** - Modern C++ standards, memory management, performance optimization
 - **[Rust](rust.md)** - Rust development patterns, ownership, error handling, cargo workflows
+- **[Go](go.md)** - Go programming standards, idioms, concurrency patterns, and best practices
 
 ## Auto-Detection
 

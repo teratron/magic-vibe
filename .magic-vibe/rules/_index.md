@@ -49,6 +49,7 @@ When working with specific programming languages, the system automatically appli
 - **TypeScript/JavaScript:** `@languages/typescript.md`
 - **C++ Projects:** `@languages/cpp.md`
 - **Rust Projects:** `@languages/rust.md`
+- **Go Projects:** `@languages/go.md`
 
 ### Framework-Specific Rules
 

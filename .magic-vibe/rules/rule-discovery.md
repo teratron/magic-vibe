@@ -221,6 +221,7 @@ def detect_workflows(project_structure, git_info):
 | **TypeScript Project**     | `.ts/.tsx` files, `tsconfig.json`   | `@languages/typescript.md`              | 2           |
 | **C++ Project**            | `.cpp/.hpp` files, `CMakeLists.txt` | `@languages/cpp.md`                     | 2           |
 | **Rust Project**           | `.rs` files, `Cargo.toml`           | `@languages/rust.md`                    | 2           |
+| **Go Project**             | `.go` files, `go.mod`               | `@languages/go.md`                      | 2           |
 | **React Project**          | `react` in dependencies             | `@frameworks/react.md`                  | 3           |
 | **Next.js Project**        | `next` in dependencies              | `@frameworks/nextjs.md`                 | 3           |
 | **Vue Project**            | `vue` in dependencies               | `@frameworks/vue.md`                    | 3           |
@@ -257,7 +258,8 @@ def select_applicable_rules(project_context):
         'typescript': "@languages/typescript.md",
         'javascript': "@languages/typescript.md",  # Use TypeScript rules for JS
         'cpp': "@languages/cpp.md",
-        'rust': "@languages/rust.md"
+        'rust': "@languages/rust.md",
+        'go': "@languages/go.md"
     }
     
     for language, score in project_context.languages:
