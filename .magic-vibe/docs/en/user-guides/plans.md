@@ -150,7 +150,7 @@ Large features can be broken into sub-plans:
 authentication-system.md           # Parent plan
 ├── oauth-integration.md           # Child plan
 ├── user-registration.md           # Child plan
-└── password-reset.md             # Child plan
+└── password-reset.md              # Child plan
 ```
 
 ### Plan Dependencies

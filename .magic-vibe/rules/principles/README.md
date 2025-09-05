@@ -9,6 +9,7 @@ Universal development principles that AI agents should apply across all programm
 - **[DRY Principle](dry.md)** - "Don't Repeat Yourself" - eliminate code duplication
 - **[KISS Principle](kiss.md)** - "Keep It Simple, Stupid" - maintain simplicity
 - **[YAGNI Principle](yagni.md)** - "You Ain't Gonna Need It" - implement only what's needed
+- **[Feature-Sliced Design](feature-sliced-design.md)** - Architectural methodology for scalable frontend applications
 
 ## Universal Application
 

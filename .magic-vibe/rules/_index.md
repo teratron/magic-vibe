@@ -93,6 +93,9 @@ For development process management:
 5. **To Apply YAGNI Principle:**
     - **Use Rule:** `@principles/yagni.md`
     - **Action:** Implement only what is currently needed, avoiding over-engineering and speculative features.
+6. **To Apply Feature-Sliced Design:**
+    - **Use Rule:** `@principles/feature-sliced-design.md`
+    - **Action:** Organize frontend applications using layer-based architecture (app/pages/widgets/features/entities/shared) with strict import hierarchy.
 
 ## AI Agent Rule Discovery Protocol
 
