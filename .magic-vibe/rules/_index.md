@@ -148,16 +148,16 @@ find . -type f \( -name "*.py" -o -name "*.js" -o -name "*.ts" -o -name "*.tsx" 
 
 Based on detected context, automatically include:
 
-| Detection | Rule Applied | Priority |
-|-----------|--------------|----------|
-| **Always** | `@core/*.md` | 1 (Highest) |
-| **Python files** | `@languages/python.md` | 2 |
-| **TypeScript files** | `@languages/typescript.md` | 2 |
-| **React dependencies** | `@frameworks/react.md` | 3 |
-| **FastAPI dependencies** | `@frameworks/fastapi.md` | 3 |
-| **Git repository** | `@workflows/gitflow.md` | 4 |
-| **Quality tools** | `@workflows/code-quality.md` | 4 |
-| **Always** | `@principles/*.md` | 5 (Lowest) |
+| Detection                | Rule Applied                 | Priority    |
+|--------------------------|------------------------------|-------------|
+| **Always**               | `@core/*.md`                 | 1 (Highest) |
+| **Python files**         | `@languages/python.md`       | 2           |
+| **TypeScript files**     | `@languages/typescript.md`   | 2           |
+| **React dependencies**   | `@frameworks/react.md`       | 3           |
+| **FastAPI dependencies** | `@frameworks/fastapi.md`     | 3           |
+| **Git repository**       | `@workflows/gitflow.md`      | 4           |
+| **Quality tools**        | `@workflows/code-quality.md` | 4           |
+| **Always**               | `@principles/*.md`           | 5 (Lowest)  |
 
 ### 3. Rule Application Phase
 

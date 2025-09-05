@@ -159,7 +159,7 @@ Development principles integrate with other Magic Vibe rules:
 
 - Principles inform framework usage patterns
 - Framework rules show principle application in specific contexts
-- Combined they prevent framework-specific anti-patterns
+- Combined they prevent framework-specific antipatterns
 
 ### Workflow Rules
 

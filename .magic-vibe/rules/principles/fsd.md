@@ -277,13 +277,15 @@ export type { User, UserRole } from "./types";
 
 ### 8.1. AI-Assisted Code Generation
 
-```typescript
-// AI Prompt Template:
-// "Generate a feature slice for user authentication following FSD architecture.
-// Include ui/, model/, and api/ segments with proper TypeScript types.
-// Ensure imports only reference entities/ and shared/ layers."
+**AI Prompt Template:**
 
-// Expected output structure:
+"Generate a feature slice for user authentication following FSD architecture.
+Include `ui/`, `model/`, and `api/` segments with proper TypeScript types.
+Ensure imports only reference `entities/` and `shared/` layers."
+
+Expected output structure:
+
+```text
 features/auth/
 ├── ui/
 │   ├── LoginForm.tsx

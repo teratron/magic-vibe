@@ -205,7 +205,7 @@ Every rule MUST include specific, measurable criteria:
 - [ ] Follows 8-section format
 - [ ] Includes measurable metrics
 - [ ] Contains working code examples (in markdown)
-- [ ] Shows anti-patterns
+- [ ] Shows antipatterns
 - [ ] Documents integration points
 - [ ] Tested with AI agents
 - [ ] Reviewed for conflicts
@@ -252,15 +252,15 @@ AI agents have strict limitations that affect rule file design:
 ```markdown
 ## Size Category Limits
 
-| File Type | Max Size | Max Tokens | Purpose |
-|-----------|----------|------------|---------|
-| Core Rules | 20KB | 5,000 | Essential system functionality |
-| Language Rules | 15KB | 3,750 | Language-specific standards |
-| Framework Rules | 15KB | 3,750 | Framework patterns |
-| Workflow Rules | 12KB | 3,000 | Process definitions |
-| Principle Rules | 15KB | 3,750 | Development principles |
-| Index Files | 25KB | 6,250 | System overviews |
-| Examples | 10KB | 2,500 | Code demonstrations |
+| File Type       | Max Size | Max Tokens | Purpose                        |
+|-----------------|----------|------------|--------------------------------|
+| Core Rules      | 20KB     | 5,000      | Essential system functionality |
+| Language Rules  | 15KB     | 3,750      | Language-specific standards    |
+| Framework Rules | 15KB     | 3,750      | Framework patterns             |
+| Workflow Rules  | 12KB     | 3,000      | Process definitions            |
+| Principle Rules | 15KB     | 3,750      | Development principles         |
+| Index Files     | 25KB     | 6,250      | System overviews               |
+| Examples        | 10KB     | 2,500      | Code demonstrations            |
 ```
 
 **Content Optimization Strategies:**

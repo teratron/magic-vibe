@@ -2,7 +2,6 @@
 
 [![Magic Vibe](https://img.shields.io/badge/Magic%20Vibe-v2.1.0-orange.svg)](./.magic-vibe/)
 [![English](https://img.shields.io/badge/Language-English-blue.svg)](README.md)
-[![Russian](https://img.shields.io/badge/Язык-Русский-red.svg)](README.ru.md)
 
 > **Comprehensive AI Agent Workflow Management System with Dynamic Rule Discovery**
 
@@ -73,7 +72,7 @@ Automatically detects project context and applies relevant rules:
 
 ```text
 .magic-vibe/
-├── rules/                      # Rule discovery system
+├── rules/                       # Rule discovery system
 │   ├── core/                    # Essential Magic Vibe rules (always applied)
 │   │   ├── tasks.md             # Task management
 │   │   ├── plans.md             # Planning and PRDs
@@ -93,8 +92,8 @@ Automatically detects project context and applies relevant rules:
 │   │   └── ...                  # Other workflows
 │   ├── principles/              # Development principles
 │   ├── hooks/                   # System-wide automation hooks
-│   └── _index.md               # Rule discovery overview
-└── ai/                         # Active project workspace
+│   └── _index.md                # Rule discovery overview
+└── ai/                          # Active project workspace
     ├── tasks/                   # Current task files
     ├── plans/                   # Current plan files
     ├── hooks/                   # User template hooks
@@ -180,14 +179,8 @@ Magic Vibe complements existing `.vscode/rules/` systems:
 
 ## 📚 Documentation
 
-- **English:** [README.md](README.md) (this file)
-- **Russian:** [README.ru.md](README.ru.md)
-- **Rule Categories:**
-  - [Core Rules](rules/core/README.md)
-  - [Language Rules](rules/languages/README.md)
-  - [Framework Rules](rules/frameworks/README.md)
-  - [Workflow Rules](rules/workflows/README.md)
-  - [Development Principles](rules/principles/README.md)
+- **English:** [README.md](docs/en/README.md)
+- **Russian:** [README.md](docs/ru/README.md)
 
 ---
 
