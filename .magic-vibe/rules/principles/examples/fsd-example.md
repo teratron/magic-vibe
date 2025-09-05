@@ -6,7 +6,7 @@ This example demonstrates a typical FSD project structure for an e-commerce appl
 
 ```text
 src/
-├── app/                           # Application layer
+├── app/                          # Application layer
 │   ├── providers/                # Global providers (theme, auth, etc.)
 │   │   ├── with-router.tsx
 │   │   ├── with-store.tsx
@@ -158,12 +158,12 @@ src/
     │   │   ├── Modal.module.css
     │   │   └── index.ts
     │   └── index.ts
-    ├── api/                      # Shared API utilities
+    ├── api/                     # Shared API utilities
     │   ├── base.ts              # Base API configuration
     │   ├── types.ts             # Common API types
     │   ├── interceptors.ts      # Request/response interceptors
     │   └── index.ts
-    ├── lib/                      # Shared libraries
+    ├── lib/                     # Shared libraries
     │   ├── hooks/               # Custom React hooks
     │   │   ├── useLocalStorage.ts
     │   │   ├── useDebounce.ts
@@ -177,7 +177,7 @@ src/
     │   │   ├── api-endpoints.ts
     │   │   └── index.ts
     │   └── index.ts
-    └── config/                   # Configuration
+    └── config/                  # Configuration
         ├── env.ts               # Environment variables
         ├── theme.ts             # Theme configuration
         └── index.ts

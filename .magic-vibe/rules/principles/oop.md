@@ -1,20 +1,16 @@
----
-description: Object-Oriented Programming (OOP) principles guide for AI code generation and development practices.
-globs:
-alwaysApply: true
----
+# OOP Principles
 
-# Object-Oriented Programming (OOP) Principles
+> **Magic Vibe Rule: Object-Oriented Programming Principles**  
+> **Category:** Principles  
+> **Priority:** High  
+> **File Size:** ~8KB (AI-optimized)  
+> **Dependencies:** `@rules/principles/solid.md`, `@rules/principles/kiss.md`
 
-Whenever you use this rule, start your message with the following:
+Object-Oriented Programming (OOP) principles guide for AI code generation ensuring maintainable, scalable, and reusable code through encapsulation, inheritance, polymorphism, and abstraction.
 
-"Applying OOP principles..."
+## 1. Implementation Guidelines
 
-This rule ensures that all AI-generated code follows fundamental Object-Oriented Programming principles to create maintainable, scalable, and reusable code.
-
-## Core OOP Principles
-
-### 1. Encapsulation
+### 1.1. Encapsulation
 
 **Definition:** Bundle data and methods that operate on that data within a single unit (class) while hiding internal implementation details.
 
@@ -24,8 +20,6 @@ This rule ensures that all AI-generated code follows fundamental Object-Oriented
 - Provide public interfaces through getter/setter methods when needed
 - Hide internal state and implementation details
 - Group related functionality within the same class
-
-**Code Examples:**
 
 ```python
 # ✅ Good: Proper encapsulation
@@ -44,7 +38,6 @@ class BankAccount:
     def get_balance(self) -> float:
         return self._balance
     
-    # Internal helper method
     def _log_transaction(self, transaction: str):
         self._transaction_history.append(transaction)
 
@@ -54,42 +47,9 @@ class BankAccount:
         self.balance = initial_balance  # Public access to sensitive data
 ```
 
-```typescript
-// ✅ Good: TypeScript encapsulation
-class UserService {
-    private users: Map<string, User> = new Map();
-    private readonly maxUsers = 1000;
-    
-    public addUser(user: User): boolean {
-        if (this.users.size >= this.maxUsers) {
-            return false;
-        }
-        this.users.set(user.id, user);
-        return true;
-    }
-    
-    public getUser(id: string): User | null {
-        return this.users.get(id) || null;
-    }
-    
-    private validateUser(user: User): boolean {
-        return user.id && user.email;
-    }
-}
-```
-
-### 2. Inheritance
+### 1.2. Inheritance
 
 **Definition:** Create new classes based on existing classes, inheriting their properties and methods while adding or modifying functionality.
-
-**Implementation Guidelines:**
-
-- Use inheritance to model "is-a" relationships
-- Prefer composition over inheritance when appropriate
-- Follow the Liskov Substitution Principle
-- Use abstract classes and interfaces for shared contracts
-
-**Code Examples:**
 
 ```python
 # ✅ Good: Proper inheritance hierarchy
@@ -117,28 +77,11 @@ class Dog(Animal):
     
     def fetch(self) -> str:
         return f"{self.name} is fetching the ball"
-
-class Cat(Animal):
-    def __init__(self, name: str, indoor: bool):
-        super().__init__(name, "Feline")
-        self.indoor = indoor
-    
-    def make_sound(self) -> str:
-        return "Meow!"
 ```
 
-### 3. Polymorphism
+### 1.3. Polymorphism
 
 **Definition:** Allow objects of different types to be treated uniformly through a common interface.
-
-**Implementation Guidelines:**
-
-- Implement method overriding in derived classes
-- Use interfaces and abstract methods for contracts
-- Enable runtime method resolution
-- Support duck typing where appropriate
-
-**Code Examples:**
 
 ```python
 # ✅ Good: Polymorphism in action
@@ -178,18 +121,9 @@ def print_shape_info(shapes: list[Shape]):
         print(f"Area: {shape.area()}, Perimeter: {shape.perimeter()}")
 ```
 
-### 4. Abstraction
+### 1.4. Abstraction
 
 **Definition:** Hide complex implementation details while exposing only essential features through simplified interfaces.
-
-**Implementation Guidelines:**
-
-- Use abstract classes and interfaces
-- Hide implementation complexity
-- Provide clear, simple public APIs
-- Focus on what an object does, not how it does it
-
-**Code Examples:**
 
 ```python
 # ✅ Good: Abstraction with clear interface
@@ -219,7 +153,7 @@ class StripePaymentProcessor(PaymentProcessor):
         pass
 ```
 
-## Advanced OOP Patterns
+## 2. Advanced OOP Patterns
 
 ### Composition Over Inheritance
 
@@ -249,54 +183,7 @@ class Car:
         return f"{engine_status}. {location}"
 ```
 
-### Interface Segregation in Practice
-
-```python
-# ✅ Good: Specific interfaces
-class Readable(ABC):
-    @abstractmethod
-    def read(self) -> str:
-        pass
-
-class Writable(ABC):
-    @abstractmethod
-    def write(self, data: str) -> bool:
-        pass
-
-class FileHandler(Readable, Writable):
-    def read(self) -> str:
-        # Implementation
-        pass
-    
-    def write(self, data: str) -> bool:
-        # Implementation
-        pass
-```
-
-## Language-Specific OOP Guidelines
-
-### Python OOP Best Practices
-
-- Use `@property` decorators for computed attributes
-- Implement `__str__` and `__repr__` methods
-- Use `@classmethod` and `@staticmethod` appropriately
-- Follow PEP 8 naming conventions
-
-### TypeScript/JavaScript OOP Best Practices
-
-- Use TypeScript interfaces for type safety
-- Implement proper access modifiers
-- Use readonly properties when appropriate
-- Leverage generics for type flexibility
-
-### C++ OOP Best Practices
-
-- Use RAII (Resource Acquisition Is Initialization)
-- Implement rule of three/five/zero
-- Use virtual destructors in base classes
-- Prefer smart pointers for memory management
-
-## Common OOP Anti-Patterns to Avoid
+## 3. Common OOP Anti-Patterns to Avoid
 
 ### 1. God Object
 
@@ -325,17 +212,7 @@ class Square(Rectangle):  # Violates Liskov Substitution Principle
         super().__init__(side, side)
 ```
 
-### 3. Excessive Coupling
-
-```python
-# ❌ Bad: Tight coupling
-class EmailService:
-    def __init__(self):
-        self.database = MySQLDatabase()  # Tight coupling
-        self.logger = FileLogger()       # Tight coupling
-```
-
-## Testing OOP Code
+## 4. Testing OOP Code
 
 ### Unit Testing Guidelines
 
@@ -371,38 +248,7 @@ def test_process_order():
     mock_email.send_confirmation.assert_called_once()
 ```
 
-## Documentation Requirements
-
-### Class Documentation
-
-- Document class purpose and responsibilities
-- Describe public methods and their contracts
-- Include usage examples
-- Document any thread-safety considerations
-
-### Method Documentation
-
-- Specify parameters and return types
-- Document side effects
-- Include preconditions and postconditions
-- Provide examples for complex methods
-
-## Performance Considerations
-
-### Object Creation
-
-- Use object pooling for expensive objects
-- Consider lazy initialization
-- Implement caching where appropriate
-- Monitor memory usage in inheritance hierarchies
-
-### Method Calls
-
-- Be aware of virtual method call overhead
-- Use final/sealed classes when inheritance isn't needed
-- Consider inlining for frequently called methods
-
-## Validation Checklist
+## 5. Validation Checklist
 
 Before completing any OOP implementation, verify:
 
@@ -417,7 +263,7 @@ Before completing any OOP implementation, verify:
 - [ ] Documentation is complete and accurate
 - [ ] Performance implications are considered
 
-## Integration with Other Principles
+## 6. Integration with Other Principles
 
 OOP principles work together with:
 

@@ -228,7 +228,6 @@ function validate_merge() {
 - `fix(api)`: resolve timeout in user endpoint
 - `flag(dashboard)`: increase beta-dashboard to 25%
 
-
 ## 4. Quality Assurance
 
 ### Testing Requirements

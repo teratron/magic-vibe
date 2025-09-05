@@ -1,18 +1,16 @@
----
-description: KISS (Keep It Simple, Stupid) principle guide for writing simple, clear, and maintainable code.
-globs:
-alwaysApply: true
----
+# KISS Principle
 
-# KISS Principle (Keep It Simple, Stupid)
+> **Magic Vibe Rule: Keep It Simple, Stupid**  
+> **Category:** Principles  
+> **Priority:** High  
+> **File Size:** ~8KB (AI-optimized)  
+> **Dependencies:** `@rules/principles/dry.md`, `@rules/principles/yagni.md`
 
-Whenever you use this rule, start your message with the following:
+KISS (Keep It Simple, Stupid) principle guide for writing simple, clear, and maintainable code that AI agents can easily understand and generate.
 
-"Applying KISS principle..."
+## 1. Implementation Guidelines
 
-This rule ensures that code is written with simplicity as the primary goal. Simple code is easier to understand, maintain, debug, and extend. The KISS principle advocates for the simplest solution that solves the problem effectively.
-
-## Core KISS Concept
+### 1.1. Core KISS Concept
 
 **Definition:** Simplicity should be a key goal in design, and unnecessary complexity should be avoided.
 
@@ -23,516 +21,338 @@ This rule ensures that code is written with simplicity as the primary goal. Simp
 - **Clear Intent**: The purpose of code should be obvious
 - **Maintainability**: Simple code is easier to maintain and modify
 
-## Simplicity Guidelines
+### 1.2. Simplicity Guidelines
 
-### 1. Prefer Clear, Descriptive Names
+**Prefer Clear, Descriptive Names:**
 
 ```python
-# ❌ Bad: Unclear, abbreviated names
+# ❌ Bad: Unclear names
 def calc_pmt(p, r, n):
     return p * (r * (1 + r) ** n) / ((1 + r) ** n - 1)
 
-def proc_usr_data(d):
-    if d['t'] == 'a':
-        return d['v'] * 1.1
-    elif d['t'] == 'b':
-        return d['v'] * 0.9
-    return d['v']
-
-# ✅ Good: Clear, descriptive names
-def calculate_monthly_payment(principal, monthly_rate, num_payments):
-    """Calculate monthly payment for a loan using the standard formula."""
-    if monthly_rate == 0:
-        return principal / num_payments
-    
-    factor = (1 + monthly_rate) ** num_payments
-    return principal * (monthly_rate * factor) / (factor - 1)
-
-def process_user_data(user_data):
-    """Process user data based on account type."""
-    account_type = user_data['account_type']
-    base_value = user_data['value']
-    
-    if account_type == 'premium':
-        return base_value * 1.1  # 10% bonus
-    elif account_type == 'basic':
-        return base_value * 0.9  # 10% reduction
-    else:
-        return base_value  # Standard rate
+# ✅ Good: Clear names
+def calculate_monthly_payment(principal, rate, payments):
+    """Calculate monthly payment for a loan."""
+    factor = (1 + rate) ** payments
+    return principal * (rate * factor) / (factor - 1)
 ```
 
-### 2. Keep Functions Small and Focused
+**Keep Functions Small and Focused:**
 
 ```python
-# ❌ Bad: Large, complex function
+# ❌ Bad: Large function with mixed responsibilities
 def process_order(order_data):
-    # Validate order
-    if not order_data.get('customer_id'):
-        raise ValueError("Customer ID required")
-    if not order_data.get('items'):
-        raise ValueError("Order must have items")
-    for item in order_data['items']:
-        if not item.get('product_id'):
-            raise ValueError("Product ID required")
-        if item.get('quantity', 0) <= 0:
-            raise ValueError("Quantity must be positive")
-    
-    # Calculate total
-    subtotal = 0
-    for item in order_data['items']:
-        product = get_product(item['product_id'])
-        if not product:
-            raise ValueError(f"Product {item['product_id']} not found")
-        if product['stock'] < item['quantity']:
-            raise ValueError(f"Insufficient stock for {product['name']}")
-        subtotal += product['price'] * item['quantity']
-    
-    # Apply discounts
-    discount = 0
-    customer = get_customer(order_data['customer_id'])
-    if customer['type'] == 'premium':
-        discount = subtotal * 0.1
-    elif customer['loyalty_points'] > 1000:
-        discount = subtotal * 0.05
-    
-    # Calculate tax
-    tax_rate = get_tax_rate(customer['state'])
-    tax = (subtotal - discount) * tax_rate
-    
-    # Create order record
-    order = {
-        'customer_id': order_data['customer_id'],
-        'items': order_data['items'],
-        'subtotal': subtotal,
-        'discount': discount,
-        'tax': tax,
-        'total': subtotal - discount + tax,
-        'status': 'pending'
-    }
-    
-    # Save to database
-    order_id = save_order(order)
-    
-    # Update inventory
-    for item in order_data['items']:
-        update_product_stock(item['product_id'], -item['quantity'])
-    
-    # Send confirmation email
-    send_order_confirmation(customer['email'], order)
-    
-    return order_id
+    # validation, calculation, saving, emailing - too much!
+    pass
 
-# ✅ Good: Broken down into focused functions
+# ✅ Good: Single-purpose functions
 def validate_order_data(order_data):
-    """Validate that order data contains required fields."""
-    if not order_data.get('customer_id'):
-        raise ValueError("Customer ID required")
-    
-    if not order_data.get('items'):
-        raise ValueError("Order must have items")
-    
-    for item in order_data['items']:
-        validate_order_item(item)
-
-def validate_order_item(item):
-    """Validate a single order item."""
-    if not item.get('product_id'):
-        raise ValueError("Product ID required")
-    
-    if item.get('quantity', 0) <= 0:
-        raise ValueError("Quantity must be positive")
-
-def calculate_order_subtotal(items):
-    """Calculate subtotal for order items."""
-    subtotal = 0
-    for item in items:
-        product = get_product(item['product_id'])
-        if not product:
-            raise ValueError(f"Product {item['product_id']} not found")
-        
-        if product['stock'] < item['quantity']:
-            raise ValueError(f"Insufficient stock for {product['name']}")
-        
-        subtotal += product['price'] * item['quantity']
-    
-    return subtotal
-
-def calculate_discount(customer, subtotal):
-    """Calculate discount based on customer type and loyalty."""
-    if customer['type'] == 'premium':
-        return subtotal * 0.1
-    elif customer['loyalty_points'] > 1000:
-        return subtotal * 0.05
-    return 0
+    """Validate order data."""
+    pass
 
 def process_order(order_data):
-    """Process a customer order through the complete workflow."""
+    """Process order workflow."""
     validate_order_data(order_data)
-    
-    customer = get_customer(order_data['customer_id'])
-    subtotal = calculate_order_subtotal(order_data['items'])
-    discount = calculate_discount(customer, subtotal)
-    
-    tax_rate = get_tax_rate(customer['state'])
-    tax = (subtotal - discount) * tax_rate
-    
-    order = create_order_record(order_data, subtotal, discount, tax)
-    order_id = save_order(order)
-    
-    update_inventory_for_order(order_data['items'])
-    send_order_confirmation(customer['email'], order)
-    
-    return order_id
+    return save_order(order_data)
 ```
 
-### 3. Avoid Over-Engineering
+**Avoid Over-Engineering:**
 
 ```python
-# ❌ Bad: Over-engineered for simple requirement
+# ❌ Bad: Complex patterns for simple needs
 class AbstractFactoryBuilderSingleton:
-    _instance = None
-    
-    def __new__(cls):
-        if cls._instance is None:
-            cls._instance = super().__new__(cls)
-        return cls._instance
-    
-    def create_builder(self, builder_type):
-        factory = self.get_factory(builder_type)
-        return factory.create_builder()
-    
-    def get_factory(self, factory_type):
-        # Complex factory selection logic
-        pass
+    pass
 
-class UserDataProcessorBuilder:
-    def __init__(self):
-        self.processor = UserDataProcessor()
-    
-    def with_validation(self):
-        self.processor.add_validator(GenericValidator())
-        return self
-    
-    def with_transformation(self):
-        self.processor.add_transformer(GenericTransformer())
-        return self
-    
-    def build(self):
-        return self.processor
+# ✅ Good: Simple solution
+def format_user_name(first, last):
+    return f"{first} {last}".strip()
+```
 
-# Usage for simple requirement: validate and transform user data
-factory = AbstractFactoryBuilderSingleton()
-builder = factory.create_builder('user_data')
-processor = builder.with_validation().with_transformation().build()
-result = processor.process(user_data)
+## 2. Change Management Protocols
 
-# ✅ Good: Simple, direct approach
-def validate_user_data(user_data):
-    """Validate user data fields."""
-    if not user_data.get('email'):
-        raise ValueError("Email is required")
-    if not user_data.get('name'):
-        raise ValueError("Name is required")
+### 2.1. Refactoring Complex Code
 
-def transform_user_data(user_data):
-    """Transform user data to standard format."""
-    return {
-        'email': user_data['email'].lower().strip(),
-        'name': user_data['name'].strip(),
-        'created_at': datetime.now()
+**Simplification Process:**
+
+1. **Identify complexity hotspots** - Long functions, deep nesting, unclear names
+2. **Extract focused functions** - Single responsibility principle
+3. **Simplify control flow** - Early returns, guard clauses
+4. **Use standard libraries** - Avoid reinventing common functionality
+
+### 2.2. Code Review Guidelines
+
+**KISS Validation Checklist:**
+
+- Function length < 20 lines
+- Nesting depth < 3 levels  
+- Clear, descriptive names
+- Single responsibility per function
+- Standard library usage where possible
+
+### 2.3. Complexity Metrics
+
+**Measurable Targets:**
+
+- **Cyclomatic Complexity**: < 10 per function
+- **Lines of Code**: < 20 per function
+- **Parameter Count**: < 5 per function
+- **Nesting Depth**: < 3 levels
+
+## 3. Communication Standards
+
+### 3.1. Naming Conventions
+
+```python
+# ✅ Good: Self-documenting names
+def calculate_monthly_payment(principal, rate, months):
+    return principal * (rate * (1 + rate) ** months) / ((1 + rate) ** months - 1)
+
+def is_valid_email(email):
+    return '@' in email and '.' in email
+
+def get_active_users():
+    return [user for user in users if user.status == 'active']
+```
+
+### 3.2. Comment Guidelines
+
+```python
+# ✅ Good: Explain why, not what
+def apply_bulk_discount(total, item_count):
+    if item_count >= 10:
+        return total * 0.9  # Encourage bulk orders
+    return total
+```
+
+### 3.3. Documentation Standards
+
+**Keep documentation simple and focused:**
+
+- **Purpose**: What the function does
+- **Parameters**: Input requirements  
+- **Returns**: Output description
+- **Example**: Simple usage case
+
+## 4. Quality Assurance Framework
+
+### 4.1. Testing Simple Code
+
+```python
+# Simple function
+def calculate_tax(amount, rate):
+    """Calculate tax for given amount and rate."""
+    return amount * rate
+
+# Simple test
+def test_calculate_tax():
+    assert calculate_tax(100, 0.1) == 10
+    assert calculate_tax(0, 0.1) == 0
+    assert calculate_tax(100, 0) == 0
+```
+
+### 4.2. Complexity Prevention
+
+**Early Warning Signs:**
+
+- Functions longer than 20 lines
+- More than 3 levels of nesting
+- Complex boolean expressions
+- Multiple responsibilities in one function
+- Hard-to-name variables/functions
+
+### 4.3. Automated Validation
+
+```bash
+# Use complexity analysis tools
+flake8 --max-complexity=10 *.py
+pylint --max-line-length=80 *.py
+```
+
+## 5. Security & Performance Guidelines
+
+### 5.1. Simple Security Practices
+
+```python
+# ✅ Good: Simple validation and authentication
+def validate_email(email):
+    return '@' in email and '.' in email.split('@')[1]
+
+def require_authentication(func):
+    def wrapper(*args, **kwargs):
+        if not is_authenticated():
+            raise PermissionError("Authentication required")
+        return func(*args, **kwargs)
+    return wrapper
+```
+
+### 5.2. Performance Through Simplicity
+
+```python
+# ✅ Good: Simple and efficient
+def get_active_users(users):
+    return [user for user in users if user.status == 'active']
+
+def calculate_total(items):
+    return sum(item.price * item.quantity for item in items)
+```
+
+## 6. Integration & Compatibility
+
+### 6.1. API Design Simplicity
+
+```python
+# ✅ Good: Simple API design
+class UserService:
+    def get_user(self, user_id):
+        """Get user by ID."""
+        return self.db.get_user(user_id)
+    
+    def create_user(self, user_data):
+        """Create new user."""
+        validate_user_data(user_data)
+        return self.db.save_user(user_data)
+    
+    def update_user(self, user_id, updates):
+        """Update existing user."""
+        user = self.get_user(user_id)
+        updated_user = {**user, **updates}
+        return self.db.save_user(updated_user)
+```
+
+### 6.2. Framework Integration
+
+**Simple patterns work across frameworks:**
+
+- Pure functions for business logic
+- Clear separation of concerns
+- Standard error handling
+- Consistent naming conventions
+
+### 6.3. Database Simplicity
+
+```python
+# ✅ Good: Simple database operations
+class UserRepository:
+    def find_by_id(self, user_id):
+        return self.db.execute("SELECT * FROM users WHERE id = ?", [user_id])
+    
+    def find_by_email(self, email):
+        return self.db.execute("SELECT * FROM users WHERE email = ?", [email])
+    
+    def save(self, user):
+        return self.db.execute(
+            "INSERT INTO users (name, email) VALUES (?, ?)",
+            [user.name, user.email]
+        )
+```
+
+## 7. Monitoring & Maintenance
+
+### 7.1. Simple Logging
+
+```
+import logging
+
+logger = logging.getLogger(__name__)
+
+def process_order(order):
+    """Process order with simple logging."""
+    logger.info(f"Processing order {order.id}")
+    
+    try:
+        result = validate_and_save_order(order)
+        logger.info(f"Order {order.id} processed successfully")
+        return result
+    except Exception as e:
+        logger.error(f"Failed to process order {order.id}: {e}")
+        raise
+```
+
+### 7.2. Metrics and Monitoring
+
+**Simple metrics to track:**
+
+- Function execution time
+- Error rates
+- Code complexity scores
+- Test coverage percentage
+
+### 7.3. Maintenance Guidelines
+
+**Regular simplification:**
+
+- Review functions over 20 lines
+- Refactor complex conditionals
+- Replace custom code with standard libraries
+- Update documentation to match simplified code
+
+## 8. AI Agent Optimization
+
+### 8.1. AI-Friendly Code Patterns
+
+```python
+# ✅ Good: Clear patterns for AI generation
+def calculate_discount(total, customer_type):
+    """Calculate discount based on customer type."""
+    discount_rates = {
+        'premium': 0.1,
+        'standard': 0.05,
+        'new': 0.0
     }
+    return total * discount_rates.get(customer_type, 0.0)
 
-def process_user_data(user_data):
-    """Validate and transform user data."""
-    validate_user_data(user_data)
-    return transform_user_data(user_data)
-
-# Simple usage
-result = process_user_data(user_data)
+def validate_required_fields(data, required_fields):
+    """Validate that all required fields are present."""
+    missing = [field for field in required_fields if field not in data]
+    if missing:
+        raise ValueError(f"Missing required fields: {missing}")
 ```
 
-### 4. Use Standard Libraries and Patterns
+### 8.2. Code Generation Guidelines
 
-```python
-# ❌ Bad: Reinventing the wheel
-def custom_sort(items, key_func=None, reverse=False):
-    """Custom sorting implementation"""
-    # Complex custom sorting algorithm
-    for i in range(len(items)):
-        for j in range(i + 1, len(items)):
-            item1_key = key_func(items[i]) if key_func else items[i]
-            item2_key = key_func(items[j]) if key_func else items[j]
-            
-            should_swap = (item1_key > item2_key) if not reverse else (item1_key < item2_key)
-            if should_swap:
-                items[i], items[j] = items[j], items[i]
-    return items
+**For AI agents generating code:**
 
-def custom_datetime_formatter(dt, format_type):
-    """Custom date formatting"""
-    if format_type == 'iso':
-        return f"{dt.year}-{str(dt.month).zfill(2)}-{str(dt.day).zfill(2)}"
-    elif format_type == 'us':
-        return f"{dt.month}/{dt.day}/{dt.year}"
-    # ... more custom formatting
+- Prefer explicit over implicit
+- Use descriptive variable names
+- Keep functions focused on single tasks
+- Include docstrings for all functions
+- Use type hints where beneficial
 
-# ✅ Good: Using standard libraries
-from datetime import datetime
+### 8.3. Pattern Recognition
 
-def sort_users_by_name(users):
-    """Sort users by name using standard library."""
-    return sorted(users, key=lambda user: user['name'])
+**Common simple patterns AI can recognize:**
 
-def format_date(date, format_string='%Y-%m-%d'):
-    """Format date using standard datetime formatting."""
-    return date.strftime(format_string)
+- Input validation functions
+- Data transformation functions
+- CRUD operations
+- Configuration loading
+- Error handling wrappers
 
-# Usage
-sorted_users = sort_users_by_name(users)
-formatted_date = format_date(datetime.now(), '%m/%d/%Y')
-```
+### 8.4. Complexity Avoidance
 
-### 5. Simplify Control Flow
+**AI agents should avoid:**
 
-```python
-# ❌ Bad: Complex nested conditions
-def calculate_shipping_cost(order):
-    if order.get('items'):
-        if len(order['items']) > 0:
-            total_weight = 0
-            for item in order['items']:
-                if item.get('weight'):
-                    total_weight += item['weight']
-            
-            if total_weight > 0:
-                if order.get('customer'):
-                    if order['customer'].get('type'):
-                        if order['customer']['type'] == 'premium':
-                            if total_weight > 10:
-                                return 0  # Free shipping
-                            else:
-                                return 5  # Reduced shipping
-                        else:
-                            if total_weight > 20:
-                                return 10  # Standard shipping
-                            else:
-                                return 15  # Higher rate for light items
-    return 25  # Default expensive shipping
+- Deep inheritance hierarchies
+- Complex design patterns for simple problems
+- Premature optimization
+- Over-abstraction
+- Magic numbers and strings
 
-# ✅ Good: Simplified, early returns
-def calculate_shipping_cost(order):
-    """Calculate shipping cost based on order weight and customer type."""
-    # Early validation
-    if not order.get('items'):
-        return 25
-    
-    total_weight = sum(item.get('weight', 0) for item in order['items'])
-    if total_weight == 0:
-        return 25
-    
-    customer_type = order.get('customer', {}).get('type', 'standard')
-    
-    # Premium customer shipping
-    if customer_type == 'premium':
-        return 0 if total_weight > 10 else 5
-    
-    # Standard customer shipping
-    return 10 if total_weight > 20 else 15
-```
+---
 
-### 6. Clear Error Handling
+**Magic Vibe KISS Principle v2.1.0** - Simplicity for AI and humans
 
-```typescript
-// ❌ Bad: Complex error handling
-async function fetchUserData(userId: string) {
-    try {
-        const response = await fetch(`/api/users/${userId}`);
-        if (!response.ok) {
-            if (response.status === 404) {
-                throw new Error('User not found');
-            } else if (response.status === 401) {
-                throw new Error('Unauthorized');
-            } else if (response.status === 403) {
-                throw new Error('Forbidden');
-            } else if (response.status >= 500) {
-                throw new Error('Server error');
-            } else {
-                throw new Error('Unknown error');
-            }
-        }
-        
-        try {
-            const data = await response.json();
-            if (data && typeof data === 'object') {
-                if (data.id && data.name && data.email) {
-                    return data;
-                } else {
-                    throw new Error('Invalid user data structure');
-                }
-            } else {
-                throw new Error('Invalid response format');
-            }
-        } catch (jsonError) {
-            throw new Error('Failed to parse response');
-        }
-    } catch (networkError) {
-        if (networkError.message.includes('fetch')) {
-            throw new Error('Network error');
-        } else {
-            throw networkError;
-        }
-    }
-}
-
-// ✅ Good: Simplified error handling
-async function fetchUserData(userId: string): Promise<User> {
-    const response = await fetch(`/api/users/${userId}`);
-    
-    if (!response.ok) {
-        const errorMessages = {
-            404: 'User not found',
-            401: 'Unauthorized access',
-            403: 'Access forbidden',
-        };
-        
-        const message = errorMessages[response.status] || `Server error (${response.status})`;
-        throw new Error(message);
-    }
-    
-    const userData = await response.json();
-    return userData as User;
-}
-
-// Usage with simple error handling
-try {
-    const user = await fetchUserData('123');
-    console.log(user);
-} catch (error) {
-    console.error('Failed to fetch user:', error.message);
-}
-```
-
-## Simplicity Patterns
-
-### 1. Guard Clauses for Early Returns
-
-```python
-# ✅ Good: Using guard clauses
-def process_payment(payment_data):
-    """Process payment with clear validation flow."""
-    if not payment_data:
-        raise ValueError("Payment data is required")
-    
-    if payment_data.get('amount', 0) <= 0:
-        raise ValueError("Amount must be positive")
-    
-    if not payment_data.get('payment_method'):
-        raise ValueError("Payment method is required")
-    
-    if not payment_data.get('customer_id'):
-        raise ValueError("Customer ID is required")
-    
-    # Main processing logic here
-    return process_validated_payment(payment_data)
-```
-
-### 2. Simple Data Structures
-
-```python
-# ❌ Bad: Over-complex data structure
-class OrderItemContainer:
-    def __init__(self):
-        self._items = {}
-        self._metadata = {}
-        self._relations = {}
-    
-    def add_item(self, item_id, item_data, metadata=None, relations=None):
-        self._items[item_id] = item_data
-        if metadata:
-            self._metadata[item_id] = metadata
-        if relations:
-            self._relations[item_id] = relations
-    
-    def get_item_with_context(self, item_id):
-        return {
-            'item': self._items.get(item_id),
-            'metadata': self._metadata.get(item_id),
-            'relations': self._relations.get(item_id)
-        }
-
-# ✅ Good: Simple data structure
-from dataclasses import dataclass
-from typing import List, Optional
-
-@dataclass
-class OrderItem:
-    product_id: str
-    quantity: int
-    price: float
-    name: str = ""
-    
-    @property
-    def total_price(self) -> float:
-        return self.quantity * self.price
-
-class Order:
-    def __init__(self, customer_id: str):
-        self.customer_id = customer_id
-        self.items: List[OrderItem] = []
-    
-    def add_item(self, item: OrderItem):
-        self.items.append(item)
-    
-    def get_total(self) -> float:
-        return sum(item.total_price for item in self.items)
-```
-
-### 3. Composition Over Complex Inheritance
-
-```python
-# ❌ Bad: Complex inheritance hierarchy
-class BaseNotification:
-    def send(self): pass
-
-class EmailNotification(BaseNotification):
-    def send(self): pass
-
-class SMSNotification(BaseNotification):
-    def send(self): pass
-
-class PushNotification(BaseNotification):
-    def send(self): pass
-
-class UrgentEmailNotification(EmailNotification):
-    def send(self): pass
-
-class UrgentSMSNotification(SMSNotification):
-    def send(self): pass
-
-# ... many more combinations
-
-# ✅ Good: Simple composition
-class EmailSender:
-    def send(self, message: str, recipient: str) -> bool:
-        # Email sending logic
-        pass
-
-class SMSSender:
-    def send(self, message: str, phone: str) -> bool:
-        # SMS sending logic
-        pass
-
-class PushSender:
+*Last Updated: 2025-01-XX | File Size: ~8KB | Status: Active*
     def send(self, message: str, device_id: str) -> bool:
         # Push notification logic
         pass
 
 class NotificationService:
-    def __init__(self):
+    def **init**(self):
         self.email_sender = EmailSender()
         self.sms_sender = SMSSender()
         self.push_sender = PushSender()
-    
+
     def send_notification(self, message: str, recipient: str, method: str, urgent: bool = False):
         if urgent:
             message = f"URGENT: {message}"
@@ -545,6 +365,7 @@ class NotificationService:
             return self.push_sender.send(message, recipient)
         else:
             raise ValueError(f"Unknown notification method: {method}")
+
 ```
 
 ## Language-Specific KISS Guidelines
@@ -577,7 +398,7 @@ except SpecificException as e:
 
 ### TypeScript KISS
 
-```typescript
+```
 // ✅ Use TypeScript features for simplicity
 interface User {
     id: string;
@@ -613,12 +434,12 @@ const activeUsers = users
 
 ### Simple Test Structure
 
-```python
+```
 class TestOrderCalculations:
     def test_calculate_subtotal_single_item(self):
         # Arrange
         items = [OrderItem(product_id="1", quantity=2, price=10.0)]
-        
+
         # Act
         subtotal = calculate_subtotal(items)
         
@@ -638,13 +459,14 @@ class TestOrderCalculations:
     def test_calculate_subtotal_empty_list(self):
         subtotal = calculate_subtotal([])
         assert subtotal == 0.0
+
 ```
 
 ## Documentation for Simple Code
 
 ### Clear, Concise Documentation
 
-```python
+```
 def calculate_monthly_payment(principal: float, annual_rate: float, years: int) -> float:
     """
     Calculate monthly loan payment.

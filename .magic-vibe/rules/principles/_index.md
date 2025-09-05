@@ -16,7 +16,7 @@ This directory contains universal development principles that AI agents should a
 - **DRY Principle:** `@principles/dry.md` - "Don't Repeat Yourself" - eliminating code duplication and ensuring single source of truth
 - **KISS Principle:** `@principles/kiss.md` - "Keep It Simple, Stupid" - maintaining simplicity and avoiding unnecessary complexity
 - **YAGNI Principle:** `@principles/yagni.md` - "You Ain't Gonna Need It" - implementing only what is currently needed
-- **Feature-Sliced Design:** `@principles/feature-sliced-design.md` - Architectural methodology for scalable frontend applications with layer-based organization
+- **Feature-Sliced Design:** `@principles/fsd.md` - Architectural methodology for scalable frontend applications with layer-based organization
 
 ## Principle Application Hierarchy
 

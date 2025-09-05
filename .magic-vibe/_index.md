@@ -222,7 +222,109 @@ touch .magic-vibe/rules/{category}/{rule-name}.md
 # Executable tools go in @tools/ if needed
 ```
 
-### 2.5. Validation Standards
+### 2.6. File Size Optimization for AI Performance
+
+**Critical:** AI Token Limitations
+
+AI agents have strict limitations that affect rule file design:
+
+**Recommended File Sizes:**
+
+- **Rule Files:** Maximum 15KB (≈ 3,750 tokens)
+- **Core Rules:** Maximum 20KB (≈ 5,000 tokens)
+- **Index Files:** Maximum 25KB (≈ 6,250 tokens)
+- **Example Files:** Maximum 10KB (≈ 2,500 tokens)
+
+**Token Calculation:**
+
+- **1 KB ≈ 250 tokens** (rough estimate)
+- **1 token ≈ 4 characters** (average for English)
+
+**Why Size Matters:**
+
+- **Context Window Limits:** GPT-4: ~128K tokens, Claude: ~200K tokens
+- **Processing Speed:** Smaller files = faster analysis
+- **Memory Efficiency:** Reduces AI agent memory usage
+- **Parsing Accuracy:** AI better understands focused content
+
+**File Size Guidelines:**
+
+```markdown
+## Size Category Limits
+
+| File Type | Max Size | Max Tokens | Purpose |
+|-----------|----------|------------|---------|
+| Core Rules | 20KB | 5,000 | Essential system functionality |
+| Language Rules | 15KB | 3,750 | Language-specific standards |
+| Framework Rules | 15KB | 3,750 | Framework patterns |
+| Workflow Rules | 12KB | 3,000 | Process definitions |
+| Principle Rules | 15KB | 3,750 | Development principles |
+| Index Files | 25KB | 6,250 | System overviews |
+| Examples | 10KB | 2,500 | Code demonstrations |
+```
+
+**Content Optimization Strategies:**
+
+1. **Prioritize Essential Information:**
+   - Focus on actionable guidance
+   - Remove verbose explanations
+   - Use concise language
+
+2. **Structure for Scanning:**
+   - Use bullet points over paragraphs
+   - Employ tables for data
+   - Implement clear headings
+
+3. **Code Block Efficiency:**
+   - Show minimal working examples
+   - Avoid redundant code
+   - Use comments sparingly
+
+4. **Cross-Reference Instead of Duplicate:**
+   - Reference other rules instead of repeating
+   - Use @rule/file.md references
+   - Link related concepts
+
+**File Size Monitoring:**
+
+```bash
+# Check file sizes during development
+find .magic-vibe/rules -name "*.md" -exec wc -c {} + | sort -n
+
+# Alert for oversized files (>25KB)
+find .magic-vibe/rules -name "*.md" -size +25k
+```
+
+**When Files Become Too Large:**
+
+1. **Split by Logical Sections:**
+   - Core functionality vs. advanced features
+   - Basic patterns vs. complex examples
+   - Different use cases or scenarios
+
+2. **Create Sub-rules:**
+   - `react.md` → `react-basic.md` + `react-advanced.md`
+   - `python.md` → `python-core.md` + `python-frameworks.md`
+
+3. **Extract Examples:**
+   - Move large code examples to separate files
+   - Reference examples from main rule
+   - Keep examples focused and minimal
+
+**AI Agent Performance Impact:**
+
+- **Files < 10KB:** Optimal performance, fast processing
+- **Files 10-20KB:** Good performance, normal processing
+- **Files 20-30KB:** Acceptable performance, slower processing  
+- **Files > 30KB:** Poor performance, may cause issues
+
+**Current Magic Vibe Status:**
+
+```text
+✅ _index.md: 8.5KB (Optimal)
+✅ Most rule files: <15KB (Good)
+⚠️ Monitor: Some principle files approaching 15KB
+```
 
 **Validation in Rules (Recommended):**
 
@@ -450,6 +552,21 @@ docs/
 3. AI agent compatibility testing
 4. Community feedback integration
 5. Documentation review and translation
+
+### 8.3. Validation Standards
+
+**Validation in Rules (Recommended):**
+
+- **Patterns:** Describe validation patterns in markdown
+- **Examples:** Show correct and incorrect code examples
+- **Linting Config:** Include configuration examples (ESLint, TSConfig, etc.)
+- **CI/CD Patterns:** Provide GitHub Actions examples
+
+**Development Tools (Optional):**
+
+- **Executable Scripts:** Place in `@tools/` directory if needed
+- **Cross-platform Support:** Provide both `.sh` and `.ps1` versions
+- **Creator Use Only:** Never reference tools in rules for user projects
 
 ---
 

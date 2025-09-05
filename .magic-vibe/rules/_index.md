@@ -116,28 +116,84 @@ For development process management:
 
 ## AI Agent Rule Discovery Protocol
 
+**Initialization Message:** "Initializing Magic Vibe rule discovery..."
+
 AI agents should follow this protocol for dynamic rule application:
 
-1. **Project Analysis:** Scan project files to detect:
-   - Programming languages (by file extensions)
-   - Frameworks (by package.json, requirements.txt, Cargo.toml, etc.)
-   - Existing workflow patterns (by .git, CI/CD files)
+### 1. Project Analysis Phase
 
-2. **Rule Selection:** Based on detected context, automatically include:
-   - Relevant language rules from `@languages/`
-   - Applicable framework rules from `@frameworks/`
-   - Appropriate workflow rules from `@workflows/`
-   - Core Magic Vibe rules from `@core/`
-   - Universal principles from `@principles/`
+Scan project files to detect:
 
-3. **Rule Precedence:** Apply rules in order:
-   - Core system rules (highest priority)
-   - Language-specific rules
-   - Framework-specific rules
-   - Workflow rules
-   - Development principles (lowest priority, but always applied)
+**Programming Languages (by file extensions):**
 
-4. **Conflict Resolution:** When rules conflict:
-   - More specific rules override general ones
-   - Later rules in the precedence chain override earlier ones
-   - Document conflicts in task notes for human review
+```bash
+# Scan first 50 files to avoid performance issues
+find . -type f \( -name "*.py" -o -name "*.js" -o -name "*.ts" -o -name "*.tsx" \) | head -50
+```
+
+**Frameworks (by dependencies and config files):**
+
+- `package.json` → React, Vue, Next.js, TailwindCSS
+- `requirements.txt` → FastAPI, Django, Flask
+- `composer.json` → Laravel
+- Config files: `next.config.*`, `vue.config.*`, `tailwind.config.*`
+
+**Workflow Patterns (by project structure):**
+
+- `.git` directory → Git workflows
+- `.github/workflows` → GitHub Actions
+- Quality tools: `.eslintrc.*`, `.pre-commit-config.yaml`
+
+### 2. Rule Selection Phase
+
+Based on detected context, automatically include:
+
+| Detection | Rule Applied | Priority |
+|-----------|--------------|----------|
+| **Always** | `@core/*.md` | 1 (Highest) |
+| **Python files** | `@languages/python.md` | 2 |
+| **TypeScript files** | `@languages/typescript.md` | 2 |
+| **React dependencies** | `@frameworks/react.md` | 3 |
+| **FastAPI dependencies** | `@frameworks/fastapi.md` | 3 |
+| **Git repository** | `@workflows/gitflow.md` | 4 |
+| **Quality tools** | `@workflows/code-quality.md` | 4 |
+| **Always** | `@principles/*.md` | 5 (Lowest) |
+
+### 3. Rule Application Phase
+
+Apply rules in priority order:
+
+1. **Core system rules** (highest priority, always applied)
+2. **Language-specific rules**
+3. **Framework-specific rules**
+4. **Workflow rules**
+5. **Development principles** (lowest priority, but always applied)
+
+### 4. Conflict Resolution Phase
+
+When rules conflict:
+
+- **Specificity Wins:** More specific rules override general ones
+- **Priority Order:** Higher priority categories override lower priority  
+- **Composition:** Combine complementary rules when possible
+- **Documentation:** Log conflicts and resolutions in task notes
+
+### Example Output
+
+```text
+Initializing Magic Vibe rule discovery...
+
+Project Analysis:
+- Languages: Python (25 files), TypeScript (12 files)
+- Frameworks: FastAPI, React
+- Workflows: Git, trunk-based development, code quality
+
+Applying Rules (12 total):
+✓ Core (7): tasks, plans, hooks, memory, expand, versioning, workflow
+✓ Languages (2): python.md, typescript.md  
+✓ Frameworks (2): fastapi.md, react.md
+✓ Workflows (3): trunk-based-development.md, code-quality.md, commit-messages.md
+✓ Principles (5): oop.md, solid.md, dry.md, kiss.md, yagni.md
+
+Active Rule Set: 19 rules loaded and ready
+```
