@@ -4,7 +4,7 @@ This example demonstrates a typical FSD project structure for an e-commerce appl
 
 ## Project Structure
 
-```
+```text
 src/
 ├── app/                           # Application layer
 │   ├── providers/                # Global providers (theme, auth, etc.)

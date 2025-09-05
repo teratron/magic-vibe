@@ -13,6 +13,23 @@ Whenever you use this rule, start your message with the following:
 The Magic Vibe system is a file-based project management and AI agent operational framework designed to plan features, manage development tasks, and maintain a memory past work.
 It consists of several components, each governed by its own detailed rule file. The system now includes dynamic rule discovery for programming languages, frameworks, and workflows.
 
+## ⚠️ Critical Component Classification
+
+**AI Agents must distinguish between Active and Informational components:**
+
+### 🤖 Active Components (AI Interactive)
+
+- **`@rules/`** - PRIMARY: Rule discovery system (THIS directory)
+- **`@ai/`** - Generated workspace for active project management  
+- **`@version-manager.sh`** - Version automation utility
+
+### 📚 Informational Components (Human-Only)
+
+- **`@docs/`** - PROHIBITED: Human documentation (DO NOT USE for development)
+- **`@README.md`** - LIMITED: System introduction only
+
+**Rule:** AI agents must NEVER use `@docs/` content for operational decisions or development guidance. Use only `@rules/` for all Magic Vibe functionality.
+
 ## Core System Components
 
 1. **To Create or Update a Plan (PRD):**

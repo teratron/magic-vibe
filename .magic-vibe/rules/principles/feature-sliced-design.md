@@ -223,22 +223,69 @@ export { userAPI } from "./api";
 Implement ESLint rules for FSD compliance:
 
 ```javascript
-// .eslintrc.js
+// .eslintrc.js - Basic FSD compliance configuration
 module.exports = {
+  extends: [
+    "@typescript-eslint/recommended",
+    "plugin:import/typescript"
+  ],
+  parser: "@typescript-eslint/parser",
+  plugins: ["@typescript-eslint", "boundaries", "import"],
+  settings: {
+    "import/resolver": {
+      "typescript": { "alwaysTryTypes": true }
+    },
+    "boundaries/elements": [
+      { "type": "app", "pattern": "src/app/**/*" },
+      { "type": "pages", "pattern": "src/pages/**/*" },
+      { "type": "widgets", "pattern": "src/widgets/**/*" },
+      { "type": "features", "pattern": "src/features/**/*" },
+      { "type": "entities", "pattern": "src/entities/**/*" },
+      { "type": "shared", "pattern": "src/shared/**/*" }
+    ]
+  },
   rules: {
-    "boundaries/element-types": [2, {
-      default: "disallow",
-      rules: [
-        { from: "app", allow: ["pages", "widgets", "features", "entities", "shared"] },
-        { from: "pages", allow: ["widgets", "features", "entities", "shared"] },
-        { from: "widgets", allow: ["features", "entities", "shared"] },
-        { from: "features", allow: ["entities", "shared"] },
-        { from: "entities", allow: ["shared"] },
-        { from: "shared", allow: [] }
+    "boundaries/element-types": ["error", {
+      "default": "disallow",
+      "rules": [
+        { "from": ["app"], "allow": ["pages", "widgets", "features", "entities", "shared"] },
+        { "from": ["pages"], "allow": ["widgets", "features", "entities", "shared"] },
+        { "from": ["widgets"], "allow": ["features", "entities", "shared"] },
+        { "from": ["features"], "allow": ["entities", "shared"] },
+        { "from": ["entities"], "allow": ["shared"] },
+        { "from": ["shared"], "allow": [] }
       ]
+    }],
+    "import/order": ["error", {
+      "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+      "pathGroups": [
+        { "pattern": "app/**", "group": "internal", "position": "before" },
+        { "pattern": "pages/**", "group": "internal", "position": "before" },
+        { "pattern": "widgets/**", "group": "internal", "position": "before" },
+        { "pattern": "features/**", "group": "internal", "position": "before" },
+        { "pattern": "entities/**", "group": "internal", "position": "before" },
+        { "pattern": "shared/**", "group": "internal", "position": "before" }
+      ],
+      "alphabetize": { "order": "asc", "caseInsensitive": true }
     }]
   }
 };
+```
+
+```json
+// package.json - Required dependencies
+{
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "eslint-plugin-boundaries": "^4.0.0",
+    "eslint-plugin-import": "^2.27.0"
+  },
+  "scripts": {
+    "lint:fsd": "eslint src/**/*.{ts,tsx,js,jsx} --fix"
+  }
+}
 ```
 
 ### 4.2. Testing Standards
