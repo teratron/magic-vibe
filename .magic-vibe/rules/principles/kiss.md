@@ -256,7 +256,7 @@ class UserRepository:
 
 ### 7.1. Simple Logging
 
-```
+```python
 import logging
 
 logger = logging.getLogger(__name__)
@@ -349,7 +349,9 @@ def validate_required_fields(data, required_fields):
 **Magic Vibe KISS Principle v2.1.0** - Simplicity for AI and humans
 
 ***Last Updated:** 2025-01-XX | **File Size:** ~8KB | **Status:** Active*
-    def send(self, message: str, device_id: str) -> bool:
+
+```python
+def send(self, message: str, device_id: str) -> bool:
         # Push notification logic
         pass
 
@@ -371,7 +373,6 @@ class NotificationService:
             return self.push_sender.send(message, recipient)
         else:
             raise ValueError(f"Unknown notification method: {method}")
-
 ```
 
 ## Language-Specific KISS Guidelines
@@ -404,7 +405,7 @@ except SpecificException as e:
 
 ### TypeScript KISS
 
-```
+```typescript
 // ✅ Use TypeScript features for simplicity
 interface User {
     id: string;
@@ -440,7 +441,7 @@ const activeUsers = users
 
 ### Simple Test Structure
 
-```
+```python
 class TestOrderCalculations:
     def test_calculate_subtotal_single_item(self):
         # Arrange
@@ -472,7 +473,7 @@ class TestOrderCalculations:
 
 ### Clear, Concise Documentation
 
-```
+```python
 def calculate_monthly_payment(principal: float, annual_rate: float, years: int) -> float:
     """
     Calculate monthly loan payment.
