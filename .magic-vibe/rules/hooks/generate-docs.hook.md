@@ -82,7 +82,7 @@ update_version "documentation" "last_auto_generation" "$(date -u +"%Y-%m-%dT%H:%
 
 # Get version info for documentation
 project_version=$(get_version "project" "version")
-task_magic_version=$(get_version "task_magic" "system_version")
+magic_vibe_version=$(get_version "task_magic" "system_version")
 
 # Create docs directory if it doesn't exist
 mkdir -p docs/en docs/ru
@@ -100,7 +100,7 @@ cat > "docs/en/task-{{task.id}}-{{task.feature}}.md" << 'EOF'
 
 **Project Version:** ${project_version}  
 **Documentation Version:** ${new_doc_version}  
-**Magic Vibe System:** v${task_magic_version}  
+**Magic Vibe System:** v${magic_vibe_version}  
 **Generated:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")
 
 ## Overview
@@ -137,7 +137,7 @@ cat > "docs/ru/task-{{task.id}}-{{task.feature}}.md" << 'EOF'
 
 **Версия проекта:** ${project_version}  
 **Версия документации:** ${new_doc_version}  
-**Система Magic Vibe:** v${task_magic_version}  
+**Система Magic Vibe:** v${magic_vibe_version}  
 **Сгенерировано:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")
 
 ## Обзор
@@ -158,7 +158,7 @@ cat > "docs/ru/task-{{task.id}}-{{task.feature}}.md" << 'EOF'
 
 ---
 
-*Автоматически сгенерировано системой Magic Vibe v${task_magic_version}*
+*Автоматически сгенерировано системой Magic Vibe v${magic_vibe_version}*
 EOF
 
 echo "Documentation generated successfully for task {{task.id}} - Documentation version: ${new_doc_version}"

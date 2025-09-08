@@ -153,7 +153,7 @@ Version information is displayed via badges in README files:
 ```markdown
 [![Project Version](https://img.shields.io/badge/Project-v0.1.0-blue.svg)](https://github.com/teratron/magic-vibe/releases)
 [![Documentation Version](https://img.shields.io/badge/Docs-v0.1.0-green.svg)](../)
-[![Magic Vibe](https://img.shields.io/badge/Task%20Magic-v0.2.1-orange.svg)](../.magic-vibe/)
+[![Magic Vibe](https://img.shields.io/badge/Magic%20Vibe-v0.2.1-orange.svg)](../.magic-vibe/)
 ```
 
 ### Documentation Headers
@@ -202,7 +202,7 @@ Hooks can access version information via these variables:
 ```bash
 project_version=$(get_version "project" "version")
 doc_version=$(get_version "documentation" "version")
-task_magic_version=$(get_version "task_magic" "system_version")
+magic_vibe_version=$(get_version "task_magic" "system_version")
 generation_count=$(get_version "documentation" "generation_count")
 ```
 

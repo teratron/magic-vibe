@@ -170,7 +170,7 @@ Start working on the first authentication task
 
 ## 🔗 Integration with VS Code Rules
 
-Magic Vibe complements existing `.vscode/rules/` systems:
+Magic Vibe complements existing `.magic-vibe/rules/` systems:
 
 - **Unified Standards:** Consistent rules across AI editors
 - **Template Compatibility:** Works with Cursor, Windsurf, and other AI IDEs

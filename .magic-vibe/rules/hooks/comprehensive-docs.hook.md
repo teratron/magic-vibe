@@ -93,7 +93,7 @@ update_version "documentation" "generation_count" "$new_count"
 
 # Get project version for documentation
 project_version=$(get_version "project" "version")
-task_magic_version=$(get_version "task_magic" "system_version")
+magic_vibe_version=$(get_version "task_magic" "system_version")
 
 # Create docs directory structure
 mkdir -p docs/en/tasks docs/ru/tasks docs/en/features docs/ru/features
@@ -125,7 +125,7 @@ cat > "docs/en/tasks/task-${TASK_ID}-${TASK_FEATURE,,}.md" << EOF
 
 **Project Version:** ${project_version}  
 **Documentation Version:** ${new_doc_version}  
-**Magic Vibe System:** v${task_magic_version}  
+**Magic Vibe System:** v${magic_vibe_version}  
 **Generation #:** ${new_count}
 
 ## Overview
@@ -173,7 +173,7 @@ cat > "docs/ru/tasks/task-${TASK_ID}-${TASK_FEATURE,,}.md" << EOF
 
 **Версия проекта:** ${project_version}  
 **Версия документации:** ${new_doc_version}  
-**Система Magic Vibe:** v${task_magic_version}  
+**Система Magic Vibe:** v${magic_vibe_version}  
 **Номер генерации:** ${new_count}
 
 ## Обзор
@@ -203,7 +203,7 @@ ${TEST_STRATEGY:-"Задача была завершена и проверена
 
 ---
 
-*Автоматически сгенерировано системой Magic Vibe v${task_magic_version} ${TIMESTAMP}*
+*Автоматически сгенерировано системой Magic Vibe v${magic_vibe_version} ${TIMESTAMP}*
 EOF
 
 # Update English documentation index
