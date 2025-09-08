@@ -10,7 +10,7 @@ alwaysApply: true
 > **Category:** Principles  
 > **Priority:** High  
 > **File Size:** ~12KB (AI-optimized)  
-> **Dependencies:** `@rules/principles/kiss.md`, `@rules/principles/solid.md`
+> **Dependencies:** `principles/kiss.md`, `principles/solid.md`
 
 DRY (Don't Repeat Yourself) principle guide for eliminating code duplication and promoting code reusability. Essential for AI agents to generate maintainable, efficient code.
 

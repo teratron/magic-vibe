@@ -10,11 +10,11 @@ This directory contains development workflow and process rules that AI agents sh
 
 ## Available Workflow Rules
 
-- **Git Workflow:** `@workflows/gitflow.md` - Git branching strategies, merge practices, collaboration patterns
-- **Trunk-Based Development:** `@workflows/trunk-based-development.md` - Continuous integration patterns, short-lived branches
-- **Commit Messages:** `@workflows/commit-messages.md` - Conventional commit format, standards, and automation
-- **Clean Code:** `@workflows/clean-code.md` - Code quality, readability standards, and maintainability practices
-- **Code Quality:** `@workflows/code-quality.md` - Quality assurance, testing standards, and validation processes
+- **Git Workflow:** `workflows/gitflow.md` - Git branching strategies, merge practices, collaboration patterns
+- **Trunk-Based Development:** `workflows/trunk-based-development.md` - Continuous integration patterns, short-lived branches
+- **Commit Messages:** `workflows/commit-messages.md` - Conventional commit format, standards, and automation
+- **Clean Code:** `workflows/clean-code.md` - Code quality, readability standards, and maintainability practices
+- **Code Quality:** `workflows/code-quality.md` - Quality assurance, testing standards, and validation processes
 
 ## Rule Application
 

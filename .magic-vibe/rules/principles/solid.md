@@ -1,10 +1,16 @@
+---
+description: SOLID principles guide for creating maintainable, flexible, and extensible code. Essential for AI agents generating scalable object-oriented designs.
+globs:
+alwaysApply: true
+---
+
 # SOLID Principles
 
 > **Magic Vibe Rule: SOLID Design Principles**  
 > **Category:** Principles  
 > **Priority:** High  
 > **File Size:** ~9KB (AI-optimized)  
-> **Dependencies:** `@rules/principles/kiss.md`, `@rules/principles/dry.md`
+> **Dependencies:** `principles/kiss.md`, `principles/dry.md`
 
 SOLID principles guide for creating maintainable, flexible, and extensible code. Essential for AI agents generating scalable object-oriented designs.
 

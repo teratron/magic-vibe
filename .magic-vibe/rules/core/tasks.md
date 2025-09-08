@@ -1,10 +1,16 @@
+---
+description: Comprehensive task management system for AI agents with file-based workflows, dependency tracking, and automated status synchronization across Magic Vibe ecosystem.
+globs:
+alwaysApply: true
+---
+
 # Task Management System
 
 > **Magic Vibe Rule: AI Task Management**  
 > **Category:** Core  
 > **Priority:** High  
 > **File Size:** ~11KB (AI-optimized)  
-> **Dependencies:** `@rules/core/plans.md`, `@rules/core/memory.md`
+> **Dependencies:** `core/plans.md`, `core/memory.md`
 
 Comprehensive task management system for AI agents with file-based workflows, dependency tracking, and automated status synchronization across Magic Vibe ecosystem.
 
@@ -316,5 +322,5 @@ error_log: null               # Error reason if failed
 
 **Magic Vibe Task System v2.1.0** - AI-optimized workflow management
 
-*For detailed sub-task creation: `@rules/core/expand.md`*  
-*For workflow diagrams: `@rules/core/workflow.md`*
+*For detailed sub-task creation: `core/expand.md`*
+*For workflow diagrams: `core/workflow.md`*

@@ -1,3 +1,10 @@
+---
+description: Magic Vibe system documentation relies on Markdown. This rule establishes standards for creating clear, consistent, and AI-optimized Markdown files.
+globs:
+  - "**/*.md"
+alwaysApply: true
+---
+
 # Magic Vibe Rule: Markdown Documentation Standards
 
 > **Magic Vibe Rule: Markdown Documentation Standards**  
@@ -85,9 +92,9 @@ Use consistent linking patterns:
 
 ```markdown
 <!-- Internal Magic Vibe references -->
-- `@rules/core/tasks.md` - Core task management
-- `@rules/languages/typescript.md` - TypeScript rules
-- `@.magic-vibe/ai/TASKS.md` - Current tasks
+- `core/tasks.md` - Core task management
+- `languages/typescript.md` - TypeScript rules
+- `.magic-vibe/ai/TASKS.md` - Current tasks
 
 <!-- External references -->
 - [Markdown Guide](https://www.markdownguide.org/)
@@ -220,7 +227,7 @@ Provide clear guidance for developers:
 
 To apply this rule:
 
-1. **For AI Agents:** Reference `@rules/languages/markdown.md`
+1. **For AI Agents:** Reference `languages/markdown.md`
 2. **For Developers:** Follow the implementation guidelines below
 3. **For Validation:** Use provided validation scripts
 ```
@@ -233,9 +240,9 @@ Reference other Magic Vibe rules:
 <!-- Clear rule dependencies -->
 **Dependencies:**
 
-- `@rules/core/quality.md` - For file size optimization
-- `@rules/workflows/documentation.md` - For writing standards
-- `@rules/principles/clarity.md` - For communication principles
+- `core/workflow.md` - For file size optimization
+- `workflows/clean-code.md` - For writing standards
+- `principles/kiss.md` - For communication principles
 ```
 
 ## 4. Quality Assurance Framework
@@ -401,13 +408,13 @@ Ensure compatibility with Magic Vibe components:
 ```markdown
 <!-- Integration with task system -->
 **Task Integration:**
-- Reference tasks using: `@.magic-vibe/ai/TASKS.md#task-id`
-- Create tasks with: `@rules/core/tasks.md` guidance
+- Reference tasks using: `.magic-vibe/ai/TASKS.md#task-id`
+- Create tasks with: `core/tasks.md` guidance
 
 <!-- Integration with plans -->
 **Plan Integration:**
-- Reference plans using: `@.magic-vibe/ai/plans/feature-name.md`
-- Create plans with: `@rules/core/plans.md` guidance
+- Reference plans using: `.magic-vibe/ai/plans/feature-name.md`
+- Create plans with: `core/plans.md` guidance
 ```
 
 ### 6.2. Tool Compatibility

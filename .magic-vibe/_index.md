@@ -18,7 +18,7 @@ alwaysApply: true
 > - This file contains **internal system development standards**
 > - **IGNORE** this file unless explicitly working on Magic Vibe system itself
 >
-> **For project development, use:** `@rules/core/`, `@rules/languages/`, `@rules/frameworks/`, `@rules/workflows/`, `@rules/principles/`
+> **For project development, use:** `rules/core/`, `rules/languages/`, `rules/frameworks/`, `rules/workflows/`, `rules/principles/`
 >
 > **For Magic Vibe System Developers and Maintainers**
 
@@ -52,15 +52,15 @@ These are the foundational rules for creating, maintaining, and evolving the Mag
 
 **Core Magic Vibe System (Rule-Based):**
 
-- `@rules/` - Pure markdown rule files (AI operational)
-- `@docs/` - Human documentation (informational)
-- `@ai/` - Generated workspace (dynamic)
-- `@README.md` - System overview (informational)
-- `@_index.md` - Creator guidelines (internal)
+- `rules/` - Pure markdown rule files (AI operational)
+- `docs/` - Human documentation (informational)
+- `ai/` - Generated workspace (dynamic, to be created)
+- `README.md` - System overview (informational)
+- `_index.md` - Creator guidelines (internal)
 
 **Development Support (Optional):**
 
-- `@tools/` - Development utilities and scripts (creator-only)
+- `tools/` - Development utilities and scripts (creator-only)
   - Version management scripts
   - Validation utilities  
   - Build and deployment helpers
@@ -69,39 +69,39 @@ These are the foundational rules for creating, maintaining, and evolving the Mag
 **Foundation vs. Generated Workspace:**
 
 - `.magic-vibe/` = **Foundation System** (template, rules, docs)
-- `.magic-vibe/ai/` = **Generated Workspace** (initially empty, populated during use)
+- `.magic-vibe/ai/` = **Generated Workspace** (initially empty, populated during use, to be created)
 - Never mix template logic with generated content
 
 **Rule vs. Documentation vs. Tools:**
 
-- `@rules/` = **Active operational rules** for AI agents and developers
-- `@docs/` = **Informational content** for human understanding only
-- `@tools/` = **Development utilities** for Magic Vibe creators only
-- AI agents MUST NOT use `@docs/` or `@tools/` for operational decisions
+- `rules/` = **Active operational rules** for AI agents and developers
+- `docs/` = **Informational content** for human understanding only
+- `tools/` = **Development utilities** for Magic Vibe creators only
+- AI agents MUST NOT use `docs/` or `tools/` for operational decisions
 
 ### 1.3. Component Classification
 
 **Active Components (AI Operational):**
 
-- `@rules/` - Rule discovery and application
-- `@ai/` - Dynamic workspace generation
-- `@README.md` - System overview with operational context
+- `rules/` - Rule discovery and application
+- `ai/` - Dynamic workspace generation
+- `README.md` - System overview with operational context
 
 **Informational Components (Human Reference):**
 
-- `@docs/` - Human-readable documentation
-- `@_index.md` - Creator guidelines and internal documentation
+- `docs/` - Human-readable documentation
+- `_index.md` - Creator guidelines and internal documentation
 
 **Development Support (Creator-Only):**
 
-- `@tools/` - Development utilities and automation scripts
+- `tools/` - Development utilities and automation scripts
 - Version management, validation tools, build helpers
 
 **CRITICAL:** AI Agent Restrictions
 
-- AI agents MUST NEVER use `@docs/` or `@tools/` content for operational decisions
+- AI agents MUST NEVER use `docs/` or `tools/` content for operational decisions
 - These directories are strictly prohibited for development guidance or code generation
-- Only `@rules/` should guide AI behavior in user projects
+- Only `rules/` should guide AI behavior in user projects
 
 ### 1.3. Template vs. Production Distinction
 
@@ -109,11 +109,11 @@ These are the foundational rules for creating, maintaining, and evolving the Mag
 
 - Contains demonstration examples and full documentation
 - Shows complete system capabilities
-- Includes populated `@ai/` directory for reference
+- Includes populated `ai/` directory for reference (to be created)
 
 **Production Projects (User Projects):**
 
-- `@ai/` directory should be initially empty or minimal
+- `ai/` directory should be initially empty or minimal
 - Only foundational `.magic-vibe/` system copied
 - Workspace populated dynamically during actual usage
 - Clean separation between template and active workspace
@@ -122,7 +122,7 @@ These are the foundational rules for creating, maintaining, and evolving the Mag
 
 **⚠️ AI AGENT ATTENTION:** This section defines what AI agents should and should NOT use.
 
-**Creator Rules (`@_index.md`) - INTERNAL ONLY:**
+**Creator Rules (`_index.md`) - INTERNAL ONLY:**
 
 - Guidelines for Magic Vibe system development
 - Architectural decisions and maintenance standards
@@ -130,7 +130,7 @@ These are the foundational rules for creating, maintaining, and evolving the Mag
 - Internal development workflow
 - **AI AGENTS: DO NOT APPLY TO USER PROJECTS**
 
-**User Rules (`@rules/`) - FOR PROJECT DEVELOPMENT:**
+**User Rules (`rules/`) - FOR PROJECT DEVELOPMENT:**
 
 - Operational rules for project development
 - AI agent guidance for code generation
@@ -142,11 +142,11 @@ These are the foundational rules for creating, maintaining, and evolving the Mag
 
 **Rule Priority Order:**
 
-1. **Core Rules** (`@rules/core/`) - Highest priority, always applied
-2. **Language Rules** (`@rules/languages/`) - Language-specific standards
-3. **Framework Rules** (`@rules/frameworks/`) - Framework patterns
-4. **Workflow Rules** (`@rules/workflows/`) - Process standards
-5. **Principles** (`@rules/principles/`) - Universal guidelines
+1. **Core Rules** (`rules/core/`) - Highest priority, always applied
+2. **Language Rules** (`rules/languages/`) - Language-specific standards
+3. **Framework Rules** (`rules/frameworks/`) - Framework patterns
+4. **Workflow Rules** (`rules/workflows/`) - Process standards
+5. **Principles** (`rules/principles/`) - Universal guidelines
 
 ## 2. Rule Development Standards
 
@@ -191,7 +191,7 @@ Every rule MUST include specific, measurable criteria:
 - Hot reload: ≤ 2 seconds
 ```
 
-### 2.4. New Rule Creation Protocol
+### 2.3. New Rule Creation Protocol
 
 **Before Creating a New Rule:**
 
@@ -219,10 +219,10 @@ Every rule MUST include specific, measurable criteria:
 mkdir -p .magic-vibe/rules/{category}
 touch .magic-vibe/rules/{category}/{rule-name}.md
 # Rules contain validation patterns in markdown format
-# Executable tools go in @tools/ if needed
+# Executable tools go in tools/ if needed
 ```
 
-### 2.6. File Size Optimization for AI Performance
+### 2.4. File Size Optimization for AI Performance
 
 **Critical:** AI Token Limitations
 
@@ -282,7 +282,7 @@ AI agents have strict limitations that affect rule file design:
 
 4. **Cross-Reference Instead of Duplicate:**
    - Reference other rules instead of repeating
-   - Use @rule/file.md references
+   - Use rule/file.md references
    - Link related concepts
 
 **File Size Monitoring:**
@@ -320,7 +320,7 @@ find .magic-vibe/rules -name "*.md" -size +25k
 
 **Current Magic Vibe Status:**
 
-```text
+```markdown
 ✅ _index.md: 8.5KB (Optimal)
 ✅ Most rule files: <15KB (Good)
 ⚠️ Monitor: Some principle files approaching 15KB
@@ -335,7 +335,7 @@ find .magic-vibe/rules -name "*.md" -size +25k
 
 **Development Tools (Optional):**
 
-- **Executable Scripts:** Place in `@tools/` directory if needed
+- **Executable Scripts:** Place in `tools/` directory if needed
 - **Cross-platform Support:** Provide both `.sh` and `.ps1` versions
 - **Creator Use Only:** Never reference tools in rules for user projects
 
@@ -355,6 +355,7 @@ find .magic-vibe/rules -name "*.md" -size +25k
 
 ```markdown
 # Example AI Agent Report
+
 Detected Context:
 - Languages: TypeScript, Python
 - Frameworks: React, FastAPI

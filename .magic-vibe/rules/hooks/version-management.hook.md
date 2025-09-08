@@ -84,7 +84,7 @@ generation_count=$(get_version "documentation" "generation_count")
 if [ -f "$DOCS_EN_README" ]; then
     # Update English documentation version info
     sed -i "s/Documentation Version.*$/Documentation Version](https:\/\/img.shields.io\/badge\/Docs-v${doc_version}-green.svg)](..\/)/g" "$DOCS_EN_README"
-    sed -i "s/Project Version.*$/Project Version](https:\/\/img.shields.io\/badge\/Project-v${project_version}-blue.svg)](https:\/\/github.com\/zigenzoog\/template-ai-rules\/releases)/g" "$DOCS_EN_README"
+    sed -i "s/Project Version.*$/Project Version](https:\/\/img.shields.io\/badge\/Project-v${project_version}-blue.svg)](https:\/\/github.com\/teratron\/magic-vibe\/releases)/g" "$DOCS_EN_README"
     sed -i "s/Magic Vibe.*$/Magic Vibe](https:\/\/img.shields.io\/badge\/Task%20Magic-v${task_magic_version}-orange.svg)](..\/\.vscode\/rules\/\.task-magic\/)/g" "$DOCS_EN_README"
     
     # Update version information section
@@ -105,7 +105,7 @@ fi
 if [ -f "$DOCS_RU_README" ]; then
     # Update Russian documentation version info
     sed -i "s/Версия документации.*$/Версия документации](https:\/\/img.shields.io\/badge\/Докс-v${doc_version}-green.svg)](..\/)/g" "$DOCS_RU_README"
-    sed -i "s/Версия проекта.*$/Версия проекта](https:\/\/img.shields.io\/badge\/Проект-v${project_version}-blue.svg)](https:\/\/github.com\/zigenzoog\/template-ai-rules\/releases)/g" "$DOCS_RU_README"
+    sed -i "s/Версия проекта.*$/Версия проекта](https:\/\/img.shields.io\/badge\/Проект-v${project_version}-blue.svg)](https:\/\/github.com\/teratron\/magic-vibe\/releases)/g" "$DOCS_RU_README"
     sed -i "s/Magic Vibe.*$/Magic Vibe](https:\/\/img.shields.io\/badge\/Task%20Magic-v${task_magic_version}-orange.svg)](..\/\.vscode\/rules\/\.task-magic\/)/g" "$DOCS_RU_README"
     
     # Update version information section (Russian)

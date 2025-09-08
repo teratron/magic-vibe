@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Version Management Script for template-ai-rules project
+# Version Management Script for magic-vibe project
 # This script manages versioning for both project and documentation
 
 VERSION_FILE=".magic-vibe/ai/version.json"

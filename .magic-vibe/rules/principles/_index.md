@@ -11,12 +11,12 @@ This directory contains universal development principles that AI agents should a
 
 ## Available Development Principles
 
-- **Object-Oriented Programming:** `@principles/oop.md` - Encapsulation, inheritance, polymorphism, and abstraction principles
-- **SOLID Design Principles:** `@principles/solid.md` - Five fundamental principles for maintainable object-oriented design
-- **DRY Principle:** `@principles/dry.md` - "Don't Repeat Yourself" - eliminating code duplication and ensuring single source of truth
-- **KISS Principle:** `@principles/kiss.md` - "Keep It Simple, Stupid" - maintaining simplicity and avoiding unnecessary complexity
-- **YAGNI Principle:** `@principles/yagni.md` - "You Ain't Gonna Need It" - implementing only what is currently needed
-- **Feature-Sliced Design:** `@principles/fsd.md` - Architectural methodology for scalable frontend applications with layer-based organization
+- **Object-Oriented Programming:** `principles/oop.md` - Encapsulation, inheritance, polymorphism, and abstraction principles
+- **SOLID Design Principles:** `principles/solid.md` - Five fundamental principles for maintainable object-oriented design
+- **DRY Principle:** `principles/dry.md` - "Don't Repeat Yourself" - eliminating code duplication and ensuring single source of truth
+- **KISS Principle:** `principles/kiss.md` - "Keep It Simple, Stupid" - maintaining simplicity and avoiding unnecessary complexity
+- **YAGNI Principle:** `principles/yagni.md` - "You Ain't Gonna Need It" - implementing only what is currently needed
+- **Feature-Sliced Design:** `principles/fsd.md` - Architectural methodology for scalable frontend applications with layer-based organization
 
 ## Principle Application Hierarchy
 

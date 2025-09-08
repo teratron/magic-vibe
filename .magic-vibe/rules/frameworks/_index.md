@@ -10,15 +10,15 @@ This directory contains framework-specific rules that AI agents should apply whe
 
 ## Available Framework Rules
 
-- **React:** `@frameworks/react.md` - React component patterns, hooks, state management, JSX standards
-- **Vue.js:** `@frameworks/vue.md` - Vue 3 composition API, component structure, state management
-- **Next.js:** `@frameworks/nextjs.md` - Next.js app router, SSR/SSG patterns, API routes, file conventions
-- **FastAPI:** `@frameworks/fastapi.md` - FastAPI development patterns, async programming, API design
-- **TailwindCSS:** `@frameworks/tailwindcss.md` - Utility-first CSS framework patterns and best practices
-- **Svelte:** `@frameworks/svelte.md` - Svelte component patterns, reactivity, SvelteKit integration
-- **SASS/SCSS:** `@frameworks/sass.md` - SASS/SCSS coding style guide, BEM methodology, file organization
-- **Database:** `@frameworks/database.md` - Database best practices with Prisma and Supabase integration
-- **Laravel:** `@frameworks/laravel.md` - Laravel framework development with MVC architecture, Eloquent ORM, and modern PHP practices
+- **React:** `frameworks/react.md` - React component patterns, hooks, state management, JSX standards
+- **Vue.js:** `frameworks/vue.md` - Vue 3 composition API, component structure, state management
+- **Next.js:** `frameworks/nextjs.md` - Next.js app router, SSR/SSG patterns, API routes, file conventions
+- **FastAPI:** `frameworks/fastapi.md` - FastAPI development patterns, async programming, API design
+- **TailwindCSS:** `frameworks/tailwindcss.md` - Utility-first CSS framework patterns and best practices
+- **Svelte:** `frameworks/svelte.md` - Svelte component patterns, reactivity, SvelteKit integration
+- **SASS/SCSS:** `frameworks/sass.md` - SASS/SCSS coding style guide, BEM methodology, file organization
+- **Database:** `frameworks/database.md` - Database best practices with Prisma and Supabase integration
+- **Laravel:** `frameworks/laravel.md` - Laravel framework development with MVC architecture, Eloquent ORM, and modern PHP practices
 
 ## Rule Application
 

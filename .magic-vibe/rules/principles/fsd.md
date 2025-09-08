@@ -1,10 +1,16 @@
+---
+description: Feature-Sliced Design (FSD) architectural methodology for building scalable frontend applications. Organizes code by business features with strict layer hierarchy and AI-optimized validation patterns.
+globs:
+alwaysApply: true
+---
+
 # FSD Principle
 
 > **Magic Vibe Rule: Feature-Sliced Design Architecture**  
 > **Category:** Principles  
 > **Priority:** High  
 > **File Size:** ~9KB (AI-optimized)  
-> **Dependencies:** `@rules/principles/solid.md`, `@rules/principles/dry.md`
+> **Dependencies:** `principles/solid.md`, `principles/dry.md`
 
 Feature-Sliced Design (FSD) architectural methodology for building scalable frontend applications. Organizes code by business features with strict layer hierarchy and AI-optimized validation patterns.
 
@@ -81,7 +87,7 @@ import { PostForm } from "features/posts/ui";        // Feature → Feature
 ```javascript
 // Entity structure example: entities/user/
 export { UserCard, UserAvatar } from "./ui";
-export { userModel, type User } from "./model";
+export { userModel, type, User } from "./model";
 export { userAPI } from "./api";
 
 ```
@@ -146,7 +152,6 @@ widgets/sidebar/        # Not widgets/left-panel/
 ui/                     # Never views/, components/
 model/                  # Never store/, state/
 api/                    # Never services/, requests/
-
 ```
 
 ## 4. Quality Assurance Framework
@@ -254,7 +259,9 @@ export type { User, UserRole } from "./types";
 
 ```markdown
 # .fsd/migration-log.md
+
 ## Migration Progress
+
 - ✅ App layer established
 - ✅ Shared utilities moved
 - 🟡 Pages layer in progress (60% complete)
@@ -262,6 +269,7 @@ export type { User, UserRole } from "./types";
 - ❌ Entities definition needed
 
 ## Import Violations
+
 - pages/home → widgets/header (3 instances)
 - features/auth → features/posts (1 instance)
 ```

@@ -29,10 +29,10 @@ The main version configuration is stored in `.magic-vibe/ai/version.json`:
 {
   "project": {
     "version": "0.1.0",
-    "name": "template-ai-rules",
+    "name": "magic-vibe",
     "build": "1",
     "release_date": "2025-01-15",
-    "changelog_url": "https://gitverse.ru/zigenzoog/template-ai-rules/releases"
+    "changelog_url": "https://github.com/teratron/magic-vibe/releases"
   },
   "documentation": {
     "version": "0.1.0",
@@ -112,19 +112,19 @@ Use the version manager script for manual version control:
 
 ```bash
 # Show current versions
-./.magic-vibe/version-manager.sh show
+./.magic-vibe/tools/version-manager.sh show
 
 # Bump project version
-./.magic-vibe/version-manager.sh bump-project minor
+./.magic-vibe/tools/version-manager.sh bump-project minor
 
 # Set specific project version
-./.magic-vibe/version-manager.sh set-project 2.0.0
+./.magic-vibe/tools/version-manager.sh set-project 2.0.0
 
 # Bump documentation version
-./.magic-vibe/version-manager.sh bump-docs patch
+./.magic-vibe/tools/version-manager.sh bump-docs patch
 
 # Set specific documentation version
-./.magic-vibe/version-manager.sh set-docs 1.5.0
+./.magic-vibe/tools/version-manager.sh set-docs 1.5.0
 ```
 
 ### Version Commands
@@ -151,7 +151,7 @@ Use the version manager script for manual version control:
 Version information is displayed via badges in README files:
 
 ```markdown
-[![Project Version](https://img.shields.io/badge/Project-v0.1.0-blue.svg)](https://gitverse.ru/zigenzoog/template-ai-rules/releases)
+[![Project Version](https://img.shields.io/badge/Project-v0.1.0-blue.svg)](https://github.com/teratron/magic-vibe/releases)
 [![Documentation Version](https://img.shields.io/badge/Docs-v0.1.0-green.svg)](../)
 [![Magic Vibe](https://img.shields.io/badge/Task%20Magic-v0.2.1-orange.svg)](../.magic-vibe/)
 ```

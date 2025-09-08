@@ -1,8 +1,8 @@
 # Template AI-Rules
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![AI-Optimized](https://img.shields.io/badge/AI-Optimized-brightgreen.svg)](https://github.com/zigenzoog/template-ai-rules)
-[![Version](https://img.shields.io/badge/Version-1.0-blue.svg)](https://github.com/zigenzoog/template-ai-rules/releases)
+[![AI-Optimized](https://img.shields.io/badge/AI-Optimized-brightgreen.svg)](https://github.com/teratron/magic-vibe)
+[![Version](https://img.shields.io/badge/Version-1.0-blue.svg)](https://github.com/teratron/magic-vibe/releases)
 
 > **Comprehensive configuration and rule template repository designed for AI-powered code editors and agents**
 
@@ -15,8 +15,8 @@ A standardized set of development guidelines, workflows, and best practices opti
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/zigenzoog/template-ai-rules.git
-   cd template-ai-rules
+   git clone https://github.com/teratron/magic-vibe.git
+   cd magic-vibe
    ```
 
 2. **Configure for your AI editor:**
@@ -253,7 +253,7 @@ Track the effectiveness of your AI-assisted development:
 
 ## 🤝 Contributing
 
-We welcome contributions to improve the template-ai-rules project:
+We welcome contributions to improve the magic-vibe project:
 
 1. **Fork** the repository
 2. **Create** a feature branch (`git checkout -b feature/amazing-improvement`)
@@ -281,9 +281,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/zigenzoog/template-ai-rules/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/zigenzoog/template-ai-rules/discussions)
-- **Documentation**: [Wiki](https://github.com/zigenzoog/template-ai-rules/wiki)
+- **Issues**: [GitHub Issues](https://github.com/teratron/magic-vibe/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/teratron/magic-vibe/discussions)
+- **Documentation**: [Wiki](https://github.com/teratron/magic-vibe/wiki)
 
 ---
 

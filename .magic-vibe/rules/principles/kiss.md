@@ -1,10 +1,16 @@
+---
+description: KISS (Keep It Simple, Stupid) principle guide for writing simple, clear, and maintainable code that AI agents can easily understand and generate.
+globs:
+alwaysApply: true
+---
+
 # KISS Principle
 
 > **Magic Vibe Rule: Keep It Simple, Stupid**  
 > **Category:** Principles  
 > **Priority:** High  
 > **File Size:** ~8KB (AI-optimized)  
-> **Dependencies:** `@rules/principles/dry.md`, `@rules/principles/yagni.md`
+> **Dependencies:** `principles/dry.md`, `principles/yagni.md`
 
 KISS (Keep It Simple, Stupid) principle guide for writing simple, clear, and maintainable code that AI agents can easily understand and generate.
 

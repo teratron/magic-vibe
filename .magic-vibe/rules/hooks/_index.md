@@ -11,7 +11,7 @@ This directory contains the core hook system rules that enable automated actions
 
 ## Available Hook System Rules
 
-- **Hooks Management:** `@core/hooks.md` - Complete hook system implementation guide for AI agents
+- **Hooks Management:** `core/hooks.md` - Complete hook system implementation guide for AI agents
 - **System-wide Hooks:** `.magic-vibe/rules/hooks/*.hook.md` - Core functionality hooks for all users
 - **User Template Hooks:** `.magic-vibe/ai/hooks/*.hook.md` - Customizable example hooks for project-specific needs
 
@@ -37,17 +37,17 @@ The Magic Vibe hook system operates on two levels:
 
 AI agents should recognize and handle these hook event types:
 
-| Event Type | Trigger Conditions | Common Use Cases |
-|------------|-------------------|------------------|
-| `task_creation` | New task file created | Task validation, assignment notifications |
-| `task_status_change` | Task status updated | Progress tracking, completion actions |
-| `task_archival` | Task moved to memory | Cleanup, documentation generation |
-| `plan_creation` | New plan file created | Plan validation, stakeholder notifications |
-| `plan_update` | Existing plan modified | Change tracking, approval workflows |
-| `git_commit` | After git commit | Code quality checks, documentation updates |
-| `git_push` | Before/after git push | Deployment triggers, quality gates |
-| `documentation_update` | Docs generated/updated | Version tracking, publication workflows |
-| `project_milestone` | Major milestone reached | Reporting, celebration, planning |
+| Event Type             | Trigger Conditions      | Common Use Cases                           |
+|------------------------|-------------------------|--------------------------------------------|
+| `task_creation`        | New task file created   | Task validation, assignment notifications  |
+| `task_status_change`   | Task status updated     | Progress tracking, completion actions      |
+| `task_archival`        | Task moved to memory    | Cleanup, documentation generation          |
+| `plan_creation`        | New plan file created   | Plan validation, stakeholder notifications |
+| `plan_update`          | Existing plan modified  | Change tracking, approval workflows        |
+| `git_commit`           | After git commit        | Code quality checks, documentation updates |
+| `git_push`             | Before/after git push   | Deployment triggers, quality gates         |
+| `documentation_update` | Docs generated/updated  | Version tracking, publication workflows    |
+| `project_milestone`    | Major milestone reached | Reporting, celebration, planning           |
 
 ## Hook Execution Protocol
 
@@ -146,7 +146,7 @@ Hook system integration points:
 Hook system rules are applied automatically when:
 
 - AI agents detect trigger events during Magic Vibe operations
-- Rules are referenced via `@core/hooks.md` in AI agent contexts
+- Rules are referenced via `core/hooks.md` in AI agent contexts
 - Hook files are created or modified in the system
 - Integration testing requires hook system validation
 

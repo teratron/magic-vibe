@@ -1,10 +1,16 @@
+---
+description: YAGNI (You Aren't Gonna Need It) principle guide for avoiding over-engineering and unnecessary features. Essential for AI agents to focus on current requirements without speculative implementation.
+globs:
+alwaysApply: true
+---
+
 # YAGNI Principle
 
 > **Magic Vibe Rule: You Aren't Gonna Need It**  
 > **Category:** Principles  
 > **Priority:** High  
 > **File Size:** ~12KB (AI-optimized)  
-> **Dependencies:** `@rules/principles/kiss.md`, `@rules/principles/dry.md`
+> **Dependencies:** `principles/kiss.md`, `principles/dry.md`
 
 YAGNI (You Aren't Gonna Need It) principle guide for avoiding over-engineering and unnecessary features. Essential for AI agents to focus on current requirements without speculative implementation.
 

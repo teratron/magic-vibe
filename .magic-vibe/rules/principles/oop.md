@@ -1,10 +1,16 @@
+---
+description: Object-Oriented Programming (OOP) principles guide for AI code generation ensuring maintainable, scalable, and reusable code through encapsulation, inheritance, polymorphism, and abstraction.
+globs:
+alwaysApply: true
+---
+
 # OOP Principles
 
 > **Magic Vibe Rule: Object-Oriented Programming Principles**  
 > **Category:** Principles  
 > **Priority:** High  
 > **File Size:** ~8KB (AI-optimized)  
-> **Dependencies:** `@rules/principles/solid.md`, `@rules/principles/kiss.md`
+> **Dependencies:** `principles/solid.md`, `principles/kiss.md`
 
 Object-Oriented Programming (OOP) principles guide for AI code generation ensuring maintainable, scalable, and reusable code through encapsulation, inheritance, polymorphism, and abstraction.
 

@@ -42,7 +42,7 @@ The memory system consists of:
 
 ## Directory and File Management
 
-When working with the memory system, the agent **must** adhere to the safe file system operation practices outlined in the `@tasks.md` rule. This includes checking for file/directory existence before operations, using `mv` for archival, and safely appending to log files. This ensures a consistent and safe approach across the entire Magic Vibe system.
+When working with the memory system, the agent **must** adhere to the safe file system operation practices outlined in the `core/tasks.md` rule. This includes checking for file/directory existence before operations, using `mv` for archival, and safely appending to log files. This ensures a consistent and safe approach across the entire Magic Vibe system.
 
 ## Directory Structure
 

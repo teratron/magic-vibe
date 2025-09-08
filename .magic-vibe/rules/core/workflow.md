@@ -1,3 +1,9 @@
+---
+description: Workflow diagram for the Magic Vibe system, illustrating the process of task creation, execution, and archival.
+globs:
+alwaysApply: true
+---
+
 # Magic Vibe Workflow Diagram
 
 Below is the workflow diagram for the Magic Vibe system, illustrating the process of task creation, execution, and archival.
