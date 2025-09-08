@@ -21,7 +21,7 @@ Feature-Sliced Design (FSD) architectural methodology for building scalable fron
 5. **Entities** - Business domain models and logic
 6. **Shared** - Reusable utilities and common components
 
-```text
+```bash
 src/
 ├── app/           # Application layer
 │   ├── providers/ # Global providers
@@ -54,7 +54,7 @@ src/
 
 **Layer Dependency Rule:** Higher layers can ONLY import from lower layers.
 
-```typescript
+```javascript
 // ✅ Valid imports (top → bottom flow)
 // In pages/home/ui/HomePage.tsx
 import { LoginForm } from "features/auth/ui";        // Pages → Features
@@ -78,11 +78,12 @@ import { PostForm } from "features/posts/ui";        // Feature → Feature
 - **lib/** - Slice-specific utilities
 - **config/** - Configuration and feature flags
 
-```typescript
+```javascript
 // Entity structure example: entities/user/
 export { UserCard, UserAvatar } from "./ui";
 export { userModel, type User } from "./model";
 export { userAPI } from "./api";
+
 ```
 
 ## 2. Change Management Protocols
@@ -95,7 +96,7 @@ export { userAPI } from "./api";
 2. **Distribution** (Week 2-3): Move UI to `pages/` and `widgets/`
 3. **Extraction** (Week 4+): Extract `entities/` and `features/`
 
-```typescript
+```javascript
 // Before: Mixed concerns
 const UserProfile = () => {
   const [user, setUser] = useState(null);
@@ -130,7 +131,7 @@ export const UserProfile = () => {
 
 ### 3.1. Naming Conventions
 
-```typescript
+```bash
 // Layer naming (lowercase, kebab-case)
 src/pages/user-profile/
 src/features/post-creation/
@@ -145,6 +146,7 @@ widgets/sidebar/        # Not widgets/left-panel/
 ui/                     # Never views/, components/
 model/                  # Never store/, state/
 api/                    # Never services/, requests/
+
 ```
 
 ## 4. Quality Assurance Framework
@@ -186,7 +188,7 @@ module.exports = {
 
 ### 5.1. Security Implementation
 
-```typescript
+```javascript
 // shared/api/baseAPI.ts
 export const secureAPI = {
   baseURL: process.env.API_URL,
@@ -207,7 +209,7 @@ export const authAPI = {
 
 ### 5.2. Performance Optimization
 
-```typescript
+```javascript
 // Lazy loading by layers
 const HomePage = lazy(() => import("pages/home"));
 const AuthFeature = lazy(() => import("features/auth"));
@@ -250,7 +252,7 @@ export type { User, UserRole } from "./types";
 
 ### 7.1. Architecture Evolution Tracking
 
-```text
+```markdown
 # .fsd/migration-log.md
 ## Migration Progress
 - ✅ App layer established
@@ -285,7 +287,7 @@ Ensure imports only reference `entities/` and `shared/` layers."
 
 Expected output structure:
 
-```text
+```bash
 features/auth/
 ├── ui/
 │   ├── LoginForm.tsx
@@ -299,11 +301,12 @@ features/auth/
 │   ├── authAPI.ts
 │   └── index.ts
 └── index.ts
+
 ```
 
 ### 8.2. AI Validation Rules
 
-```typescript
+```javascript
 // AI-readable validation config
 export const fsdValidationRules = {
   maxFileLines: 300,
@@ -340,4 +343,4 @@ export const fsdValidationRules = {
 
 **Magic Vibe FSD Principles v2.1.0** - Scalable frontend architecture
 
-*Last Updated: 2025-01-XX | File Size: ~9KB | Status: Active*
+**Last Updated:** 2025-09-08 | **File Size:** ~9KB | **Status:** Active*

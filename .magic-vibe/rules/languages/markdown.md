@@ -1,11 +1,11 @@
-# Markdown Language Rules
+# Magic Vibe Rule: Markdown Documentation Standards
 
 > **Magic Vibe Rule: Markdown Documentation Standards**  
 > **Category:** Language  
 > **Priority:** High  
 > **File Size:** ~15KB (AI-optimized)
 
-Markdown forms the foundation of Magic Vibe system documentation. This rule defines standards for creating clear, consistent, and AI-optimized Markdown files within the Magic Vibe ecosystem.
+Magic Vibe system documentation relies on Markdown. This rule establishes standards for creating clear, consistent, and AI-optimized Markdown files.
 
 ## 1. Implementation Guidelines
 
@@ -14,23 +14,7 @@ Markdown forms the foundation of Magic Vibe system documentation. This rule defi
 Every Magic Vibe Markdown file must follow this structure:
 
 ```markdown
-\# [Document Title]
 
-> **Magic Vibe Rule: [Rule Name]**  
-> **Category:** [core|languages|frameworks|workflows|principles]  
-> **Priority:** [High|Medium|Low]  
-> **File Size:** ~[X]KB (AI-optimized)
-
-Brief description of the rule's purpose and scope.
-
-## 1. Implementation Guidelines
-## 2. Change Management Protocols  
-## 3. Communication Standards
-## 4. Quality Assurance Framework
-## 5. Security & Performance Guidelines
-## 6. Integration & Compatibility
-## 7. Monitoring & Maintenance
-## 8. AI Agent Optimization
 ```
 
 ### 1.2. Header Hierarchy
@@ -154,12 +138,7 @@ Use consistent list formatting:
 When updating Markdown files:
 
 ```markdown
-<!-- Version tracking in git commits -->
-git commit -m "docs(markdown): update section 3.2 - communication standards"
 
-<!-- File modification tracking -->
-<!-- Last modified: 2025-01-XX by [Author] -->
-<!-- Changes: Added AI optimization guidelines -->
 ```
 
 ### 2.3. Breaking Changes
@@ -230,6 +209,7 @@ Follow these steps to implement authentication:
 
 ```
 
+
 ### 3.3. User Communication
 
 Provide clear guidance for developers:
@@ -252,6 +232,7 @@ Reference other Magic Vibe rules:
 ```markdown
 <!-- Clear rule dependencies -->
 **Dependencies:**
+
 - `@rules/core/quality.md` - For file size optimization
 - `@rules/workflows/documentation.md` - For writing standards
 - `@rules/principles/clarity.md` - For communication principles
@@ -263,7 +244,7 @@ Reference other Magic Vibe rules:
 
 Implement automated validation:
 
-```powershell
+```markdown
 # PowerShell validation script example
 function Test-MarkdownStructure {
     param([string]$FilePath)
@@ -304,7 +285,7 @@ function Test-MarkdownStructure {
 
 ```markdown
 <!-- GOOD: Language specified -->
-```typescript
+``typescript
 const config = { api: true };
 ```
 
@@ -313,8 +294,8 @@ Generic configuration or mixed content
 ```
 
 <!-- BAD: No language specified - triggers MD040 warning -->
-```text
-config = { api: true }
+```markdown
+
 ```
 
 ### 4.3. Accessibility Standards
@@ -326,9 +307,9 @@ config = { api: true }
 <!-- Good: Clear table headers -->
 | Rule Type | File Size Limit | Priority |
 |-----------|-----------------|----------|
-| Core      | 10KB           | High     |
-| Language  | 8KB            | Medium   |
-| Framework | 12KB           | Medium   |
+| Core      | 10KB            | High     |
+| Language  | 8KB             | Medium   |
+| Framework | 12KB            | Medium   |
 ```
 
 ### 4.4. Testing Standards

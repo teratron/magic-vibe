@@ -26,9 +26,11 @@ YAGNI (You Aren't Gonna Need It) principle guide for avoiding over-engineering a
 **Over-Flexible Configurations:**
 
 ```python
+
 # ❌ Bad: Over-engineered configuration
+
 class DatabaseConfiguration:
-    def __init__(self):
+    def **init**(self):
         self.host = "localhost"
         self.port = 5432
         self.ssl_mode = "prefer"
@@ -38,14 +40,15 @@ class DatabaseConfiguration:
         # ... 20 more options that might never be used
 
 # ✅ Good: Simple configuration for current needs
+
 class DatabaseConfig:
-    def __init__(self):
+    def **init**(self):
         self.host = "localhost"
         self.port = 5432
         self.database = "myapp"
         self.username = "user"
         self.password = "password"
-    
+
     # Add more options only when actually needed
 ```
 
@@ -80,14 +83,16 @@ class PaymentService:
 
 ```python
 # ❌ Bad: Over-generalized for unclear future needs
-def process_data(data, processor_type='default', options=None, 
+
+def process_data(data, processor_type='default', options=None,
                 transformers=None, validators=None, filters=None,
-                output_format='json', cache_enabled=True, 
+                output_format='json', cache_enabled=True,
                 async_mode=False, batch_size=100, retry_count=3):
     # Complex implementation handling all possible scenarios
     pass
 
 # ✅ Good: Specific function for current need
+
 def validate_user_data(user_data):
     """Validate user registration data."""
     if not user_data.get('email'):
@@ -149,17 +154,19 @@ class NotificationService:
 
 ```python
 # Start simple
+
 class OrderService:
     def create_order(self, user_id, items):
         order = Order(user_id, items)
         return self.order_repository.save(order)
 
 # When email notification is actually needed, add it
+
 class OrderService:
-    def __init__(self, order_repository, email_service):
+    def **init**(self, order_repository, email_service):
         self.order_repository = order_repository
         self.email_service = email_service  # Added when needed
-    
+
     def create_order(self, user_id, items):
         order = Order(user_id, items)
         saved_order = self.order_repository.save(order)
@@ -235,8 +242,8 @@ class UserService:
 class TestUserService:
     def test_create_user(self):
         user_service = UserService()
-        user = user_service.create_user("test@example.com", "password123")
-        
+        user = user_service.create_user("<test@example.com>", "password123")
+
         assert user.email == "test@example.com"
         assert user.verify_password("password123")
         assert user.created_at is not None
@@ -428,4 +435,4 @@ class SimpleUserService:
 
 **Magic Vibe YAGNI Principle v2.1.0** - Lean, focused development
 
-***Last Updated:** 2025-01-XX | **File Size:** ~12KB | **Status:** Active*
+**Last Updated:** 2025-09-08 | **File Size:** ~12KB | **Status:** Active*
