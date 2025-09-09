@@ -422,10 +422,10 @@ globs:
 
 ```bash
 # Auto-increment docs version when tasks complete
-./version-manager.sh auto-docs
+./tools/version-manager.sh auto-docs
 
 # Manual project version updates
-./version-manager.sh bump-project minor
+./tools/version-manager.sh bump-project minor
 ```
 
 ## 5. Documentation Standards
